@@ -1,0 +1,84 @@
+body {
+    background: #f6f6f6;
+    font-family: sans;
+    padding-top: 20px;
+    padding-left: 80px;
+}
+
+table {
+    background: #fefefe;
+    width: 900px;
+    border: 1px solid #cecac0;
+    border-collapse: separate;
+    border-left: 0;
+    border-radius: 6px;
+    border-spacing: 0px;
+    overflow: hidden;
+}
+
+thead {
+    display: table-header-group;
+    vertical-align: middle;
+    border-color: inherit;
+    border-collapse: separate;
+}
+
+tr {
+    display: table-row;
+    vertical-align: inherit;
+    border-color: inherit;
+}
+
+th {
+    background: #cce5ed;
+    text-align: left;
+    padding: 5px;
+}
+
+td {
+    text-align: left;
+    padding: 10px;
+    border-top: 1px solid #cecac0;
+}
+
+th, td {
+    text-align: left;
+    vertical-align: top;
+    border-left: 1px solid #cecac0;
+}
+
+thead:first-child tr:first-child th:first-child, tbody:first-child tr:first-child td:first-child {
+    border-radius: 6px 0 0 0;
+                                                 }
+
+thead:last-child tr:last-child th:first-child, tbody:last-child tr:last-child td:first-child {
+    border-radius: 0 0 0 6px;
+                                               }
+
+li {
+    padding-top: 3px;
+}
+
+.classname, .groupname, .testname {
+    font-family: monospace;
+}
+
+.classname {
+    padding: 7px;
+    font-size: 150%;
+}
+
+.groupname {
+    padding: 5px;
+    font-weight: bolder;
+    font-size: 120%;
+}
+
+.testname {
+    font-weight: bolder;
+    font-size: 100%;
+}
+
+.comment {
+    font-size: 90%;
+}
