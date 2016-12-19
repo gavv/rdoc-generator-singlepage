@@ -37,7 +37,12 @@ class RDoc::Generator::RSinglePage
   end
 
   def get_html
-    builder = Nokogiri::HTML::Builder.new(:encoding => 'UTF-8') do |doc|
+    builder = get_builder get_classes
+    builder.to_html
+  end
+
+  def get_builder(classes)
+    Nokogiri::HTML::Builder.new(:encoding => 'UTF-8') do |doc|
       doc.html do
         doc.head do
           doc.style do
@@ -50,25 +55,47 @@ class RDoc::Generator::RSinglePage
             doc.text get_title
           end
 
-          get_classes.each do |klass|
-            doc.table do
-              doc.tr do
-                doc.th.classname do
-                  doc.text klass[:name]
+          doc.div.top do
+            doc.div.tocbox do
+              classes.each do |klass|
+                doc.div.tocclassbox do
+                  doc.div.tocclassheader do
+                    doc.a(href: '#' + klass[:name]).classref do
+                      doc.text klass[:name]
+                    end
+                  end
+
+                  klass[:groups].each do |group|
+                    doc.div.tocgroup do
+                      doc.a(href: '#' + klass[:name] + '::' + group[:name]).groupref do
+                        doc.text group[:name]
+                      end
+                    end
+                  end
                 end
               end
+            end
 
-              klass[:groups].each do |group|
-                doc.tr do
-                  doc.td do
-                    doc.span.groupname do
-                      doc.text group[:name]
+            doc.div.mainbox do
+              classes.each do |klass|
+                doc.div.classbox(id: klass[:name]) do
+                  doc.div.classheader do
+                    doc.span.classname do
+                      doc.text klass[:name]
                     end
+                  end
 
-                    doc.ul do
+                  klass[:groups].each do |group|
+                    doc.div.groupbox(id: klass[:name] + '::' + group[:name]) do
+                      doc.div.groupheader do
+                        doc.span.groupname do
+                          doc.text group[:name]
+                        end
+                      end
+
                       group[:methods].each do |method|
-                        doc.li do
-                          doc.span.testname do
+                        doc.div.methodbox do
+                          doc.span.methodname do
                             doc.text method[:name]
                           end
                           doc.span.comment do
@@ -81,13 +108,10 @@ class RDoc::Generator::RSinglePage
                 end
               end
             end
-
-            doc.br
           end
         end
       end
     end
-    builder.to_html
   end
 
   def get_css
