@@ -98,3 +98,56 @@ body {
 .groupref {
     font-size: 80%;
 }
+
+.code {
+    display: block;
+    background: #262626;
+    color: white;
+    overflow: auto;
+    padding: 5px;
+}
+
+.ruby-constant {
+    color: #7fffd4;
+    background: transparent;
+}
+
+.ruby-keyword {
+    color: #00ffff;
+    background: transparent;
+}
+
+.ruby-ivar {
+    color: #eedd82;
+    background: transparent;
+}
+
+.ruby-operator {
+    color: #00ffee;
+    background: transparent;
+}
+
+.ruby-identifier {
+    color: #ffdead;
+    background: transparent;
+}
+
+.ruby-node {
+    color: #ffa07a;
+    background: transparent;
+}
+
+.ruby-comment {
+    color: #dc0000;
+    background: transparent;
+}
+
+.ruby-regexp {
+    color: #ffa07a;
+    background: transparent;
+}
+
+.ruby-value {
+    color: #7fffd4;
+    background: transparent;
+}

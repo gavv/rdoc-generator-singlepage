@@ -101,6 +101,11 @@ class RDoc::Generator::RSinglePage
                           doc.span.comment do
                             doc << method[:comment]
                           end
+                          doc.div.code do
+                            doc.pre do
+                              doc << method[:code]
+                            end
+                          end
                         end
                       end
                     end
@@ -115,7 +120,7 @@ class RDoc::Generator::RSinglePage
   end
 
   def get_css
-    # TODO: move CSS to theme, get theme from config
+    # TODO: move to theme, get theme from config
     File.open(File.join get_data_dir, 'default.css') do |file|
       file.read
     end
@@ -175,6 +180,7 @@ class RDoc::Generator::RSinglePage
       {
         name:    method.name,
         comment: get_comment(method),
+        code:    method.markup_code,
       }
     end
   end
