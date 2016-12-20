@@ -1,3 +1,5 @@
+/* http://ethanschoonover.com/solarized */
+
 body {
     background: #f6f6f6;
     font-family: sans;
@@ -22,7 +24,7 @@ body {
 }
 
 .classbox {
-    border: 1px solid #cecac0;
+    border: 1px solid #93a1a1;
     border-radius: 6px;
     overflow: hidden;
     background: #fefefe;
@@ -31,12 +33,13 @@ body {
 }
 
 .classheader {
-    background: #cce5ed;
+    background: #657b83;
+    color: white;
     padding: 5px;
 }
 
 .groupbox {
-    border-top: 1px solid #cecac0;
+    border-top: 1px solid #93a1a1;
     padding: 5px;
 }
 
@@ -47,10 +50,11 @@ body {
 .methodbox {
     padding-top: 10px;
     padding-left: 30px;
+    padding-right: 30px;
 }
 
 .tocclassbox {
-    border: 1px solid #cecac0;
+    border: 1px solid #93a1a1;
     border-radius: 6px;
     overflow: hidden;
     background: #fefefe;
@@ -99,55 +103,52 @@ body {
     font-size: 80%;
 }
 
-.code {
-    display: block;
-    background: #262626;
-    color: white;
-    overflow: auto;
+pre {
+    border: 1px solid #93a1a1;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fdf6e3;
     padding: 5px;
 }
 
 .ruby-constant {
-    color: #7fffd4;
-    background: transparent;
+    color: #839496;
 }
 
 .ruby-keyword {
-    color: #00ffff;
-    background: transparent;
+    color: #1360a9;
+    font-weight: bold;
 }
 
 .ruby-ivar {
-    color: #eedd82;
-    background: transparent;
+    color: #2aa198;
 }
 
 .ruby-operator {
-    color: #00ffee;
-    background: transparent;
+    color: #859900;
 }
 
 .ruby-identifier {
-    color: #ffdead;
-    background: transparent;
+    color: #1d544c;
 }
 
 .ruby-node {
-    color: #ffa07a;
-    background: transparent;
+    color: #a73407;
 }
 
 .ruby-comment {
-    color: #dc0000;
-    background: transparent;
+    color: #dc322f;
+    font-style: italic;
 }
 
 .ruby-regexp {
     color: #ffa07a;
-    background: transparent;
 }
 
 .ruby-value {
-    color: #7fffd4;
-    background: transparent;
+    color: #009705;
+}
+
+.ruby-string {
+    color: #657b83;
 }

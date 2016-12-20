@@ -45,8 +45,11 @@ class RDoc::Generator::RSinglePage
     Nokogiri::HTML::Builder.new(:encoding => 'UTF-8') do |doc|
       doc.html do
         doc.head do
-          doc.style do
+          doc.style(type: 'text/css') do
             doc << get_css
+          end
+          doc.script(type: 'text/javascript') do
+            doc << get_js
           end
         end
 
@@ -121,7 +124,14 @@ class RDoc::Generator::RSinglePage
 
   def get_css
     # TODO: move to theme, get theme from config
-    File.open(File.join get_data_dir, 'default.css') do |file|
+    File.open(File.join get_data_dir, 'solarized.css') do |file|
+      file.read
+    end
+  end
+
+  def get_js
+    # TODO: move to theme, get theme from config
+    File.open(File.join get_data_dir, 'solarized.js') do |file|
       file.read
     end
   end
