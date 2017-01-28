@@ -6,6 +6,8 @@ require 'fileutils'
 class RDoc::Options
   attr_accessor :output_file
   attr_accessor :theme_name
+  attr_accessor :filter_class
+  attr_accessor :filter_method
 end
 
 class RDoc::Generator::RSinglePage
@@ -19,19 +21,32 @@ class RDoc::Generator::RSinglePage
     opt.separator 'rsinglepage generator options:'
 
     opt.separator nil
-    opt.on('--opf, --output-file FILE', String,
+    opt.on('--theme=NAME', String,
+           'Set theme.',
+           "Defaults to '#{rdoc_options.theme_name}'.",
+           'Available themes:',
+           *(themes_list.map { |s| " - #{s}" })) do |value|
+      rdoc_options.theme_name = value
+    end
+
+    opt.separator nil
+    opt.on('--output-file=FILE', '--opf', String,
            'Set output file name.',
            "Defaults to '#{rdoc_options.output_file}'.") do |value|
       rdoc_options.output_file = value
     end
 
     opt.separator nil
-    opt.on('--theme NAME', String,
-           'Set theme.',
-           "Defaults to '#{rdoc_options.theme_name}'.",
-           'Available themes:',
-           *(themes_list.map { |s| " - #{s}" })) do |value|
-      rdoc_options.theme_name = value
+    opt.on('--filter-class=REGEX', '--fc', String,
+           "Include only classes and modules that",
+           "match regex.") do |value|
+      rdoc_options.filter_class = Regexp.new(value)
+    end
+
+    opt.separator nil
+    opt.on('--filter-method=REGEX', '--fm', String,
+           "Include only methods that match regex.") do |value|
+      rdoc_options.filter_method = Regexp.new(value)
     end
   end
 
@@ -58,12 +73,13 @@ class RDoc::Generator::RSinglePage
 
   def generate_html
     theme = load_theme
+    title = get_title
     classes = get_classes
-    builder = new_builder(theme, classes)
+    builder = new_builder(theme, title, classes)
     builder.to_html
   end
 
-  def new_builder(theme, classes)
+  def new_builder(theme, title, classes)
     Nokogiri::HTML::Builder.new(encoding: 'UTF-8') do |doc|
       doc.html do
         doc.head do
@@ -83,7 +99,7 @@ class RDoc::Generator::RSinglePage
 
         doc.body do
           doc.h1 do
-            doc.text get_title
+            doc.text title
           end
 
           doc.div.top do
@@ -236,7 +252,7 @@ class RDoc::Generator::RSinglePage
     methods = klass.method_list
 
     methods = methods.select do |method|
-      !skip_method? method.name
+      !skip_method? klass.full_name, method.name
     end
 
     methods.map do |method|
@@ -263,13 +279,19 @@ class RDoc::Generator::RSinglePage
   end
 
   def skip_class?(class_name)
-    # TODO: move to config
-    !class_name.start_with? 'Test'
+    if @options.filter_class
+      @options.filter_class.match(class_name).nil?
+    else
+      false
+    end
   end
 
-  def skip_method?(method_name)
-    # TODO: move to config
-    !method_name.start_with? 'test_'
+  def skip_method?(class_name, method_name)
+    if @options.filter_method
+      @options.filter_method.match(class_name + '#' + method_name).nil?
+    else
+      false
+    end
   end
 
   def check_one_of(message: '', expected: [], actual: '')
