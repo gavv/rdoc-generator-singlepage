@@ -1,9 +1,9 @@
 require 'rdoc/rdoc'
 require 'nokogiri'
+require 'yaml'
 require 'fileutils'
 
 class RDoc::Generator::RSinglePage
-
   RDoc::RDoc.add_generator(self)
 
   def initialize(store, options)
@@ -13,7 +13,7 @@ class RDoc::Generator::RSinglePage
 
   def generate
     File.open(get_output_file, 'w') do |file|
-      file.write(get_html)
+      file.write(generate_html)
     end
   end
 
@@ -27,29 +27,28 @@ class RDoc::Generator::RSinglePage
 
   private
 
-  def get_output_file
-    # TODO: move to config
-    'doc.html'
-  end
-
-  def get_data_dir
-    File.join File.dirname(__FILE__), '../../../data/rdoc-generator-singlepage'
-  end
-
-  def get_html
-    builder = get_builder get_classes
+  def generate_html
+    theme = get_theme
+    classes = get_classes
+    builder = new_builder(theme, classes)
     builder.to_html
   end
 
-  def get_builder(classes)
-    Nokogiri::HTML::Builder.new(:encoding => 'UTF-8') do |doc|
+  def new_builder(theme, classes)
+    Nokogiri::HTML::Builder.new(encoding: 'UTF-8') do |doc|
       doc.html do
         doc.head do
-          doc.style(type: 'text/css') do
-            doc << get_css
-          end
-          doc.script(type: 'text/javascript') do
-            doc << get_js
+          theme[:include].each do |type, data|
+            case type
+            when :css
+              doc.style(type: 'text/css') do
+                doc << data
+              end
+            when :js
+              doc.script(type: 'text/javascript') do
+                doc << data
+              end
+            end
           end
         end
 
@@ -122,18 +121,46 @@ class RDoc::Generator::RSinglePage
     end
   end
 
-  def get_css
-    # TODO: move to theme, get theme from config
-    File.open(File.join get_data_dir, 'solarized.css') do |file|
-      file.read
-    end
+  def get_data_dir
+    File.join File.dirname(__FILE__), '../../../data/rdoc-generator-singlepage'
   end
 
-  def get_js
-    # TODO: move to theme, get theme from config
-    File.open(File.join get_data_dir, 'solarized.js') do |file|
-      file.read
+  def get_output_file
+    # TODO: move to config
+    'doc.html'
+  end
+
+  def get_theme_name
+    # TODO: move to config
+    'default'
+  end
+
+  def get_theme
+    theme_dir = File.join(get_data_dir, 'themes', get_theme_name)
+
+    theme = {
+      include: {}
+    }
+
+    config = YAML.load_file(File.join(theme_dir, 'config.yml'))
+
+    if config['include']
+      config['include'].each do |type, path|
+        check_one_of(
+          message:  'unexpected include file type in theme config',
+          expected: %w(css js),
+          actual:   type
+        )
+        File.open(File.join(theme_dir, path)) do |file|
+          theme[:include][type.to_sym] = file.read
+        end
+      end
     end
+
+    theme
+
+  rescue => error
+    raise "can't load '#{get_theme_name}' theme\n#{error}"
   end
 
   def get_title
@@ -147,15 +174,13 @@ class RDoc::Generator::RSinglePage
       !skip_class? klass.full_name
     end
 
-    classes.sort_by! do |klass|
-      klass.full_name
-    end
+    classes.sort_by!(&:full_name)
 
     classes.map do |klass|
       {
         name:    klass.full_name,
         comment: get_comment(klass),
-        groups:  get_groups(klass),
+        groups:  get_groups(klass)
       }
     end
   end
@@ -165,15 +190,14 @@ class RDoc::Generator::RSinglePage
     groups = {}
 
     methods.each do |method|
-      if group = get_group_name(method[:name])
-        if !groups.include? group
-          groups[group] = {
-            name:    group,
-            methods: []
-          }
-        end
-        groups[group][:methods] << method
+      next unless group = get_group_name(method[:name])
+      unless groups.include? group
+        groups[group] = {
+          name:    group,
+          methods: []
+        }
       end
+      groups[group][:methods] << method
     end
 
     groups.values
@@ -190,7 +214,7 @@ class RDoc::Generator::RSinglePage
       {
         name:    method.name,
         comment: get_comment(method),
-        code:    method.markup_code,
+        code:    method.markup_code
       }
     end
   end
@@ -217,5 +241,13 @@ class RDoc::Generator::RSinglePage
   def skip_method?(method_name)
     # TODO: move to config
     !method_name.start_with? 'test_'
+  end
+
+  def check_one_of(message: '', expected: [], actual: '')
+    unless expected.include?(actual)
+      raise %(#{message}: ) +
+            %(got '#{actual}', ) +
+            %(expected one of: #{expected.map { |e| "'#{e}'" }.join(', ')})
+    end
   end
 end
