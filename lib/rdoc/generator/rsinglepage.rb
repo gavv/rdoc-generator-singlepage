@@ -127,7 +127,7 @@ class RDoc::Generator::RSinglePage
                   doc.text klass[:name]
                 end
 
-                if klass[:groups].length() > 0
+                unless klass[:groups].empty?
                   doc.div.tocGroupBlock do
                     klass[:groups].each do |group|
                       doc.a(href: '#' + klass[:name] + '::' + group[:name]).tocGroup do
@@ -291,8 +291,6 @@ class RDoc::Generator::RSinglePage
       'Class Methods'
     elsif contain_member(klass.class_method_list, member[:name])
       'Instance Methods'
-    else
-      nil
     end
   end
 
