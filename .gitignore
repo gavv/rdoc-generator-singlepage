@@ -1,3 +1,11 @@
 Gemfile.lock
 .bundle
 pkg
+
+# swap
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*~
+
+# auto-generated rdoc output
+doc
