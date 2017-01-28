@@ -115,19 +115,24 @@ class RDoc::Generator::RSinglePage
 
         doc.body do
           doc.header do
-            doc.h1 do
-              doc.text title
-            end
+            doc.text title
           end
 
           doc.aside do
             classes.each do |klass|
-              doc.div.tocClassBlock do
-                doc.a(href: '#' + klass[:name]).tocClass do
-                  doc.text klass[:name]
+              if klass[:groups].empty?
+                doc.div.tocClassBlock do
+                  doc.a(href: '#' + klass[:name]).tocClass do
+                    doc.text klass[:name]
+                  end
                 end
-
-                unless klass[:groups].empty?
+              else
+                doc.details.tocClassBlock do
+                  doc.summary do
+                    doc.a(href: '#' + klass[:name]).tocClass do
+                      doc.text klass[:name]
+                    end
+                  end
                   doc.div.tocGroupBlock do
                     klass[:groups].each do |group|
                       doc.a(href: '#' + klass[:name] + '::' + group[:name]).tocGroup do
@@ -163,6 +168,9 @@ class RDoc::Generator::RSinglePage
                             doc << method[:comment]
                           end
                           doc.details.methodCode do
+                            doc.summary do
+                              doc.text "Show code"
+                            end
                             doc.pre do
                               doc << method[:code]
                             end
