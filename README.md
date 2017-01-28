@@ -6,7 +6,7 @@ Generate single-page HTML5 documentation for Ruby RDoc.
 
 ## Features
 
-* Generate single standalone HTML page suitable for offline use.
+* Generate single standalone HTML5 page suitable for offline use.
 * Themes support.
 * Excluding classes or members by regex.
 * Grouping class members by category or regex.
