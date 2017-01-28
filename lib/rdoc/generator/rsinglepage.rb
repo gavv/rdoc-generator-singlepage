@@ -247,7 +247,7 @@ class RDoc::Generator::RSinglePage
     groups = {}
 
     methods.each do |method|
-      next unless group = get_member_group(method)
+      next unless group = get_member_group(klass, method)
       unless groups.include? group
         groups[group] = {
           name:    group,
@@ -284,13 +284,20 @@ class RDoc::Generator::RSinglePage
     end
   end
 
-  def get_member_group(member)
+  def get_member_group(klass, member)
     if @options.group_members
       get_member_group_from_match(member[:name])
+    elsif contain_member(klass.instance_method_list, member[:name])
+      'Class Methods'
+    elsif contain_member(klass.class_method_list, member[:name])
+      'Instance Methods'
     else
-      # TODO: group by member kind: attribute, method, ...
-      'default_group'
+      nil
     end
+  end
+
+  def contain_member(methods, member_name)
+    methods.select { |m| m.name == member_name }.size == 1
   end
 
   def get_member_group_from_match(member_name)
