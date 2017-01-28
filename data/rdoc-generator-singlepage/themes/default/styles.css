@@ -1,142 +1,113 @@
-/* http://ethanschoonover.com/solarized */
-aside {
-  float: left;
-  width: 300px;
-  overflow: hidden;
-}
-aside a {
-  padding: 3px;
-}
-aside .testGroup, aside .groupBlock {
-  display: block;
-  padding-left: 10px;
-}
-
-main {
-    margin-left: 310px;
-}
-
-main article header {
-  background: #657b83;
-  color: white;
-  padding: 5px;
-}
-
-article section {
-  border-top: 1px solid #93a1a1;
-  padding: 5px;
-}
-
-article section header {
-  background: none;
-  color: black;
-}
-
 body {
-    background: #f6f6f6;
-    font-family: sans;
-}
-
-
-.classbox {
-    border: 1px solid #93a1a1;
-    border-radius: 6px;
+  margin: 0 20px; }
+  body a {
+    color: black;
+    text-decoration: none; }
+  body summary {
+    outline: none; }
+  body > header {
+    font-size: 32px;
+    font-weight: 600;
+    padding: 10px 0;
+    margin-left: 330px; }
+  body aside {
+    float: left;
+    width: 325px;
     overflow: hidden;
-    background: #fefefe;
-    width: 900px;
-    margin-bottom: 20px;
-}
-
-.classheader {
-    background: #657b83;
-    color: white;
-    padding: 5px;
-}
-
-.methodbox {
-    padding-top: 10px;
-    padding-left: 30px;
-    padding-right: 30px;
-}
-
-.classname, .groupname, .methodname {
-    font-family: monospace;
-}
-
-.classname {
-    padding: 7px;
-    font-size: 150%;
-}
-
-.groupname {
-    padding: 5px;
-    font-weight: bolder;
-    font-size: 120%;
-}
-
-.methodname {
-    font-weight: bolder;
-    font-size: 100%;
-}
-
-.comment {
-    font-size: 90%;
-}
-
-.classref {
-    font-size: 80%;
-}
-
-.groupref {
-    font-size: 80%;
-}
-
-pre {
-    border: 1px solid #93a1a1;
-    border-radius: 6px;
-    overflow: hidden;
-    background: #fdf6e3;
-    padding: 5px;
-}
-
-.ruby-constant {
-    color: #839496;
-}
-
-.ruby-keyword {
-    color: #1360a9;
-    font-weight: bold;
-}
-
-.ruby-ivar {
-    color: #2aa198;
-}
-
-.ruby-operator {
-    color: #859900;
-}
-
-.ruby-identifier {
-    color: #1d544c;
-}
-
-.ruby-node {
-    color: #a73407;
-}
-
-.ruby-comment {
-    color: #dc322f;
-    font-style: italic;
-}
-
-.ruby-regexp {
-    color: #ffa07a;
-}
-
-.ruby-value {
-    color: #009705;
-}
-
-.ruby-string {
-    color: #657b83;
-}
+    position: fixed;
+    overflow-y: scroll;
+    bottom: 0;
+    top: 10px; }
+    body aside summary::-webkit-details-marker {
+      display: none; }
+    body aside summary:after {
+      border-radius: 5px;
+      content: "+";
+      color: #000;
+      float: right;
+      font-size: 1.3em;
+      font-weight: bold;
+      margin: 5px 10px 0 0;
+      padding: 0;
+      text-align: center;
+      width: 20px; }
+    body aside details[open] summary:after {
+      content: "-"; }
+    body aside a {
+      display: inline-block; }
+    body aside .tocGroupBlock {
+      background-color: white; }
+      body aside .tocGroupBlock .tocGroup {
+        display: block;
+        padding: 10px 20px;
+        border-bottom: 1px solid #f2f2f2;
+        border-left: 3px solid transparent; }
+        body aside .tocGroupBlock .tocGroup:hover {
+          border-left: 3px solid black; }
+        body aside .tocGroupBlock .tocGroup:last-child {
+          border-bottom: none; }
+    body aside .tocClassBlock {
+      border: 1px solid #d9d9d9;
+      background-color: #f6f6f6;
+      border-radius: 3px;
+      margin: 7px;
+      width: 300px; }
+      body aside .tocClassBlock .tocClass {
+        padding: 10px;
+        width: 234px;
+        word-wrap: break-word; }
+  body main {
+    margin-left: 330px; }
+    body main article {
+      margin: 7px; }
+      body main article header {
+        background: #f2f2f2;
+        color: black;
+        padding: 10px;
+        font-size: 160%; }
+      body main article section {
+        border-top: 1px solid #93a1a1;
+        padding: 5px; }
+        body main article section header {
+          padding: 7px;
+          font-size: 150%; }
+        body main article section .methodBlock {
+          padding-top: 10px;
+          padding-left: 30px;
+          padding-right: 30px; }
+          body main article section .methodBlock .methodName {
+            font-weight: bolder;
+            font-size: 100%; }
+          body main article section .methodBlock .methodComment {
+            font-size: 90%; }
+        body main article section header {
+          background: none;
+          color: black; }
+        body main article section pre {
+          border: 1px solid #93a1a1;
+          border-radius: 6px;
+          overflow: hidden;
+          background: #fdf6e3;
+          padding: 5px; }
+          body main article section pre .ruby-constant {
+            color: #839496; }
+          body main article section pre .ruby-keyword {
+            color: #1360a9;
+            font-weight: bold; }
+          body main article section pre .ruby-ivar {
+            color: #2aa198; }
+          body main article section pre .ruby-operator {
+            color: #859900; }
+          body main article section pre .ruby-identifier {
+            color: #1d544c; }
+          body main article section pre .ruby-node {
+            color: #a73407; }
+          body main article section pre .ruby-comment {
+            color: #dc322f;
+            font-style: italic; }
+          body main article section pre .ruby-regexp {
+            color: #ffa07a; }
+          body main article section pre .ruby-value {
+            color: #009705; }
+          body main article section pre .ruby-string {
+            color: #657b83; }
