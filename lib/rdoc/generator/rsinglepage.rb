@@ -114,23 +114,23 @@ class RDoc::Generator::RSinglePage
         end
 
         doc.body do
-          doc.h1 do
-            doc.text title
+          doc.header do
+            doc.h1 do
+              doc.text title
+            end
           end
 
-          doc.div.top do
-            doc.div.tocbox do
-              classes.each do |klass|
-                doc.div.tocclassbox do
-                  doc.div.tocclassheader do
-                    doc.a(href: '#' + klass[:name]).classref do
-                      doc.text klass[:name]
-                    end
-                  end
+          doc.aside do
+            classes.each do |klass|
+              doc.div.tocClassBlock do
+                doc.a(href: '#' + klass[:name]).tocClass do
+                  doc.text klass[:name]
+                end
 
-                  klass[:groups].each do |group|
-                    doc.div.tocgroup do
-                      doc.a(href: '#' + klass[:name] + '::' + group[:name]).groupref do
+                if klass[:groups].length() > 0
+                  doc.div.tocGroupBlock do
+                    klass[:groups].each do |group|
+                      doc.a(href: '#' + klass[:name] + '::' + group[:name]).tocGroup do
                         doc.text group[:name]
                       end
                     end
@@ -138,36 +138,32 @@ class RDoc::Generator::RSinglePage
                 end
               end
             end
+          end
 
-            doc.div.mainbox do
-              classes.each do |klass|
-                doc.div.classbox(id: klass[:name]) do
-                  doc.div.classheader do
-                    doc.span.classname do
-                      doc.text klass[:name]
+          doc.main do
+            classes.each do |klass|
+              doc.article(id: klass[:name]) do
+                doc.header do
+                  doc.text klass[:name]
+                end
+
+                klass[:groups].each do |group|
+                  doc.section(id: klass[:name] + '::' + group[:name]) do
+                    doc.header do
+                      doc.text group[:name]
                     end
-                  end
 
-                  klass[:groups].each do |group|
-                    doc.div.groupbox(id: klass[:name] + '::' + group[:name]) do
-                      doc.div.groupheader do
-                        doc.span.groupname do
-                          doc.text group[:name]
+                    group[:methods].each do |method|
+                      doc.div.methodBlock do
+                        doc.span.methodName do
+                          doc.text method[:name]
                         end
-                      end
-
-                      group[:methods].each do |method|
-                        doc.div.methodbox do
-                          doc.span.methodname do
-                            doc.text method[:name]
-                          end
-                          doc.span.comment do
-                            doc << method[:comment]
-                          end
-                          doc.div.code do
-                            doc.pre do
-                              doc << method[:code]
-                            end
+                        doc.span.methodComment do
+                          doc << method[:comment]
+                        end
+                        doc.details.methodCode do
+                          doc.pre do
+                            doc << method[:code]
                           end
                         end
                       end
