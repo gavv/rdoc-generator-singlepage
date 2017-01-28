@@ -38,14 +38,14 @@ class RDoc::Generator::RSinglePage
 
     opt.separator nil
     opt.on('--filter-class=REGEX', '--fc', String,
-           "Include only classes and modules that",
-           "match regex.") do |value|
+           'Include only classes and modules that',
+           'match regex.') do |value|
       rdoc_options.filter_class = Regexp.new(value)
     end
 
     opt.separator nil
     opt.on('--filter-method=REGEX', '--fm', String,
-           "Include only methods that match regex.") do |value|
+           'Include only methods that match regex.') do |value|
       rdoc_options.filter_method = Regexp.new(value)
     end
   end
@@ -81,7 +81,7 @@ class RDoc::Generator::RSinglePage
   end
 
   def to_html(root)
-    return "<!DOCTYPE html>\n#{root.to_xml}"
+    "<!DOCTYPE html>\n#{root.to_xml}"
   end
 
   def new_builder(theme, title, classes)
