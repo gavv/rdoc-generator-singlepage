@@ -4,14 +4,14 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 Gem::Specification.new do |spec|
   spec.name          = 'rdoc-generator-singlepage'
   spec.version       = '0.0.1'
-  spec.authors       = ['Victor Gaydov']
+  spec.authors       = ['Victor Gaydov', 'Dmitriy Shilin']
   spec.email         = ['victor@enise.org']
-  spec.description   = %q{Single-page HTML generator for RDoc}
-  spec.summary       = %q{Exposes a new HTML formatter for RDoc}
-  spec.homepage      = 'https://github.com/gavv/rdoc-generator-singlepage'
+  spec.description   = 'Single-page HTML generator for RDoc with theme support'
+  spec.summary       = 'Exposes a new HTML formatter for RDoc'
+  spec.homepage      = 'https://github.com/rbdoc/rdoc-generator-singlepage'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files`.split($/)
+  spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
