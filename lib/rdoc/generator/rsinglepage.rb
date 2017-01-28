@@ -153,17 +153,30 @@ class RDoc::Generator::RSinglePage
                       doc.text group[:name]
                     end
 
-                    group[:methods].each do |method|
-                      doc.div.methodBlock do
-                        doc.span.methodName do
-                          doc.text method[:name]
+                    if group[:kind] == 'method'
+                      group[:methods].each do |method|
+                        doc.div.methodBlock do
+                          doc.span.methodName do
+                            doc.text method[:name]
+                          end
+                          doc.span.methodComment do
+                            doc << method[:comment]
+                          end
+                          doc.details.methodCode do
+                            doc.pre do
+                              doc << method[:code]
+                            end
+                          end
                         end
-                        doc.span.methodComment do
-                          doc << method[:comment]
-                        end
-                        doc.details.methodCode do
-                          doc.pre do
-                            doc << method[:code]
+                      end
+                    elsif group[:kind] == 'attribute'
+                      group[:attributes].each do |attr|
+                        doc.div.methodBlock do
+                          doc.span.methodComment do
+                            doc << attr[:comment]
+                          end
+                          doc.span.methodName do
+                            doc.text attr[:name]
                           end
                         end
                       end
@@ -251,10 +264,30 @@ class RDoc::Generator::RSinglePage
       unless groups.include? group
         groups[group] = {
           name:    group,
+          kind: 'method',
           methods: []
         }
       end
       groups[group][:methods] << method
+    end
+
+    attr = {
+      'Instance Attributes' => klass.instance_attributes,
+      'Class Attributes' => klass.class_attributes
+    }
+
+    attr.each do |k, v|
+      groups[k] = {
+          name: k,
+          kind: 'attribute',
+          attributes: []
+      }
+      v.each do |a|
+        groups[k][:attributes] << {
+          name: "#{a.name} #{a.rw}",
+          comment: get_comment(a)
+        }
+      end
     end
 
     groups.values
