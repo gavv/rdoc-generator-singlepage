@@ -6,8 +6,9 @@ require 'fileutils'
 class RDoc::Options
   attr_accessor :output_file
   attr_accessor :theme_name
-  attr_accessor :filter_class
-  attr_accessor :filter_method
+  attr_accessor :filter_classes
+  attr_accessor :filter_members
+  attr_accessor :group_members
 end
 
 class RDoc::Generator::RSinglePage
@@ -37,16 +38,24 @@ class RDoc::Generator::RSinglePage
     end
 
     opt.separator nil
-    opt.on('--filter-class=REGEX', '--fc', String,
+    opt.on('--filter-classes=REGEX', '--fc', String,
            'Include only classes and modules that',
            'match regex.') do |value|
-      rdoc_options.filter_class = Regexp.new(value)
+      rdoc_options.filter_classes = Regexp.new(value)
     end
 
     opt.separator nil
-    opt.on('--filter-method=REGEX', '--fm', String,
-           'Include only methods that match regex.') do |value|
-      rdoc_options.filter_method = Regexp.new(value)
+    opt.on('--filter-members=REGEX', '--fm', String,
+           'Include only members that match regex.') do |value|
+      rdoc_options.filter_members = Regexp.new(value)
+    end
+
+    opt.separator nil
+    opt.on('--group-members=REGEX', '--gm', String,
+           'Group members by regex instead of default',
+           'grouping. First capture group defines',
+           'the group name.') do |value|
+      rdoc_options.group_members = Regexp.new(value)
     end
   end
 
@@ -242,7 +251,7 @@ class RDoc::Generator::RSinglePage
     groups = {}
 
     methods.each do |method|
-      next unless group = get_group_name(method[:name])
+      next unless group = get_member_group(method)
       unless groups.include? group
         groups[group] = {
           name:    group,
@@ -259,7 +268,7 @@ class RDoc::Generator::RSinglePage
     methods = klass.method_list
 
     methods = methods.select do |method|
-      !skip_method? klass.full_name, method.name
+      !skip_member? method.name
     end
 
     methods.map do |method|
@@ -279,23 +288,36 @@ class RDoc::Generator::RSinglePage
     end
   end
 
-  def get_group_name(method_name)
-    # TODO: move to config
-    m = /^test_([^_]+)/.match(method_name)
-    m[1] if m
+  def get_member_group(member)
+    if @options.group_members
+      get_member_group_from_match(member[:name])
+    else
+      # TODO: group by member kind: attribute, method, ...
+      'default_group'
+    end
+  end
+
+  def get_member_group_from_match(member_name)
+    if m = @options.group_members.match(member_name)
+      if m.length != 2
+        raise "Invalid group-members regex: /#{@options.group_members}/\n" \
+              'Expected exactly one capture group.'
+      end
+      m[1]
+    end
   end
 
   def skip_class?(class_name)
-    if @options.filter_class
-      @options.filter_class.match(class_name).nil?
+    if @options.filter_classes
+      @options.filter_classes.match(class_name).nil?
     else
       false
     end
   end
 
-  def skip_method?(class_name, method_name)
-    if @options.filter_method
-      @options.filter_method.match(class_name + '#' + method_name).nil?
+  def skip_member?(member_name)
+    if @options.filter_members
+      @options.filter_members.match(member_name).nil?
     else
       false
     end
