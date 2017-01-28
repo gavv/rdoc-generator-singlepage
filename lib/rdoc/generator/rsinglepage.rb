@@ -169,7 +169,7 @@ class RDoc::Generator::RSinglePage
                           end
                           doc.details.methodCode do
                             doc.summary do
-                              doc.text "Show code"
+                              doc.text 'Show code'
                             end
                             doc.pre do
                               doc << method[:code]
@@ -286,9 +286,9 @@ class RDoc::Generator::RSinglePage
 
     attr.each do |k, v|
       groups[k] = {
-          name: k,
-          kind: 'attribute',
-          attributes: []
+        name: k,
+        kind: 'attribute',
+        attributes: []
       }
       v.each do |a|
         groups[k][:attributes] << {
