@@ -76,21 +76,28 @@ class RDoc::Generator::RSinglePage
     title = get_title
     classes = get_classes
     builder = new_builder(theme, title, classes)
-    builder.to_html
+    root = builder.doc.root
+    to_html root
+  end
+
+  def to_html(root)
+    return "<!DOCTYPE html>\n#{root.to_xml}"
   end
 
   def new_builder(theme, title, classes)
-    Nokogiri::HTML::Builder.new(encoding: 'UTF-8') do |doc|
+    Nokogiri::XML::Builder.new do |doc|
       doc.html do
         doc.head do
+          doc.meta(charset: 'UTF-8')
+
           theme[:include].each do |type, data|
             case type
             when :css
-              doc.style(type: 'text/css') do
+              doc.style do
                 doc << data
               end
             when :js
-              doc.script(type: 'text/javascript') do
+              doc.script do
                 doc << data
               end
             end

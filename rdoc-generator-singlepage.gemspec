@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.version       = '0.0.1'
   spec.authors       = ['Victor Gaydov', 'Dmitriy Shilin']
   spec.email         = ['victor@enise.org']
-  spec.description   = 'Single-page HTML generator for RDoc with theme support'
+  spec.description   = 'Single-page HTML5 generator for RDoc with themes support'
   spec.summary       = 'Exposes a new HTML formatter for RDoc'
   spec.homepage      = 'https://github.com/rbdoc/rdoc-generator-singlepage'
   spec.license       = 'MIT'
