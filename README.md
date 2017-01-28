@@ -1,4 +1,4 @@
-# RDoc::Generator::SinglePage
+# RDoc::Generator::RSinglePage
 
 *Work in progress!*
 
