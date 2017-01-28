@@ -1,27 +1,42 @@
 /* http://ethanschoonover.com/solarized */
+aside {
+  float: left;
+  width: 300px;
+  overflow: hidden;
+}
+aside a {
+  padding: 3px;
+}
+aside .testGroup, aside .groupBlock {
+  display: block;
+  padding-left: 10px;
+}
+
+main {
+    margin-left: 310px;
+}
+
+main article header {
+  background: #657b83;
+  color: white;
+  padding: 5px;
+}
+
+article section {
+  border-top: 1px solid #93a1a1;
+  padding: 5px;
+}
+
+article section header {
+  background: none;
+  color: black;
+}
 
 body {
     background: #f6f6f6;
     font-family: sans;
-    padding-top: 20px;
-    padding-left: 80px;
 }
 
-.top {
-    display: table;
-    border-spacing: 30px 0px;
-    margin-left: -30px;
-    margin-right: -30px;
-}
-
-.tocbox {
-    display: table-cell;
-    width: 250px;
-}
-
-.mainbox {
-    display: table-cell;
-}
 
 .classbox {
     border: 1px solid #93a1a1;
@@ -38,37 +53,10 @@ body {
     padding: 5px;
 }
 
-.groupbox {
-    border-top: 1px solid #93a1a1;
-    padding: 5px;
-}
-
-.groupheader {
-    padding: 5px;
-}
-
 .methodbox {
     padding-top: 10px;
     padding-left: 30px;
     padding-right: 30px;
-}
-
-.tocclassbox {
-    border: 1px solid #93a1a1;
-    border-radius: 6px;
-    overflow: hidden;
-    background: #fefefe;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-
-.tocclassheader {
-    padding-left: 5px;
-}
-
-.tocgroup {
-    padding: 1px;
-    padding-left: 20px;
 }
 
 .classname, .groupname, .methodname {
