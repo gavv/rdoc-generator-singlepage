@@ -3,8 +3,37 @@ require 'nokogiri'
 require 'yaml'
 require 'fileutils'
 
+class RDoc::Options
+  attr_accessor :output_file
+  attr_accessor :theme_name
+end
+
 class RDoc::Generator::RSinglePage
   RDoc::RDoc.add_generator(self)
+
+  def self.setup_options(rdoc_options)
+    rdoc_options.output_file = 'index.html'
+    rdoc_options.theme_name = 'default'
+
+    opt = rdoc_options.option_parser
+    opt.separator 'rsinglepage generator options:'
+
+    opt.separator nil
+    opt.on('--opf, --output-file FILE', String,
+           'Set output file name.',
+           "Defaults to '#{rdoc_options.output_file}'.") do |value|
+      rdoc_options.output_file = value
+    end
+
+    opt.separator nil
+    opt.on('--theme NAME', String,
+           'Set theme.',
+           "Defaults to '#{rdoc_options.theme_name}'.",
+           'Available themes:',
+           *(themes_list.map { |s| " - #{s}" })) do |value|
+      rdoc_options.theme_name = value
+    end
+  end
 
   def initialize(store, options)
     @store = store
@@ -12,7 +41,7 @@ class RDoc::Generator::RSinglePage
   end
 
   def generate
-    File.open(get_output_file, 'w') do |file|
+    File.open(@options.output_file, 'w') do |file|
       file.write(generate_html)
     end
   end
@@ -28,7 +57,7 @@ class RDoc::Generator::RSinglePage
   private
 
   def generate_html
-    theme = get_theme
+    theme = load_theme
     classes = get_classes
     builder = new_builder(theme, classes)
     builder.to_html
@@ -121,22 +150,22 @@ class RDoc::Generator::RSinglePage
     end
   end
 
-  def get_data_dir
-    File.join File.dirname(__FILE__), '../../../data/rdoc-generator-singlepage'
+  def self.themes_dir
+    File.join File.dirname(__FILE__), '../../../data/rdoc-generator-singlepage/themes'
   end
 
-  def get_output_file
-    # TODO: move to config
-    'doc.html'
+  def self.themes_list
+    Dir[File.join(themes_dir, '*')].sort.select do |path|
+      File.directory? path
+    end.map do |path|
+      File.basename path
+    end
   end
 
-  def get_theme_name
-    # TODO: move to config
-    'default'
-  end
+  def load_theme
+    theme_name = @options.theme_name
 
-  def get_theme
-    theme_dir = File.join(get_data_dir, 'themes', get_theme_name)
+    theme_dir = File.join(self.class.themes_dir, theme_name)
 
     theme = {
       include: {}
@@ -147,7 +176,7 @@ class RDoc::Generator::RSinglePage
     if config['include']
       config['include'].each do |type, path|
         check_one_of(
-          message:  'unexpected include file type in theme config',
+          message:  'Unexpected include file type in theme config',
           expected: %w(css js),
           actual:   type
         )
@@ -160,7 +189,7 @@ class RDoc::Generator::RSinglePage
     theme
 
   rescue => error
-    raise "can't load '#{get_theme_name}' theme\n#{error}"
+    raise "Can't load '#{theme_name}' theme\n#{error}"
   end
 
   def get_title
