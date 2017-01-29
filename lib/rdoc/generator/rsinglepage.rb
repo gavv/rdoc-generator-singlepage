@@ -5,6 +5,7 @@ require 'fileutils'
 
 class RDoc::Options
   attr_accessor :rsp_filename
+  attr_accessor :rsp_prefix
   attr_accessor :rsp_themes
   attr_accessor :rsp_filter_classes
   attr_accessor :rsp_filter_members
@@ -29,6 +30,13 @@ class RDoc::Generator::RSinglePage
            'Set output HTML file name.',
            "Defaults to '#{DEFAULT_FILENAME}'.") do |value|
       rdoc_options.rsp_filename = value
+    end
+
+    opt.separator nil
+    opt.on('--rsp-prefix=PREFIX', String,
+           'Set URL prefix for links to stylesheets and',
+           'scripts in generated HTML. Empty by default.') do |value|
+      rdoc_options.rsp_prefix = value
     end
 
     opt.separator nil
@@ -303,7 +311,9 @@ class RDoc::Generator::RSinglePage
   end
 
   def get_url(name)
-    name
+    prefix = @options.rsp_prefix || ''
+    prefix += '/' if !prefix.empty? && !prefix.end_with?('/')
+    prefix + name
   end
 
   def get_title
