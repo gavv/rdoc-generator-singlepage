@@ -67,13 +67,10 @@ Specify additional theme that may partially override default one:
 $ rdoc -f rsinglepage --rsp-theme default --rsp-theme ./custom_theme.yml
 ```
 
-Generate documentation only for tests, and group members by regex:
+Filter classes and members by regex:
 
 ```
-$ rdoc -f rsinglepage                          \
-     --rsp-filter-classes '^Test.*'            \
-     --rsp-filter-members '^test_.*'           \
-     --rsp-group-members 'test_([^_]+)_.*'
+$ rdoc -f rsinglepage --rsp-filter-classes '^Test.*' --rsp-filter-members '^test_.*'
 ```
 
 ## Using from code
