@@ -190,9 +190,9 @@ class RDoc::Generator::RSinglePage
 
                   group[:members].each do |member|
                     doc.div(class: :memberBlock) do
-                      if member[:title]
+                      if member[:id]
                         doc.span(class: :memberName) do
-                          doc.text! member[:title]
+                          doc.text! member[:id]
                         end
                       end
 
@@ -400,7 +400,16 @@ class RDoc::Generator::RSinglePage
       next if skip_member? m.name
 
       member = {}
-      member[:id] = m.name if m.name
+      member[:id] = if m.respond_to? :arglists
+                      if m.arglists
+                        m.arglists
+                      else
+                        m.name
+                      end
+                    else
+                      m.name
+                    end
+
       member[:title] = m.name if m.name
       member[:comment] = get_comment(m)
 
