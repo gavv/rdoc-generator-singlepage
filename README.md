@@ -46,7 +46,7 @@ $ rdoc --help
 Generate documentation under the `doc/` directory:
 
 ```
-$ rdoc -f rsinglepage
+$ rdoc -f rsinglepage --title "My Project"
 ```
 
 Use custom directory and file name:
