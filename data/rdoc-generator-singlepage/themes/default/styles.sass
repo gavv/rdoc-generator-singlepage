@@ -6,10 +6,54 @@
   padding: 10px 20px
   width: 20px
 
+@mixin addLabel($color, $fontColor, $content)
+  content: $content
+  background-color: $color
+  padding: 2px 5px
+  border-radius: 8px
+  font-size: 8px
+  color: $fontColor
+
 body
   margin: 0 20px
   font-family: RobotoRegular
   font-size: 15px
+
+  .rbKind
+    &Method:before
+      @include addLabel(#dff0d8, #3c763d, 'method')
+
+    &Constant:before
+      @include addLabel(#dff0d8, #3c763d, 'constant')
+
+    &Attribute:before
+      @include addLabel(#dff0d8, #3c763d, 'attribute')
+
+    &Extended:before
+      @include addLabel(#dff0d8, #3c763d, 'extended')
+
+    &Class:before
+      @include addLabel(#dff0d8, #3c763d, 'class')
+
+    &Module:before
+      @include addLabel(#dff0d8, #3c763d, 'module')
+  
+  .rbLevel
+    &Instance:before
+      @include addLabel(#d9edf7, #31708f, 'instance')
+
+    &Class:before
+      @include addLabel(#d9edf7, #31708f, 'class')
+
+  .rbVisibility
+    &Public:before
+      @include addLabel(#fcf8e3, #8a6d3b, 'public')
+  
+    &Private:before
+      @include addLabel(#fcf8e3, #8a6d3b, 'private')
+
+    &Protected:before
+      @include addLabel(#fcf8e3, #8a6d3b, 'protected')
 
   header
     font-family: RalewaySemiBold
@@ -20,6 +64,7 @@ body
 
   summary
     outline: none
+    display: inline-block
 
     &::-webkit-details-marker
       display: none
@@ -42,7 +87,15 @@ body
     margin-top: 17px
 
     summary:after
-      @include customDetails
+      content: "+"
+      color: #000
+      font-size: 20px
+      text-align: center
+      width: 20px
+      position: absolute
+      width: 40px
+      top: 9%
+      right: 0px
 
     details[open] summary:after
       content: "−"
@@ -72,12 +125,13 @@ body
       border-radius: 3px
       margin: 7px
       width: 300px
+      position: relative
 
       &:first-child
         margin-top: 0
 
       .tocClass
-        width: 234px
+        width: 190px
         word-wrap: break-word
         padding: 5px
 
