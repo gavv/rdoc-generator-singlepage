@@ -1,7 +1,18 @@
-$leftMargin: 330px
+@mixin customDetails
+  content: "+"
+  color: #000
+  font-size: 20px
+  text-align: center
+  padding: 10px 20px
+  width: 20px
 
 body
   margin: 0 20px
+  font-family: RobotoRegular
+  font-size: 15px
+
+  header
+    font-family: RalewaySemiBold
 
   a
     color: black
@@ -10,11 +21,15 @@ body
   summary
     outline: none
 
+    &::-webkit-details-marker
+      display: none
+
+
   & > header
     font-size: 32px
     font-weight: 600
     padding: 10px 0
-    margin-left: $leftMargin
+    margin: 10px 0 30px 350px
 
   aside
     float: left
@@ -23,26 +38,14 @@ body
     position: fixed
     overflow-y: scroll
     bottom: 0
-    top: 10px
+    top: 0
+    margin-top: 17px
 
-    summary
-      &::-webkit-details-marker
-        display: none
-
-      &:after
-        border-radius: 5px
-        content: "+"
-        color: #000
-        float: right
-        font-size: 1.3em
-        font-weight: bold
-        margin: 5px 10px 0 0
-        padding: 0
-        text-align: center
-        width: 20px
+    summary:after
+      @include customDetails
 
     details[open] summary:after
-      content: "-"
+      content: "−"
 
     a
       display: inline-block
@@ -53,70 +56,89 @@ body
 
       .tocGroup
         display: block
-        padding: 10px 20px
+        padding: 5px 20px
         border-bottom: 1px solid #f2f2f2
         border-left: 3px solid transparent
 
         &:hover
-          border-left: 3px solid black
+          border-left: 3px solid #f25158
 
         &:last-child
           border-bottom: none
 
     .tocClassBlock
-      border: 1px solid #d9d9d9
-      background-color: #f6f6f6
+      border: 1px solid rgba(136,136,136,0.12)
+      background-color: #fafafa
       border-radius: 3px
       margin: 7px
       width: 300px
 
+      &:first-child
+        margin-top: 0
+
       .tocClass
-        padding: 10px
         width: 234px
         word-wrap: break-word
+        padding: 5px
 
   main
-    margin-left: $leftMargin
+    margin-left: 340px
 
     article
-      margin: 7px
+      border: 1px solid #d9d9d9
+      border-radius: 5px
+      margin-top: 15px
 
       header
-        background: #f2f2f2
+        background: #f3f3f3
         color: black
-        padding: 10px
-        font-size: 160%
+        padding: 5px
+        font-size: 22px
+
+      section:first-of-type
+        border-top: none
 
       section
-        border-top: 1px solid #93a1a1
-        padding: 5px
+        border-top: 1px solid #d9d9d9
+        padding: 5px 5px 0 5px
+        border-radius: 5px
+
+        summary:before
+          @include customDetails
+
+        details
+          border: 1px solid #d9d9d9
+          border-radius: 6px
+          overflow: hidden
+          background: #fdf6e3
+          padding: 5px
+
+          &[open] summary:before
+            content: "−"
 
         header
           padding: 7px
-          font-size: 150%
 
         .memberBlock
-          padding-top: 10px
-          padding-left: 30px
-          padding-right: 30px
+          padding-bottom: 15px
+          border-bottom: 1px solid #d9d9d9
+          margin: 10px 30px 0 30px
+
+          &:last-child
+            border-bottom: none
 
           .memberName
             font-weight: bolder
-            font-size: 100%
 
           .memberComment
-            font-size: 90%
+            font-size: 14px
 
         header
           background: none
           color: black
 
         pre
-          border: 1px solid #93a1a1
-          border-radius: 6px
-          overflow: hidden
-          background: #fdf6e3
-          padding: 5px
+          font-size: 12px
 
           .ruby-constant
             color: #839496

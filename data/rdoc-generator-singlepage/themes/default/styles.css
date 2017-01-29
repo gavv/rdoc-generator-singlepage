@@ -1,15 +1,22 @@
+@charset "UTF-8";
 body {
-  margin: 0 20px; }
+  margin: 0 20px;
+  font-family: RobotoRegular;
+  font-size: 15px; }
+  body header {
+    font-family: RalewaySemiBold; }
   body a {
     color: black;
     text-decoration: none; }
   body summary {
     outline: none; }
+    body summary::-webkit-details-marker {
+      display: none; }
   body > header {
     font-size: 32px;
     font-weight: 600;
     padding: 10px 0;
-    margin-left: 330px; }
+    margin: 10px 0 30px 350px; }
   body aside {
     float: left;
     width: 325px;
@@ -17,78 +24,91 @@ body {
     position: fixed;
     overflow-y: scroll;
     bottom: 0;
-    top: 10px; }
-    body aside summary::-webkit-details-marker {
-      display: none; }
+    top: 0;
+    margin-top: 17px; }
     body aside summary:after {
-      border-radius: 5px;
       content: "+";
       color: #000;
-      float: right;
-      font-size: 1.3em;
-      font-weight: bold;
-      margin: 5px 10px 0 0;
-      padding: 0;
+      font-size: 20px;
       text-align: center;
+      padding: 10px 20px;
       width: 20px; }
     body aside details[open] summary:after {
-      content: "-"; }
+      content: "−"; }
     body aside a {
       display: inline-block; }
     body aside .tocGroupBlock {
       background-color: white; }
       body aside .tocGroupBlock .tocGroup {
         display: block;
-        padding: 10px 20px;
+        padding: 5px 20px;
         border-bottom: 1px solid #f2f2f2;
         border-left: 3px solid transparent; }
         body aside .tocGroupBlock .tocGroup:hover {
-          border-left: 3px solid black; }
+          border-left: 3px solid #f25158; }
         body aside .tocGroupBlock .tocGroup:last-child {
           border-bottom: none; }
     body aside .tocClassBlock {
-      border: 1px solid #d9d9d9;
-      background-color: #f6f6f6;
+      border: 1px solid rgba(136, 136, 136, 0.12);
+      background-color: #fafafa;
       border-radius: 3px;
       margin: 7px;
       width: 300px; }
+      body aside .tocClassBlock:first-child {
+        margin-top: 0; }
       body aside .tocClassBlock .tocClass {
-        padding: 10px;
         width: 234px;
-        word-wrap: break-word; }
-  body main {
-    margin-left: 330px; }
-    body main article {
-      margin: 7px; }
-      body main article header {
-        background: #f2f2f2;
-        color: black;
-        padding: 10px;
-        font-size: 160%; }
-      body main article section {
-        border-top: 1px solid #93a1a1;
+        word-wrap: break-word;
         padding: 5px; }
-        body main article section header {
-          padding: 7px;
-          font-size: 150%; }
-        body main article section .memberBlock {
-          padding-top: 10px;
-          padding-left: 30px;
-          padding-right: 30px; }
-          body main article section .memberBlock .memberName {
-            font-weight: bolder;
-            font-size: 100%; }
-          body main article section .memberBlock .memberComment {
-            font-size: 90%; }
-        body main article section header {
-          background: none;
-          color: black; }
-        body main article section pre {
-          border: 1px solid #93a1a1;
+  body main {
+    margin-left: 340px; }
+    body main article {
+      border: 1px solid #d9d9d9;
+      border-radius: 5px;
+      margin-top: 15px; }
+      body main article header {
+        background: #f3f3f3;
+        color: black;
+        padding: 5px;
+        font-size: 22px; }
+      body main article section:first-of-type {
+        border-top: none; }
+      body main article section {
+        border-top: 1px solid #d9d9d9;
+        padding: 5px 5px 0 5px;
+        border-radius: 5px; }
+        body main article section summary:before {
+          content: "+";
+          color: #000;
+          font-size: 20px;
+          text-align: center;
+          padding: 10px 20px;
+          width: 20px; }
+        body main article section details {
+          border: 1px solid #d9d9d9;
           border-radius: 6px;
           overflow: hidden;
           background: #fdf6e3;
           padding: 5px; }
+          body main article section details[open] summary:before {
+            content: "−"; }
+        body main article section header {
+          padding: 7px; }
+        body main article section .memberBlock {
+          padding-bottom: 15px;
+          border-bottom: 1px solid #d9d9d9;
+          margin: 10px 30px 0 30px; }
+          body main article section .memberBlock:last-child {
+            border-bottom: none; }
+          body main article section .memberBlock .memberName {
+            font-weight: bolder; }
+          body main article section .memberBlock .memberComment {
+            font-size: 14px; }
+        body main article section header {
+          background: none;
+          color: black; }
+        body main article section pre {
+          font-size: 12px; }
           body main article section pre .ruby-constant {
             color: #839496; }
           body main article section pre .ruby-keyword {
