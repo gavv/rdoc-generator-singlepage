@@ -143,14 +143,11 @@ class RDoc::Generator::RSinglePage
         end
 
         theme[:head][:styles].each do |file|
-          doc.style do
-            doc << file[:data]
-          end
+          doc.link(rel: :stylesheet, href: file[:url])
         end
 
         theme[:head][:scripts].each do |file|
-          doc.script do
-            doc << file[:data]
+          doc.script(src: file[:url]) do
           end
         end
 
@@ -314,18 +311,20 @@ class RDoc::Generator::RSinglePage
           files.each do |file_info|
             path = theme_file_path(theme_path, file_info['file'])
             case section
-            when :styles, :scripts, :html
-              file = {
-                data: File.read(path)
-              }
-            when :fonts
+            when :styles, :scripts, :fonts
               name = File.basename(path)
               file = {
                 src_path: path,
                 dst_name: name,
                 url:      get_url(name),
-                family:   file_info['family']
               }
+            when :html
+              file = {
+                data: File.read(path)
+              }
+            end
+            if section == :fonts
+              file[:family] = file_info['family']
             end
             theme[:head][section] << file
           end
