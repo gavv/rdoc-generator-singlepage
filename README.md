@@ -1,6 +1,6 @@
 # RDoc::Generator::RSinglePage
 
-Generate single-page HTML5 documentation for Ruby RDoc.
+Single page HTML5 generator for Ruby RDoc.
 
 *Work in progress!*
 
