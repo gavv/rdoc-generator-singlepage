@@ -294,7 +294,7 @@ class RDoc::Generator::RSinglePage
     groups = {}
 
     members.each do |member|
-      group = get_member_group(klass, member)
+      group = get_member_group(member)
       next unless group
 
       unless groups.include? group
@@ -313,21 +313,39 @@ class RDoc::Generator::RSinglePage
   def get_members(klass)
     members = []
 
-    [
-      klass.method_list,
-      klass.attributes
-    ].each do |member_list|
-      member_list.each do |m|
-        next if skip_member? m.name
-
-        member = {}
-        member[:name] = m.name
-        member[:comment] = get_comment(m)
-        member[:code] = m.markup_code if m.markup_code && m.markup_code != ''
-
-        members << member
-      end
+    method_members = get_raw_members klass.method_list do |member|
+      member[:kind] = :method
     end
+
+    attr_members = get_raw_members klass.attributes do |member|
+      member[:kind] = :attribute
+    end
+
+    members.push(*method_members)
+    members.push(*attr_members)
+
+    members
+  end
+
+  def get_raw_members(member_list)
+    members = []
+
+    member_list.each do |m|
+      next if skip_member? m.name
+
+      member = {}
+      member[:name] = m.name if m.name
+      member[:comment] = get_comment(m)
+      member[:code] = m.markup_code if m.markup_code && m.markup_code != ''
+      member[:level] = m.type.to_sym if m.type
+      member[:visibility] = m.visibility.to_sym if m.visibility
+
+      yield member
+
+      members << member
+    end
+
+    members
   end
 
   def get_comment(object)
@@ -338,22 +356,27 @@ class RDoc::Generator::RSinglePage
     end
   end
 
-  def get_member_group(klass, member)
+  def get_member_group(member)
     if @options.rsp_group_members
-      get_member_group_from_match(member[:name])
-    elsif contain_member(klass.instance_method_list, member[:name])
-      'Class Methods'
-    elsif contain_member(klass.class_method_list, member[:name])
-      'Instance Methods'
-    elsif contain_member(klass.instance_attributes, member[:name])
-      'Instance Attributes'
-    elsif contain_member(klass.class_attributes, member[:name])
-      'Class Attributes'
+      return get_member_group_from_match(member[:name])
     end
-  end
 
-  def contain_member(methods, member_name)
-    methods.select { |m| m.name == member_name }.size == 1
+    case member[:type]
+    when :method
+      case member[:level]
+      when :instance
+        'Instance Methods'
+      when :class
+        'Class Methods'
+      end
+    when :attribute
+      case member[:level]
+      when :instance
+        'Instance Attributes'
+      when :class
+        'Class Attributes'
+      end
+    end
   end
 
   def get_member_group_from_match(member_name)
