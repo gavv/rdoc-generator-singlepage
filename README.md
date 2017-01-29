@@ -11,9 +11,15 @@ Single page HTML5 generator for Ruby RDoc.
 * Exclude classes or members by regex.
 * Group class members by regex.
 
-## Demo
+## Example output
 
-*todo*
+Example output is available [**online**](https://rbdoc.github.io/rdoc-generator-singlepage/example_html/). It was generated from the [`example.rb`](docs/example.rb) in the [`docs`](docs) directory.
+
+Generate locally:
+
+```
+$ rake example
+```
 
 ## Installation
 
