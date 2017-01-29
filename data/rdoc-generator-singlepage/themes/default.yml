@@ -1,2 +1,14 @@
 head:
-  style: "default/styles.css"
+  styles:
+    -
+      file: default/styles.css
+  fonts:
+    -
+      file: fonts/Roboto-Regular.ttf
+      family: RobotoRegular
+    -
+      file: fonts/Raleway-Regular.ttf
+      family: RalewayRegular
+    -
+      file: fonts/Raleway-SemiBold.ttf
+      family: RalewaySemiBold
