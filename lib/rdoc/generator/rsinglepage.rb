@@ -372,8 +372,23 @@ class RDoc::Generator::RSinglePage
       member[:kind] = :attribute
     end
 
+    const_members = get_raw_members klass.constants do |member|
+      member[:kind] = :constant
+    end
+
+    extends_members = get_raw_members klass.extends do |member|
+      member[:kind] = :extended
+    end
+
+    include_members = get_raw_members klass.includes do |member|
+      member[:kind] = :included
+    end
+
     members.push(*method_members)
     members.push(*attr_members)
+    members.push(*const_members)
+    members.push(*extends_members)
+    members.push(*include_members)
 
     members
   end
@@ -388,9 +403,18 @@ class RDoc::Generator::RSinglePage
       member[:id] = m.name if m.name
       member[:title] = m.name if m.name
       member[:comment] = get_comment(m)
-      member[:code] = m.markup_code if m.markup_code && m.markup_code != ''
-      member[:level] = m.type.to_sym if m.type
-      member[:visibility] = m.visibility.to_sym if m.visibility
+
+      if m.respond_to? :markup_code
+        member[:code] = m.markup_code if m.markup_code && m.markup_code != ''
+      end
+
+      if m.respond_to? :type
+        member[:level] = m.type.to_sym if m.type
+      end
+
+      if m.respond_to? :visibility
+        member[:visibility] = m.visibility.to_sym if m.visibility
+      end
 
       yield member
 
@@ -432,6 +456,12 @@ class RDoc::Generator::RSinglePage
       when :class
         'Class Attributes'
       end
+    when :constant
+      'Constants'
+    when :extended
+      'Extend Modules'
+    when :included
+      'Include Modules'
     end
   end
 
