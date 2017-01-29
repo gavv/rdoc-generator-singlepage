@@ -158,33 +158,28 @@ class RDoc::Generator::RSinglePage
                       doc.text group[:name]
                     end
 
-                    if group[:kind] == 'method'
-                      group[:methods].each do |method|
-                        doc.div.methodBlock do
+                    group[:members].each do |member|
+                      doc.div.methodBlock do
+                        if member[:name]
                           doc.span.methodName do
-                            doc.text method[:name]
+                            doc.text member[:name]
                           end
+                        end
+
+                        if member[:comment]
                           doc.span.methodComment do
-                            doc << method[:comment]
+                            doc << member[:comment]
                           end
+                        end
+
+                        if member[:code]
                           doc.details.methodCode do
                             doc.summary do
                               doc.text 'Show code'
                             end
                             doc.pre do
-                              doc << method[:code]
+                              doc << member[:code]
                             end
-                          end
-                        end
-                      end
-                    elsif group[:kind] == 'attribute'
-                      group[:attributes].each do |attr|
-                        doc.div.methodBlock do
-                          doc.span.methodComment do
-                            doc << attr[:comment]
-                          end
-                          doc.span.methodName do
-                            doc.text attr[:name]
                           end
                         end
                       end
@@ -272,11 +267,10 @@ class RDoc::Generator::RSinglePage
       unless groups.include? group
         groups[group] = {
           name:    group,
-          kind: 'method',
-          methods: []
+          members: []
         }
       end
-      groups[group][:methods] << method
+      groups[group][:members] << method
     end
 
     attr = {
@@ -287,11 +281,10 @@ class RDoc::Generator::RSinglePage
     attr.each do |k, v|
       groups[k] = {
         name: k,
-        kind: 'attribute',
-        attributes: []
+        members: []
       }
       v.each do |a|
-        groups[k][:attributes] << {
+        groups[k][:members] << {
           name: "#{a.name} #{a.rw}",
           comment: get_comment(a)
         }
