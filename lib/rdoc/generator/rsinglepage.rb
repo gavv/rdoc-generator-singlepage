@@ -98,21 +98,27 @@ class RDoc::Generator::RSinglePage
       doc.head do
         doc.meta(charset: 'UTF-8')
 
-        theme[:include].each do |type, data|
+        theme[:head].each do |type, data|
           case type
-          when :css
+          when :style
             doc.style do
               doc << data
             end
-          when :js
+          when :script
             doc.script do
               doc << data
             end
+          when :html
+            doc << data
           end
         end
       end
 
       doc.body do
+        if theme[:body][:header]
+          doc << theme[:body][:header]
+        end
+
         doc.header do
           doc.text! title
         end
@@ -189,6 +195,10 @@ class RDoc::Generator::RSinglePage
             end
           end
         end
+
+        if theme[:body][:footer]
+          doc << theme[:body][:footer]
+        end
       end
     end
 
@@ -200,33 +210,53 @@ class RDoc::Generator::RSinglePage
   end
 
   def self.themes_list
-    Dir[File.join(themes_dir, '*')].sort.select do |path|
-      File.directory? path
-    end.map do |path|
-      File.basename path
+    Dir[File.join(themes_dir, '*.yml')].sort.map do |path|
+      File.basename path, '.yml'
+    end
+  end
+
+  def load_theme_file(file)
+    File.open(File.join(self.class.themes_dir, file)) do |file|
+      file.read
     end
   end
 
   def load_theme
     theme_name = @options.rsp_theme
 
-    theme_dir = File.join(self.class.themes_dir, theme_name)
-
     theme = {
-      include: {}
+      head: {},
+      body: {}
     }
 
-    config = YAML.load_file(File.join(theme_dir, 'config.yml'))
+    config = YAML.load(load_theme_file("#{theme_name}.yml"))
 
-    if config['include']
-      config['include'].each do |type, path|
-        check_one_of(
-          message:  'Unexpected include file type in theme config',
-          expected: %w(css js),
-          actual:   type
-        )
-        File.open(File.join(theme_dir, path)) do |file|
-          theme[:include][type.to_sym] = file.read
+    config.each do |section, files|
+      check_one_of(
+        message:  "Unexpected section in theme config",
+        expected: %w(head body),
+        actual:   section
+      )
+
+      case section
+      when 'head'
+        files.each do |type, path|
+          check_one_of(
+            message:  "Unexpected file type in 'head' section of theme config",
+            expected: %w(style script html),
+            actual:   type
+          )
+          theme[:head][type.to_sym] = load_theme_file(path)
+        end
+
+      when 'body'
+        files.each do |type, path|
+          check_one_of(
+            message:  "Unexpected file type in 'body' section of theme config",
+            expected: %w(header footer),
+            actual:   type
+          )
+          theme[:body][type.to_sym] = load_theme_file(path)
         end
       end
     end
