@@ -386,7 +386,7 @@ class RDoc::Generator::RSinglePage
       return get_member_group_from_match(member[:name])
     end
 
-    case member[:type]
+    case member[:kind]
     when :method
       case member[:level]
       when :instance
