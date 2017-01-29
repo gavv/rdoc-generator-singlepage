@@ -193,8 +193,8 @@ class RDoc::Generator::RSinglePage
 
         doc.main do
           classes.each do |klass|
-            doc.article(id: klass[:id], class: css_classes(:classBlock, klass)) do
-              doc.header do
+            doc.article(id: klass[:id]) do
+              doc.header(class: css_classes(:classHeader, klass)) do
                 doc.text! klass[:title]
               end
 
