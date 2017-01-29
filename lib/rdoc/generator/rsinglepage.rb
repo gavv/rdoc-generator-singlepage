@@ -205,7 +205,7 @@ class RDoc::Generator::RSinglePage
                       if member[:code]
                         doc.details(class: :memberCode) do
                           doc.summary do
-                            doc.text! 'Show code'
+                            doc.text! 'Source code'
                           end
                           doc.pre do
                             doc << member[:code]
