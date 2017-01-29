@@ -4,8 +4,8 @@ require 'yaml'
 require 'fileutils'
 
 class RDoc::Options
-  attr_accessor :rsp_theme
   attr_accessor :rsp_filename
+  attr_accessor :rsp_themes
   attr_accessor :rsp_filter_classes
   attr_accessor :rsp_filter_members
   attr_accessor :rsp_group_members
@@ -14,26 +14,36 @@ end
 class RDoc::Generator::RSinglePage
   RDoc::RDoc.add_generator(self)
 
+  DEFAULT_FILENAME = 'index.html'
+  DEFAULT_THEME    = 'default'
+
   def self.setup_options(rdoc_options)
-    rdoc_options.rsp_theme    = 'default'
-    rdoc_options.rsp_filename = 'index.html'
+    rdoc_options.rsp_filename = DEFAULT_FILENAME
+    rdoc_options.rsp_themes   = []
 
     opt = rdoc_options.option_parser
     opt.separator 'RSinglePage generator options:'
 
     opt.separator nil
-    opt.on('--rsp-theme=NAME', String,
-           "Set theme. Defaults to '#{rdoc_options.rsp_theme}'.",
-           'Available themes:',
-           *(themes_list.map { |s| " - #{s}" })) do |value|
-      rdoc_options.rsp_theme = value
+    opt.on('--rsp-filename=FILE', String,
+           'Set output HTML file name.',
+           "Defaults to '#{DEFAULT_FILENAME}'.") do |value|
+      rdoc_options.rsp_filename = value
     end
 
     opt.separator nil
-    opt.on('--rsp-filename=FILE', String,
-           'Set output HTML file name.',
-           "Defaults to '#{rdoc_options.rsp_filename}'.") do |value|
-      rdoc_options.rsp_filename = value
+    opt.on('--rsp-theme=NAME', String,
+           "Set theme. Defaults to '#{DEFAULT_THEME}'. Specify",
+           "multiple times to merge several themes. Every",
+           "next theme overwrites options set by previous",
+           "themes. If name contains slash, it's a path,",
+           "and otherwise it's a name of installed theme.",
+           "Installed themes:",
+           *(themes_list.map { |s| " - #{s}" })) do |value|
+      # Expand path while parsing options, because later RDoc will
+      # chdir into the output directory and we'll not be able to
+      # resolve relative paths correctly.
+      rdoc_options.rsp_themes << theme_path(value)
     end
 
     opt.separator nil
@@ -215,21 +225,39 @@ class RDoc::Generator::RSinglePage
     end
   end
 
-  def load_theme_file(file)
-    File.open(File.join(self.class.themes_dir, file)) do |file|
-      file.read
+  def self.theme_path(name)
+    if name.include? '/'
+      File.absolute_path name
+    else
+      File.join themes_dir, "#{name}.yml"
     end
   end
 
-  def load_theme
-    theme_name = @options.rsp_theme
+  def read_theme_file(theme_path, file_path)
+    File.read(File.join(File.dirname(theme_path), file_path))
+  end
 
+  def load_theme
     theme = {
       head: {},
       body: {}
     }
 
-    config = YAML.load(load_theme_file("#{theme_name}.yml"))
+    theme_list = unless @options.rsp_themes.empty?
+                   @options.rsp_themes
+                 else
+                   Array[self.class.theme_path DEFAULT_THEME]
+                 end
+
+    theme_list.each do |theme_path|
+      add_theme(theme, theme_path)
+    end
+
+    theme
+  end
+
+  def add_theme(theme, theme_path)
+    config = YAML.load_file theme_path
 
     config.each do |section, files|
       check_one_of(
@@ -246,7 +274,7 @@ class RDoc::Generator::RSinglePage
             expected: %w(style script html),
             actual:   type
           )
-          theme[:head][type.to_sym] = load_theme_file(path)
+          theme[:head][type.to_sym] = read_theme_file(theme_path, path)
         end
 
       when 'body'
@@ -256,15 +284,12 @@ class RDoc::Generator::RSinglePage
             expected: %w(header footer),
             actual:   type
           )
-          theme[:body][type.to_sym] = load_theme_file(path)
+          theme[:body][type.to_sym] = read_theme_file(theme_path, path)
         end
       end
     end
-
-    theme
-
   rescue => error
-    raise "Can't load '#{theme_name}' theme\n#{error}"
+    raise "Can't load theme - #{theme_path}\n#{error}"
   end
 
   def get_title
