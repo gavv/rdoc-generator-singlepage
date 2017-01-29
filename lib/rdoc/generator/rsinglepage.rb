@@ -88,7 +88,7 @@ class RDoc::Generator::RSinglePage
   end
 
   def to_html(builder)
-    "<!DOCTYPE html>\n#{builder.to_s}"
+    "<!DOCTYPE html>\n#{builder}"
   end
 
   def new_builder(theme, title, classes)
@@ -121,7 +121,7 @@ class RDoc::Generator::RSinglePage
           classes.each do |klass|
             if klass[:groups].empty?
               doc.div(class: :tocClassBlock) do
-                doc.a(class: :tocClass, href:  '#' + klass[:name]) do
+                doc.a(class: :tocClass, href: '#' + klass[:name]) do
                   doc.text! klass[:name]
                 end
               end
