@@ -74,9 +74,16 @@ class RDoc::Generator::RSinglePage
   end
 
   def generate
-    File.open(@options.rsp_filename, 'w') do |file|
-      file.write(generate_html)
-    end
+    theme = load_theme
+
+    title = get_title
+    classes = get_classes
+
+    builder = new_builder(theme, title, classes)
+    html = generate_html(builder)
+
+    install_theme_files(theme)
+    install_html_file(html)
   end
 
   def class_dir
@@ -89,15 +96,19 @@ class RDoc::Generator::RSinglePage
 
   private
 
-  def generate_html
-    theme = load_theme
-    title = get_title
-    classes = get_classes
-    builder = new_builder(theme, title, classes)
-    to_html builder
+  def install_theme_files(theme)
+    theme[:head].each do |type, file|
+      FileUtils.copy_file(file[:path], file[:name])
+    end
   end
 
-  def to_html(builder)
+  def install_html_file(html)
+    File.open(@options.rsp_filename, 'w') do |file|
+      file.write(html)
+    end
+  end
+
+  def generate_html(builder)
     "<!DOCTYPE html>\n#{builder}"
   end
 
@@ -108,15 +119,12 @@ class RDoc::Generator::RSinglePage
       doc.head do
         doc.meta(charset: 'UTF-8')
 
-        theme[:head].each do |type, data|
+        theme[:head].each do |type, file|
           case type
-          when :style
-            doc.style do
-              doc << data
-            end
+          when :style, :font
+            doc.link(rel: :stylesheet, href: file[:url])
           when :script
-            doc.script do
-              doc << data
+            doc.script(src: file[:url]) do
             end
           when :html
             doc << data
@@ -229,8 +237,8 @@ class RDoc::Generator::RSinglePage
     end
   end
 
-  def read_theme_file(theme_path, file_path)
-    File.read(File.join(File.dirname(theme_path), file_path))
+  def theme_file_path(theme_path, file_path)
+    File.join(File.dirname(theme_path), file_path)
   end
 
   def load_theme
@@ -267,10 +275,16 @@ class RDoc::Generator::RSinglePage
         files.each do |type, path|
           check_one_of(
             message:  "Unexpected file type in 'head' section of theme config",
-            expected: %w(style script html),
+            expected: %w(style font script html),
             actual:   type
           )
-          theme[:head][type.to_sym] = read_theme_file(theme_path, path)
+          path = theme_file_path(theme_path, path)
+          name = File.basename(path)
+          theme[:head][type.to_sym] = {
+            name: name,
+            url:  get_url(name),
+            path: path
+          }
         end
 
       when 'body'
@@ -280,12 +294,16 @@ class RDoc::Generator::RSinglePage
             expected: %w(header footer),
             actual:   type
           )
-          theme[:body][type.to_sym] = read_theme_file(theme_path, path)
+          theme[:body][type.to_sym] = File.read(theme_file_path(theme_path, path))
         end
       end
     end
   rescue => error
     raise "Can't load theme - #{theme_path}\n#{error}"
+  end
+
+  def get_url(name)
+    name
   end
 
   def get_title
