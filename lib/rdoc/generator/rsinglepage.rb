@@ -166,13 +166,13 @@ class RDoc::Generator::RSinglePage
         doc.aside do
           classes.each do |klass|
             if klass[:groups].empty?
-              doc.div(class: ([:tocClassBlock] + get_classes_indicators(klass)).join(' ')) do
+              doc.div(class: css_classes(:tocClassBlock, klass)) do
                 doc.a(class: :tocClass, href: '#' + klass[:id]) do
                   doc.text! klass[:title]
                 end
               end
             else
-              doc.details(class: ([:tocClassBlock] + get_classes_indicators(klass)).join(' ')) do
+              doc.details(class: css_classes(:tocClassBlock, klass)) do
                 doc.summary do
                   doc.a(class: :tocClass, href: '#' + klass[:id]) do
                     doc.text! klass[:title]
@@ -180,7 +180,7 @@ class RDoc::Generator::RSinglePage
                 end
                 doc.div(class: :tocGroupBlock) do
                   klass[:groups].each do |group|
-                    doc.a(class: :tocGroup,
+                    doc.a(class: css_classes(:tocGroup, group),
                           href: '#' + group[:id]) do
                       doc.text! group[:title]
                     end
@@ -193,19 +193,19 @@ class RDoc::Generator::RSinglePage
 
         doc.main do
           classes.each do |klass|
-            doc.article(id: klass[:id]) do
+            doc.article(id: klass[:id], class: css_classes(:classBlock, klass)) do
               doc.header do
                 doc.text! klass[:title]
               end
 
               klass[:groups].each do |group|
-                doc.section(id: group[:id]) do
+                doc.section(id: group[:id], class: :groupBlock) do
                   doc.header do
                     doc.text! group[:title]
                   end
 
                   group[:members].each do |member|
-                    doc.div(class: ([:memberBlock] + get_classes_indicators(member)).join(' ')) do
+                    doc.div(class: css_classes(:memberBlock, member)) do
                       if member[:id]
                         doc.span(class: :memberName) do
                           doc.text! member[:id]
@@ -243,42 +243,49 @@ class RDoc::Generator::RSinglePage
     doc
   end
 
-  def get_classes_indicators(member)
-    indicators = []
-    case member[:kind]
+  def css_classes(main_class, object)
+    classes = [main_class]
+    classes += css_indicator_classes(object)
+    classes.join(' ')
+  end
+
+  def css_indicator_classes(object)
+    classes = []
+
+    case object[:kind]
     when :method
-      indicators << :rbKindMethod
+      classes << :rbKindMethod
     when :constant
-      indicators << :rbKindConstant
+      classes << :rbKindConstant
     when :attribute
-      indicators << :rbKindAttribute
+      classes << :rbKindAttribute
     when :included
-      indicators << :rbKindIncluded
+      classes << :rbKindIncluded
     when :extended
-      indicators << :rbKindExtended
+      classes << :rbKindExtended
     when :class
-      indicators << :rbKindClass
+      classes << :rbKindClass
     when :module
-      indicators << :rbKindModule
+      classes << :rbKindModule
     end
 
-    case member[:level]
+    case object[:level]
     when :instance
-      indicators << :rbLevelInstance
+      classes << :rbLevelInstance
     when :class
-      indicators << :rbLevelClass
+      classes << :rbLevelClass
     end
 
-    case member[:visibility]
+    case object[:visibility]
     when :public
-      indicators << :rbVisibilityPublic
+      classes << :rbVisibilityPublic
     when :private
-      indicators << :rbVisibilityPrivate
+      classes << :rbVisibilityPrivate
     when :protected
-      indicators << :rbVisibilityProtected
+      classes << :rbVisibilityProtected
     end
 
-    indicators
+    classes
   end
 
   def self.themes_dir
@@ -429,15 +436,16 @@ class RDoc::Generator::RSinglePage
       group = get_member_group(member)
       next unless group
 
-      unless groups.include? group
-        groups[group] = {
-          title: group,
-          id: klass.full_name.strip + '::' + group.strip,
+      group_id = klass.full_name.strip + '::' + group[:title].strip
+
+      unless groups.include? group_id
+        groups[group_id] = group.merge(
+          id: group_id,
           members: []
-        }
+        )
       end
 
-      groups[group][:members] << member
+      groups[group_id][:members] << member
     end
 
     groups.values
@@ -536,23 +544,48 @@ class RDoc::Generator::RSinglePage
     when :method
       case member[:level]
       when :instance
-        'Instance Methods'
+        {
+          title: 'Instance Methods',
+          kind:  :method,
+          level: :instance
+        }
       when :class
-        'Class Methods'
+        {
+          title: 'Class Methods',
+          kind:  :method,
+          level: :class
+        }
       end
     when :attribute
       case member[:level]
       when :instance
-        'Instance Attributes'
+        {
+          title: 'Instance Attributes',
+          kind:  :attribute,
+          level: :instance
+        }
       when :class
-        'Class Attributes'
+        {
+          title: 'Class Attributes',
+          kind:  :attribute,
+          level: :class
+        }
       end
     when :constant
-      'Constants'
+        {
+          title: 'Constants',
+          kind:  :constant
+        }
     when :extended
-      'Extend Modules'
+        {
+          title: 'Extend Modules',
+          kind:  :extended
+        }
     when :included
-      'Include Modules'
+        {
+          title: 'Include Modules',
+          kind:  :included
+        }
     end
   end
 
@@ -562,7 +595,9 @@ class RDoc::Generator::RSinglePage
         raise "Invalid group-members regex: /#{@options.rsp_group_members}/\n" \
               'Expected exactly one capture group.'
       end
-      m[1]
+      {
+        title: m[1]
+      }
     end
   end
 
