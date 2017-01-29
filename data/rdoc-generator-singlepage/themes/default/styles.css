@@ -3,13 +3,91 @@ body {
   margin: 0 20px;
   font-family: RobotoRegular;
   font-size: 15px; }
+  body .rbKindMethod:before {
+    content: "method";
+    background-color: #dff0d8;
+    padding: 2px 5px;
+    border-radius: 8px;
+    font-size: 8px;
+    color: #3c763d; }
+  body .rbKindConstant:before {
+    content: "constant";
+    background-color: #dff0d8;
+    padding: 2px 5px;
+    border-radius: 8px;
+    font-size: 8px;
+    color: #3c763d; }
+  body .rbKindAttribute:before {
+    content: "attribute";
+    background-color: #dff0d8;
+    padding: 2px 5px;
+    border-radius: 8px;
+    font-size: 8px;
+    color: #3c763d; }
+  body .rbKindExtended:before {
+    content: "extended";
+    background-color: #dff0d8;
+    padding: 2px 5px;
+    border-radius: 8px;
+    font-size: 8px;
+    color: #3c763d; }
+  body .rbKindClass:before {
+    content: "class";
+    background-color: #dff0d8;
+    padding: 2px 5px;
+    border-radius: 8px;
+    font-size: 8px;
+    color: #3c763d; }
+  body .rbKindModule:before {
+    content: "module";
+    background-color: #dff0d8;
+    padding: 2px 5px;
+    border-radius: 8px;
+    font-size: 8px;
+    color: #3c763d; }
+  body .rbLevelInstance:before {
+    content: "instance";
+    background-color: #d9edf7;
+    padding: 2px 5px;
+    border-radius: 8px;
+    font-size: 8px;
+    color: #31708f; }
+  body .rbLevelClass:before {
+    content: "class";
+    background-color: #d9edf7;
+    padding: 2px 5px;
+    border-radius: 8px;
+    font-size: 8px;
+    color: #31708f; }
+  body .rbVisibilityPublic:before {
+    content: "public";
+    background-color: #fcf8e3;
+    padding: 2px 5px;
+    border-radius: 8px;
+    font-size: 8px;
+    color: #8a6d3b; }
+  body .rbVisibilityPrivate:before {
+    content: "private";
+    background-color: #fcf8e3;
+    padding: 2px 5px;
+    border-radius: 8px;
+    font-size: 8px;
+    color: #8a6d3b; }
+  body .rbVisibilityProtected:before {
+    content: "protected";
+    background-color: #fcf8e3;
+    padding: 2px 5px;
+    border-radius: 8px;
+    font-size: 8px;
+    color: #8a6d3b; }
   body header {
     font-family: RalewaySemiBold; }
   body a {
     color: black;
     text-decoration: none; }
   body summary {
-    outline: none; }
+    outline: none;
+    display: inline-block; }
     body summary::-webkit-details-marker {
       display: none; }
   body > header {
@@ -31,8 +109,11 @@ body {
       color: #000;
       font-size: 20px;
       text-align: center;
-      padding: 10px 20px;
-      width: 20px; }
+      width: 20px;
+      position: absolute;
+      width: 40px;
+      top: 9%;
+      right: 0px; }
     body aside details[open] summary:after {
       content: "−"; }
     body aside a {
@@ -53,11 +134,12 @@ body {
       background-color: #fafafa;
       border-radius: 3px;
       margin: 7px;
-      width: 300px; }
+      width: 300px;
+      position: relative; }
       body aside .tocClassBlock:first-child {
         margin-top: 0; }
       body aside .tocClassBlock .tocClass {
-        width: 234px;
+        width: 190px;
         word-wrap: break-word;
         padding: 5px; }
   body main {
