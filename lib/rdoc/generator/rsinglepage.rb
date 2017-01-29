@@ -14,8 +14,8 @@ end
 class RDoc::Generator::RSinglePage
   RDoc::RDoc.add_generator(self)
 
-  DEFAULT_FILENAME = 'index.html'
-  DEFAULT_THEME    = 'default'
+  DEFAULT_FILENAME = 'index.html'.freeze
+  DEFAULT_THEME    = 'default'.freeze
 
   def self.setup_options(rdoc_options)
     rdoc_options.rsp_filename = DEFAULT_FILENAME
@@ -34,11 +34,11 @@ class RDoc::Generator::RSinglePage
     opt.separator nil
     opt.on('--rsp-theme=NAME', String,
            "Set theme. Defaults to '#{DEFAULT_THEME}'. Specify",
-           "multiple times to merge several themes. Every",
-           "next theme overwrites options set by previous",
+           'multiple times to merge several themes. Every',
+           'next theme overwrites options set by previous',
            "themes. If name contains slash, it's a path,",
            "and otherwise it's a name of installed theme.",
-           "Installed themes:",
+           'Installed themes:',
            *(themes_list.map { |s| " - #{s}" })) do |value|
       # Expand path while parsing options, because later RDoc will
       # chdir into the output directory and we'll not be able to
@@ -125,9 +125,7 @@ class RDoc::Generator::RSinglePage
       end
 
       doc.body do
-        if theme[:body][:header]
-          doc << theme[:body][:header]
-        end
+        doc << theme[:body][:header] if theme[:body][:header]
 
         doc.header do
           doc.text! title
@@ -137,22 +135,22 @@ class RDoc::Generator::RSinglePage
           classes.each do |klass|
             if klass[:groups].empty?
               doc.div(class: :tocClassBlock) do
-                doc.a(class: :tocClass, href: '#' + klass[:name]) do
-                  doc.text! klass[:name]
+                doc.a(class: :tocClass, href: '#' + klass[:id]) do
+                  doc.text! klass[:title]
                 end
               end
             else
               doc.details(class: :tocClassBlock) do
                 doc.summary do
-                  doc.a(class: :tocClass, href: '#' + klass[:name]) do
-                    doc.text! klass[:name]
+                  doc.a(class: :tocClass, href: '#' + klass[:id]) do
+                    doc.text! klass[:title]
                   end
                 end
                 doc.div(class: :tocGroupBlock) do
                   klass[:groups].each do |group|
                     doc.a(class: :tocGroup,
-                          href: '#' + klass[:name] + '::' + group[:name]) do
-                      doc.text! group[:name]
+                          href: '#' + group[:id]) do
+                      doc.text! group[:title]
                     end
                   end
                 end
@@ -163,22 +161,22 @@ class RDoc::Generator::RSinglePage
 
         doc.main do
           classes.each do |klass|
-            doc.article(id: klass[:name]) do
+            doc.article(id: klass[:id]) do
               doc.header do
-                doc.text! klass[:name]
+                doc.text! klass[:title]
               end
 
               klass[:groups].each do |group|
-                doc.section(id: klass[:name] + '::' + group[:name]) do
+                doc.section(id: group[:id]) do
                   doc.header do
-                    doc.text! group[:name]
+                    doc.text! group[:title]
                   end
 
                   group[:members].each do |member|
                     doc.div(class: :memberBlock) do
-                      if member[:name]
+                      if member[:title]
                         doc.span(class: :memberName) do
-                          doc.text! member[:name]
+                          doc.text! member[:title]
                         end
                       end
 
@@ -206,9 +204,7 @@ class RDoc::Generator::RSinglePage
           end
         end
 
-        if theme[:body][:footer]
-          doc << theme[:body][:footer]
-        end
+        doc << theme[:body][:footer] if theme[:body][:footer]
       end
     end
 
@@ -243,10 +239,10 @@ class RDoc::Generator::RSinglePage
       body: {}
     }
 
-    theme_list = unless @options.rsp_themes.empty?
-                   @options.rsp_themes
-                 else
+    theme_list = if @options.rsp_themes.empty?
                    Array[self.class.theme_path DEFAULT_THEME]
+                 else
+                   @options.rsp_themes
                  end
 
     theme_list.each do |theme_path|
@@ -261,7 +257,7 @@ class RDoc::Generator::RSinglePage
 
     config.each do |section, files|
       check_one_of(
-        message:  "Unexpected section in theme config",
+        message:  'Unexpected section in theme config',
         expected: %w(head body),
         actual:   section
       )
@@ -307,7 +303,8 @@ class RDoc::Generator::RSinglePage
 
     classes.map do |klass|
       {
-        name:    klass.full_name,
+        id:    klass.full_name,
+        title: klass.full_name,
         comment: get_comment(klass),
         groups:  get_groups(klass)
       }
@@ -324,7 +321,8 @@ class RDoc::Generator::RSinglePage
 
       unless groups.include? group
         groups[group] = {
-          name: group,
+          title: group,
+          id: klass.full_name.strip + '::' + group.strip,
           members: []
         }
       end
@@ -359,7 +357,8 @@ class RDoc::Generator::RSinglePage
       next if skip_member? m.name
 
       member = {}
-      member[:name] = m.name if m.name
+      member[:id] = m.name if m.name
+      member[:title] = m.name if m.name
       member[:comment] = get_comment(m)
       member[:code] = m.markup_code if m.markup_code && m.markup_code != ''
       member[:level] = m.type.to_sym if m.type
@@ -383,9 +382,13 @@ class RDoc::Generator::RSinglePage
 
   def get_member_group(member)
     if @options.rsp_group_members
-      return get_member_group_from_match(member[:name])
+      return get_member_group_from_match(member[:title])
     end
 
+    get_member_group_with_default_grouping member
+  end
+
+  def get_member_group_with_default_grouping(member)
     case member[:kind]
     when :method
       case member[:level]
