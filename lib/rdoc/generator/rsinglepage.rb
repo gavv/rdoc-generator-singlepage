@@ -97,7 +97,7 @@ class RDoc::Generator::RSinglePage
   private
 
   def install_theme_files(theme)
-    theme[:head].each do |type, file|
+    theme[:head].each do |_type, file|
       FileUtils.copy_file(file[:path], file[:name])
     end
   end
@@ -400,10 +400,10 @@ class RDoc::Generator::RSinglePage
 
   def get_member_group(member)
     if @options.rsp_group_members
-      return get_member_group_from_match(member[:title])
+      get_member_group_from_match(member[:title])
+    else
+      get_member_group_with_default_grouping(member)
     end
-
-    get_member_group_with_default_grouping member
   end
 
   def get_member_group_with_default_grouping(member)
