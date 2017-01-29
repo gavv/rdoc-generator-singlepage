@@ -71,14 +71,14 @@ body {
         body main article section header {
           padding: 7px;
           font-size: 150%; }
-        body main article section .methodBlock {
+        body main article section .memberBlock {
           padding-top: 10px;
           padding-left: 30px;
           padding-right: 30px; }
-          body main article section .methodBlock .methodName {
+          body main article section .memberBlock .memberName {
             font-weight: bolder;
             font-size: 100%; }
-          body main article section .methodBlock .methodComment {
+          body main article section .memberBlock .memberComment {
             font-size: 90%; }
         body main article section header {
           background: none;

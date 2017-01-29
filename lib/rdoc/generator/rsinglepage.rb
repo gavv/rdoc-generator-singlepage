@@ -159,21 +159,21 @@ class RDoc::Generator::RSinglePage
                   end
 
                   group[:members].each do |member|
-                    doc.div(class: :methodBlock) do
+                    doc.div(class: :memberBlock) do
                       if member[:name]
-                        doc.span(class: :methodName) do
+                        doc.span(class: :memberName) do
                           doc.text! member[:name]
                         end
                       end
 
                       if member[:comment]
-                        doc.span(class: :methodComment) do
+                        doc.span(class: :memberComment) do
                           doc << member[:comment]
                         end
                       end
 
                       if member[:code]
-                        doc.details(class: :methodCode) do
+                        doc.details(class: :memberCode) do
                           doc.summary do
                             doc.text! 'Show code'
                           end
