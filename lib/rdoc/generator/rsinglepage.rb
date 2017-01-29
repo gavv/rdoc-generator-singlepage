@@ -361,16 +361,14 @@ class RDoc::Generator::RSinglePage
               file = {
                 src_path: path,
                 dst_name: name,
-                url:      get_url(name),
+                url:      get_url(name)
               }
             when :html
               file = {
                 data: File.read(path)
               }
             end
-            if section == :fonts
-              file[:family] = file_info['family']
-            end
+            file[:family] = file_info['family'] if section == :fonts
             theme[:head][section] << file
           end
         end
@@ -421,7 +419,7 @@ class RDoc::Generator::RSinglePage
   end
 
   def get_class_kind(store, class_name)
-    if store.all_modules.select {|m| m.full_name == class_name }.size == 1
+    if store.all_modules.select { |m| m.full_name == class_name }.size == 1
       :module
     else
       :class
@@ -572,20 +570,20 @@ class RDoc::Generator::RSinglePage
         }
       end
     when :constant
-        {
-          title: 'Constants',
-          kind:  :constant
-        }
+      {
+        title: 'Constants',
+        kind:  :constant
+      }
     when :extended
-        {
-          title: 'Extend Modules',
-          kind:  :extended
-        }
+      {
+        title: 'Extend Modules',
+        kind:  :extended
+      }
     when :included
-        {
-          title: 'Include Modules',
-          kind:  :included
-        }
+      {
+        title: 'Include Modules',
+        kind:  :included
+      }
     end
   end
 
