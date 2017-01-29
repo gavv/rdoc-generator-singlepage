@@ -1,5 +1,5 @@
 require 'rdoc/rdoc'
-require 'nokogiri'
+require 'builder'
 require 'yaml'
 require 'fileutils'
 
@@ -84,101 +84,101 @@ class RDoc::Generator::RSinglePage
     title = get_title
     classes = get_classes
     builder = new_builder(theme, title, classes)
-    root = builder.doc.root
-    to_html root
+    to_html builder
   end
 
-  def to_html(root)
-    "<!DOCTYPE html>\n#{root.to_xml}"
+  def to_html(builder)
+    "<!DOCTYPE html>\n#{builder.to_s}"
   end
 
   def new_builder(theme, title, classes)
-    Nokogiri::XML::Builder.new do |doc|
-      doc.html do
-        doc.head do
-          doc.meta(charset: 'UTF-8')
+    doc = Builder::XmlMarkup.new(indent: 2)
 
-          theme[:include].each do |type, data|
-            case type
-            when :css
-              doc.style do
-                doc << data
+    doc.html do
+      doc.head do
+        doc.meta(charset: 'UTF-8')
+
+        theme[:include].each do |type, data|
+          case type
+          when :css
+            doc.style do
+              doc << data
+            end
+          when :js
+            doc.script do
+              doc << data
+            end
+          end
+        end
+      end
+
+      doc.body do
+        doc.header do
+          doc.text! title
+        end
+
+        doc.aside do
+          classes.each do |klass|
+            if klass[:groups].empty?
+              doc.div(class: :tocClassBlock) do
+                doc.a(class: :tocClass, href:  '#' + klass[:name]) do
+                  doc.text! klass[:name]
+                end
               end
-            when :js
-              doc.script do
-                doc << data
+            else
+              doc.details(class: :tocClassBlock) do
+                doc.summary do
+                  doc.a(class: :tocClass, href: '#' + klass[:name]) do
+                    doc.text! klass[:name]
+                  end
+                end
+                doc.div(class: :tocGroupBlock) do
+                  klass[:groups].each do |group|
+                    doc.a(class: :tocGroup,
+                          href: '#' + klass[:name] + '::' + group[:name]) do
+                      doc.text! group[:name]
+                    end
+                  end
+                end
               end
             end
           end
         end
 
-        doc.body do
-          doc.header do
-            doc.text title
-          end
-
-          doc.aside do
-            classes.each do |klass|
-              if klass[:groups].empty?
-                doc.div.tocClassBlock do
-                  doc.a(href: '#' + klass[:name]).tocClass do
-                    doc.text klass[:name]
-                  end
-                end
-              else
-                doc.details.tocClassBlock do
-                  doc.summary do
-                    doc.a(href: '#' + klass[:name]).tocClass do
-                      doc.text klass[:name]
-                    end
-                  end
-                  doc.div.tocGroupBlock do
-                    klass[:groups].each do |group|
-                      doc.a(href: '#' + klass[:name] + '::' + group[:name]).tocGroup do
-                        doc.text group[:name]
-                      end
-                    end
-                  end
-                end
+        doc.main do
+          classes.each do |klass|
+            doc.article(id: klass[:name]) do
+              doc.header do
+                doc.text! klass[:name]
               end
-            end
-          end
 
-          doc.main do
-            classes.each do |klass|
-              doc.article(id: klass[:name]) do
-                doc.header do
-                  doc.text klass[:name]
-                end
+              klass[:groups].each do |group|
+                doc.section(id: klass[:name] + '::' + group[:name]) do
+                  doc.header do
+                    doc.text! group[:name]
+                  end
 
-                klass[:groups].each do |group|
-                  doc.section(id: klass[:name] + '::' + group[:name]) do
-                    doc.header do
-                      doc.text group[:name]
-                    end
-
-                    group[:members].each do |member|
-                      doc.div.methodBlock do
-                        if member[:name]
-                          doc.span.methodName do
-                            doc.text member[:name]
-                          end
+                  group[:members].each do |member|
+                    doc.div(class: :methodBlock) do
+                      if member[:name]
+                        doc.span(class: :methodName) do
+                          doc.text! member[:name]
                         end
+                      end
 
-                        if member[:comment]
-                          doc.span.methodComment do
-                            doc << member[:comment]
-                          end
+                      if member[:comment]
+                        doc.span(class: :methodComment) do
+                          doc << member[:comment]
                         end
+                      end
 
-                        if member[:code]
-                          doc.details.methodCode do
-                            doc.summary do
-                              doc.text 'Show code'
-                            end
-                            doc.pre do
-                              doc << member[:code]
-                            end
+                      if member[:code]
+                        doc.details(class: :methodCode) do
+                          doc.summary do
+                            doc.text! 'Show code'
+                          end
+                          doc.pre do
+                            doc << member[:code]
                           end
                         end
                       end
@@ -191,6 +191,8 @@ class RDoc::Generator::RSinglePage
         end
       end
     end
+
+    doc
   end
 
   def self.themes_dir

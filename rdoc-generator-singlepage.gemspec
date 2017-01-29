@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_runtime_dependency 'rdoc'
-  spec.add_runtime_dependency 'nokogiri'
+  spec.add_runtime_dependency 'builder'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
