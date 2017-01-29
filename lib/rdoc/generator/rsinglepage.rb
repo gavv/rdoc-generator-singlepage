@@ -4,58 +4,57 @@ require 'yaml'
 require 'fileutils'
 
 class RDoc::Options
-  attr_accessor :output_file
-  attr_accessor :theme_name
-  attr_accessor :filter_classes
-  attr_accessor :filter_members
-  attr_accessor :group_members
+  attr_accessor :rsp_theme
+  attr_accessor :rsp_filename
+  attr_accessor :rsp_filter_classes
+  attr_accessor :rsp_filter_members
+  attr_accessor :rsp_group_members
 end
 
 class RDoc::Generator::RSinglePage
   RDoc::RDoc.add_generator(self)
 
   def self.setup_options(rdoc_options)
-    rdoc_options.output_file = 'index.html'
-    rdoc_options.theme_name = 'default'
+    rdoc_options.rsp_theme    = 'default'
+    rdoc_options.rsp_filename = 'index.html'
 
     opt = rdoc_options.option_parser
-    opt.separator 'rsinglepage generator options:'
+    opt.separator 'RSinglePage generator options:'
 
     opt.separator nil
-    opt.on('--theme=NAME', String,
-           'Set theme.',
-           "Defaults to '#{rdoc_options.theme_name}'.",
+    opt.on('--rsp-theme=NAME', String,
+           "Set theme. Defaults to '#{rdoc_options.rsp_theme}'.",
            'Available themes:',
            *(themes_list.map { |s| " - #{s}" })) do |value|
-      rdoc_options.theme_name = value
+      rdoc_options.rsp_theme = value
     end
 
     opt.separator nil
-    opt.on('--output-file=FILE', '--opf', String,
-           'Set output file name.',
-           "Defaults to '#{rdoc_options.output_file}'.") do |value|
-      rdoc_options.output_file = value
+    opt.on('--rsp-filename=FILE', String,
+           'Set output HTML file name.',
+           "Defaults to '#{rdoc_options.rsp_filename}'.") do |value|
+      rdoc_options.rsp_filename = value
     end
 
     opt.separator nil
-    opt.on('--filter-classes=REGEX', '--fc', String,
+    opt.on('--rsp-filter-classes=REGEX', String,
            'Include only classes and modules that',
            'match regex.') do |value|
-      rdoc_options.filter_classes = Regexp.new(value)
+      rdoc_options.rsp_filter_classes = Regexpn.new(value)
     end
 
     opt.separator nil
-    opt.on('--filter-members=REGEX', '--fm', String,
+    opt.on('--rsp-filter-members=REGEX', String,
            'Include only members that match regex.') do |value|
-      rdoc_options.filter_members = Regexp.new(value)
+      rdoc_options.rsp_filter_members = Regexp.new(value)
     end
 
     opt.separator nil
-    opt.on('--group-members=REGEX', '--gm', String,
+    opt.on('--rsp-group-members=REGEX', String,
            'Group members by regex instead of default',
-           'grouping. First capture group defines',
-           'the group name.') do |value|
-      rdoc_options.group_members = Regexp.new(value)
+           'grouping. First regex capture group is used',
+           'as a group name.') do |value|
+      rdoc_options.rsp_group_members = Regexp.new(value)
     end
   end
 
@@ -65,7 +64,7 @@ class RDoc::Generator::RSinglePage
   end
 
   def generate
-    File.open(@options.output_file, 'w') do |file|
+    File.open(@options.rsp_filename, 'w') do |file|
       file.write(generate_html)
     end
   end
@@ -212,7 +211,7 @@ class RDoc::Generator::RSinglePage
   end
 
   def load_theme
-    theme_name = @options.theme_name
+    theme_name = @options.rsp_theme
 
     theme_dir = File.join(self.class.themes_dir, theme_name)
 
@@ -326,7 +325,7 @@ class RDoc::Generator::RSinglePage
   end
 
   def get_member_group(klass, member)
-    if @options.group_members
+    if @options.rsp_group_members
       get_member_group_from_match(member[:name])
     elsif contain_member(klass.instance_method_list, member[:name])
       'Class Methods'
@@ -340,9 +339,9 @@ class RDoc::Generator::RSinglePage
   end
 
   def get_member_group_from_match(member_name)
-    if m = @options.group_members.match(member_name)
+    if m = @options.rsp_group_members.match(member_name)
       if m.length != 2
-        raise "Invalid group-members regex: /#{@options.group_members}/\n" \
+        raise "Invalid group-members regex: /#{@options.rsp_group_members}/\n" \
               'Expected exactly one capture group.'
       end
       m[1]
@@ -350,16 +349,16 @@ class RDoc::Generator::RSinglePage
   end
 
   def skip_class?(class_name)
-    if @options.filter_classes
-      @options.filter_classes.match(class_name).nil?
+    if @options.rsp_filter_classes
+      @options.rsp_filter_classes.match(class_name).nil?
     else
       false
     end
   end
 
   def skip_member?(member_name)
-    if @options.filter_members
-      @options.filter_members.match(member_name).nil?
+    if @options.rsp_filter_members
+      @options.rsp_filter_members.match(member_name).nil?
     else
       false
     end
