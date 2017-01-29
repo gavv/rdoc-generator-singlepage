@@ -17,6 +17,14 @@ Single page HTML5 generator for Ruby RDoc.
 
 ## Installation
 
+From rubygems:
+
+```
+todo
+```
+
+From sources:
+
 ```
 $ rake install
 ```
