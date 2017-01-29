@@ -13,7 +13,7 @@ Single page HTML5 generator for Ruby RDoc.
 
 ## Example output
 
-Example output is available [**online**](https://rbdoc.github.io/rdoc-generator-singlepage/example_html/). It was generated from the [`example.rb`](docs/example.rb) in the [`docs`](docs) directory.
+Example output is available [online](https://rbdoc.github.io/rdoc-generator-singlepage/example_html/). It was generated from the [`example.rb`](docs/example.rb) in the [`docs`](docs) directory.
 
 Generate locally:
 
