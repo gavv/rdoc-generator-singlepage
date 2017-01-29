@@ -105,8 +105,12 @@ class RDoc::Generator::RSinglePage
   private
 
   def install_theme_files(theme)
-    theme[:head].each do |_type, file|
-      FileUtils.copy_file(file[:path], file[:name])
+    theme[:head].values.each do |files|
+      files.each do |file|
+        if file[:src_path] && file[:dst_name]
+          FileUtils.copy_file(file[:src_path], file[:dst_name])
+        end
+      end
     end
   end
 
@@ -127,16 +131,31 @@ class RDoc::Generator::RSinglePage
       doc.head do
         doc.meta(charset: 'UTF-8')
 
-        theme[:head].each do |type, file|
-          case type
-          when :style, :font
-            doc.link(rel: :stylesheet, href: file[:url])
-          when :script
-            doc.script(src: file[:url]) do
+        unless theme[:head][:fonts].empty?
+          doc.style do
+            theme[:head][:fonts].each do |file|
+              doc << "@font-face {\n"
+              doc << "  font-family: '#{file[:family]}';\n"
+              doc << "  src: url('#{file[:url]}');\n"
+              doc << "}\n"
             end
-          when :html
-            doc << data
           end
+        end
+
+        theme[:head][:styles].each do |file|
+          doc.style do
+            doc << file[:data]
+          end
+        end
+
+        theme[:head][:scripts].each do |file|
+          doc.script do
+            doc << file[:data]
+          end
+        end
+
+        theme[:head][:html].each do |file|
+          doc << file[:data]
         end
       end
 
@@ -251,7 +270,12 @@ class RDoc::Generator::RSinglePage
 
   def load_theme
     theme = {
-      head: {},
+      head: {
+        styles: [],
+        fonts: [],
+        scripts: [],
+        html: []
+      },
       body: {}
     }
 
@@ -262,16 +286,16 @@ class RDoc::Generator::RSinglePage
                  end
 
     theme_list.each do |theme_path|
-      add_theme(theme, theme_path)
+      merge_theme(theme, theme_path)
     end
 
     theme
   end
 
-  def add_theme(theme, theme_path)
+  def merge_theme(theme, theme_path)
     config = YAML.load_file theme_path
 
-    config.each do |section, files|
+    config.each do |section, content|
       check_one_of(
         message:  'Unexpected section in theme config',
         expected: %w(head body),
@@ -280,29 +304,41 @@ class RDoc::Generator::RSinglePage
 
       case section
       when 'head'
-        files.each do |type, path|
+        content.each do |key, files|
           check_one_of(
-            message:  "Unexpected file type in 'head' section of theme config",
-            expected: %w(style font script html),
-            actual:   type
+            message:  "Unexpected key in 'head'",
+            expected: %w(styles fonts scripts html),
+            actual:   key
           )
-          path = theme_file_path(theme_path, path)
-          name = File.basename(path)
-          theme[:head][type.to_sym] = {
-            name: name,
-            url:  get_url(name),
-            path: path
-          }
+          section = key.to_sym
+          files.each do |file_info|
+            path = theme_file_path(theme_path, file_info['file'])
+            case section
+            when :styles, :scripts, :html
+              file = {
+                data: File.read(path)
+              }
+            when :fonts
+              name = File.basename(path)
+              file = {
+                src_path: path,
+                dst_name: name,
+                url:      get_url(name),
+                family:   file_info['family']
+              }
+            end
+            theme[:head][section] << file
+          end
         end
 
       when 'body'
-        files.each do |type, path|
+        content.each do |key, path|
           check_one_of(
-            message:  "Unexpected file type in 'body' section of theme config",
+            message:  "Unexpected key in 'body'",
             expected: %w(header footer),
-            actual:   type
+            actual:   key
           )
-          theme[:body][type.to_sym] = File.read(theme_file_path(theme_path, path))
+          theme[:body][key.to_sym] = File.read(theme_file_path(theme_path, path))
         end
       end
     end
