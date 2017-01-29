@@ -290,54 +290,43 @@ class RDoc::Generator::RSinglePage
   end
 
   def get_groups(klass)
-    methods = get_methods(klass)
+    members = get_members(klass)
     groups = {}
 
-    methods.each do |method|
-      next unless group = get_member_group(klass, method)
+    members.each do |member|
+      group = get_member_group(klass, member)
+      next unless group
+
       unless groups.include? group
         groups[group] = {
-          name:    group,
+          name: group,
           members: []
         }
       end
-      groups[group][:members] << method
-    end
 
-    attr = {
-      'Instance Attributes' => klass.instance_attributes,
-      'Class Attributes' => klass.class_attributes
-    }
-
-    attr.each do |k, v|
-      groups[k] = {
-        name: k,
-        members: []
-      }
-      v.each do |a|
-        groups[k][:members] << {
-          name: "#{a.name} #{a.rw}",
-          comment: get_comment(a)
-        }
-      end
+      groups[group][:members] << member
     end
 
     groups.values
   end
 
-  def get_methods(klass)
-    methods = klass.method_list
+  def get_members(klass)
+    members = []
 
-    methods = methods.select do |method|
-      !skip_member? method.name
-    end
+    [
+      klass.method_list,
+      klass.attributes
+    ].each do |member_list|
+      member_list.each do |m|
+        next if skip_member? m.name
 
-    methods.map do |method|
-      {
-        name:    method.name,
-        comment: get_comment(method),
-        code:    method.markup_code
-      }
+        member = {}
+        member[:name] = m.name
+        member[:comment] = get_comment(m)
+        member[:code] = m.markup_code if m.markup_code && m.markup_code != ''
+
+        members << member
+      end
     end
   end
 
@@ -356,6 +345,10 @@ class RDoc::Generator::RSinglePage
       'Class Methods'
     elsif contain_member(klass.class_method_list, member[:name])
       'Instance Methods'
+    elsif contain_member(klass.instance_attributes, member[:name])
+      'Instance Attributes'
+    elsif contain_member(klass.class_attributes, member[:name])
+      'Class Attributes'
     end
   end
 
