@@ -166,13 +166,13 @@ class RDoc::Generator::RSinglePage
         doc.aside do
           classes.each do |klass|
             if klass[:groups].empty?
-              doc.div(class: :tocClassBlock) do
+              doc.div(class: ([:tocClassBlock] + get_classes_indicators(klass)).join(' ')) do
                 doc.a(class: :tocClass, href: '#' + klass[:id]) do
                   doc.text! klass[:title]
                 end
               end
             else
-              doc.details(class: :tocClassBlock) do
+              doc.details(class: ([:tocClassBlock] + get_classes_indicators(klass)).join(' ')) do
                 doc.summary do
                   doc.a(class: :tocClass, href: '#' + klass[:id]) do
                     doc.text! klass[:title]
@@ -205,7 +205,7 @@ class RDoc::Generator::RSinglePage
                   end
 
                   group[:members].each do |member|
-                    doc.div(class: :memberBlock) do
+                    doc.div(class: ([:memberBlock] + get_classes_indicators(member)).join(' ')) do
                       if member[:id]
                         doc.span(class: :memberName) do
                           doc.text! member[:id]
@@ -241,6 +241,44 @@ class RDoc::Generator::RSinglePage
     end
 
     doc
+  end
+
+  def get_classes_indicators(member)
+    indicators = []
+    case member[:kind]
+    when :method
+      indicators << :rbKindMethod
+    when :constant
+      indicators << :rbKindConstant
+    when :attribute
+      indicators << :rbKindAttribute
+    when :included
+      indicators << :rbKindIncluded
+    when :extended
+      indicators << :rbKindExtended
+    when :class
+      indicators << :rbKindClass
+    when :module
+      indicators << :rbKindModule
+    end
+
+    case member[:level]
+    when :instance
+      indicators << :rbLevelInstance
+    when :class
+      indicators << :rbLevelClass
+    end
+
+    case member[:visibility]
+    when :public
+      indicators << :rbVisibilityPublic
+    when :private
+      indicators << :rbVisibilityPrivate
+    when :protected
+      indicators << :rbVisibilityProtected
+    end
+
+    indicators
   end
 
   def self.themes_dir
@@ -368,9 +406,18 @@ class RDoc::Generator::RSinglePage
       {
         id:    klass.full_name,
         title: klass.full_name,
+        kind: get_class_kind(@store, klass.full_name),
         comment: get_comment(klass),
         groups:  get_groups(klass)
       }
+    end
+  end
+
+  def get_class_kind(store, class_name)
+    if store.all_modules.select {|m| m.full_name == class_name }.size == 1
+      :module
+    else
+      :class
     end
   end
 
