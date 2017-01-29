@@ -10,7 +10,7 @@ Generate single-page HTML5 documentation for Ruby RDoc.
 * Optionaly inline all scripts and styles.
 * Themes support.
 * Excluding classes or members by regex.
-* Grouping class members by category or regex.
+* Grouping class members by regex.
 
 ## Demo
 
