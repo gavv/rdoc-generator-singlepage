@@ -10,7 +10,7 @@ Single page HTML5 generator for Ruby RDoc.
 * Themes support.
 * Filter classes or members by regex.
 
-## Example output
+## Demo
 
 See example output [here](https://rbdoc.github.io/rdoc-generator-singlepage/example_html/). It was generated from the [`example.rb`](docs/example.rb) in the [`docs`](docs) directory.
 
@@ -34,7 +34,9 @@ From sources:
 $ rake install
 ```
 
-## Using from command line
+## Usage
+
+#### From command line
 
 Display all supported command line options:
 
@@ -72,11 +74,15 @@ Filter classes and members by regex:
 $ rdoc -f rsinglepage --rsp-filter-classes '^Test.*' --rsp-filter-members '^test_.*'
 ```
 
-## Using from code
+#### From code
 
 *todo*
 
-## Adding themes
+#### From rake
+
+*todo*
+
+## Themes
 
 *todo*
 
