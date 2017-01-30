@@ -5,5 +5,5 @@ task :example do
      " rdoc" +
      " -f rsinglepage" +
      " -o example_html" +
-     " -t 'RDoc::Generator::RSinglePage Example Output'"
+     " -t 'RDoc::Generator::RSinglePage Example'"
 end
