@@ -8,8 +8,7 @@ Single page HTML5 generator for Ruby RDoc.
 
 * Generate single page HTML5 documentation suitable for offline use.
 * Themes support.
-* Exclude classes or members by regex.
-* Group class members by regex.
+* Filter classes or members by regex.
 
 ## Example output
 
