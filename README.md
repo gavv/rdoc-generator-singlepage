@@ -10,7 +10,7 @@ Single page HTML5 generator for Ruby RDoc.
 * Themes support.
 * Filter classes or members by regex.
 
-## Demo
+## Example
 
 See example output [here](https://rbdoc.github.io/rdoc-generator-singlepage/example_html/). It was generated from the [`example.rb`](docs/example.rb) in the [`docs`](docs) directory.
 
@@ -88,4 +88,5 @@ $ rdoc -f rsinglepage --rsp-filter-classes '^Test.*' --rsp-filter-members '^test
 
 ## License
 
-MIT
+* The source code is licensed under [MIT](LICENSE) license.
+* Fonts have their own [licenses](data/rdoc-generator-singlepage/themes/fonts).
