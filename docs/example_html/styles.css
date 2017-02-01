@@ -3,83 +3,92 @@ body {
   margin: 0 20px;
   font-family: RobotoRegular;
   font-size: 15px; }
-  body .rbKindMethod:before {
-    content: "method";
-    background-color: #dff0d8;
-    padding: 2px 5px;
-    border-radius: 8px;
-    font-size: 8px;
-    color: #3c763d; }
-  body .rbKindConstant:before {
-    content: "constant";
-    background-color: #dff0d8;
-    padding: 2px 5px;
-    border-radius: 8px;
-    font-size: 8px;
-    color: #3c763d; }
-  body .rbKindAttribute:before {
-    content: "attribute";
-    background-color: #dff0d8;
-    padding: 2px 5px;
-    border-radius: 8px;
-    font-size: 8px;
-    color: #3c763d; }
-  body .rbKindExtended:before {
-    content: "extended";
-    background-color: #dff0d8;
-    padding: 2px 5px;
-    border-radius: 8px;
-    font-size: 8px;
-    color: #3c763d; }
-  body .rbKindClass:before {
-    content: "class";
-    background-color: #dff0d8;
-    padding: 2px 5px;
-    border-radius: 8px;
-    font-size: 8px;
-    color: #3c763d; }
-  body .rbKindModule:before {
-    content: "module";
-    background-color: #dff0d8;
-    padding: 2px 5px;
-    border-radius: 8px;
-    font-size: 8px;
-    color: #3c763d; }
-  body .rbLevelInstance:before {
-    content: "instance";
-    background-color: #d9edf7;
-    padding: 2px 5px;
-    border-radius: 8px;
-    font-size: 8px;
-    color: #31708f; }
-  body .rbLevelClass:before {
-    content: "class";
-    background-color: #d9edf7;
-    padding: 2px 5px;
-    border-radius: 8px;
-    font-size: 8px;
-    color: #31708f; }
-  body .rbVisibilityPublic:before {
-    content: "public";
-    background-color: #fcf8e3;
-    padding: 2px 5px;
-    border-radius: 8px;
-    font-size: 8px;
-    color: #8a6d3b; }
-  body .rbVisibilityPrivate:before {
-    content: "private";
-    background-color: #fcf8e3;
-    padding: 2px 5px;
-    border-radius: 8px;
-    font-size: 8px;
-    color: #8a6d3b; }
-  body .rbVisibilityProtected:before {
-    content: "protected";
-    background-color: #fcf8e3;
-    padding: 2px 5px;
-    border-radius: 8px;
-    font-size: 8px;
-    color: #8a6d3b; }
+  body .indicator {
+    display: inline-block; }
+    body .indicatorKindModule:before {
+      content: "module";
+      background-color: #dff0d8;
+      padding: 3px 5px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #3c763d; }
+    body .indicatorKindClass:before {
+      content: "class";
+      background-color: #dff0d8;
+      padding: 3px 5px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #3c763d; }
+    body .indicatorKindIncluded:before {
+      content: "included";
+      background-color: #dff0d8;
+      padding: 3px 5px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #3c763d; }
+    body .indicatorKindExtended:before {
+      content: "extended";
+      background-color: #dff0d8;
+      padding: 3px 5px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #3c763d; }
+    body .indicatorKindConstant:before {
+      content: "constant";
+      background-color: #dff0d8;
+      padding: 3px 5px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #3c763d; }
+    body .indicatorKindClassMethod:before {
+      content: "class method";
+      background-color: #dff0d8;
+      padding: 3px 5px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #3c763d; }
+    body .indicatorKindInstanceMethod:before {
+      content: "instance method";
+      background-color: #d9edf7;
+      padding: 3px 5px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #31708f; }
+    body .indicatorKindClassAttribute:before {
+      content: "class attribute";
+      background-color: #d9edf7;
+      padding: 3px 5px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #31708f; }
+    body .indicatorKindInstanceAttribute:before {
+      content: "instance attribute";
+      background-color: #dff0d8;
+      padding: 3px 5px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #3c763d; }
+    body .indicatorVisibilityPublic:before {
+      content: "public";
+      background-color: #fcf8e3;
+      padding: 3px 5px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #8a6d3b; }
+    body .indicatorVisibilityPrivate:before {
+      content: "private";
+      background-color: #fcf8e3;
+      padding: 3px 5px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #8a6d3b; }
+    body .indicatorVisibilityProtected:before {
+      content: "protected";
+      background-color: #fcf8e3;
+      padding: 3px 5px;
+      border-radius: 8px;
+      font-size: 11px;
+      color: #8a6d3b; }
   body header {
     font-family: RalewaySemiBold; }
   body a {

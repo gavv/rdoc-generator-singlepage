@@ -19,52 +19,70 @@
     <link rel="stylesheet" href="styles.css"/>
   </head>
   <body>
-    <header>
+    <header class="mainHeader">
 RDoc::Generator::RSinglePage Example    </header>
     <aside>
-      <details class="tocClassBlock rbKindClass">
+      <details class="tocClassBlock">
         <summary>
+          <div class="indicator indicatorKindClass">
+          </div>
           <a class="tocClass" href="#Bar">
 Bar          </a>
         </summary>
         <div class="tocGroupBlock">
-          <a class="tocGroup rbKindMethod rbLevelClass" href="#Bar::Class Methods">
+          <a class="tocGroup" href="#Bar::Class Methods">
 Class Methods          </a>
-          <a class="tocGroup rbKindIncluded" href="#Bar::Include Modules">
+          <a class="tocGroup" href="#Bar::Include Modules">
 Include Modules          </a>
         </div>
       </details>
-      <details class="tocClassBlock rbKindClass">
+      <details class="tocClassBlock">
         <summary>
+          <div class="indicator indicatorKindClass">
+          </div>
           <a class="tocClass" href="#Baz">
 Baz          </a>
         </summary>
         <div class="tocGroupBlock">
-          <a class="tocGroup rbKindExtended" href="#Baz::Extend Modules">
+          <a class="tocGroup" href="#Baz::Extend Modules">
 Extend Modules          </a>
         </div>
       </details>
-      <details class="tocClassBlock rbKindModule">
+      <details class="tocClassBlock">
         <summary>
+          <div class="indicator indicatorKindModule">
+          </div>
           <a class="tocClass" href="#Foo">
 Foo          </a>
         </summary>
         <div class="tocGroupBlock">
-          <a class="tocGroup rbKindMethod rbLevelInstance" href="#Foo::Instance Methods">
+          <a class="tocGroup" href="#Foo::Instance Methods">
 Instance Methods          </a>
         </div>
       </details>
     </aside>
     <main>
-      <article id="Bar">
-        <header class="classHeader rbKindClass">
-Bar        </header>
-        <section id="Bar::Class Methods" class="groupBlock">
-          <header>
-Class Methods          </header>
-          <div class="memberBlock rbKindMethod rbLevelClass rbVisibilityPublic">
-            <span class="memberName">
-bar()            </span>
+      <article class="classBlock" id="Bar">
+        <header class="classHeader">
+          <div class="indicator indicatorKindClass">
+          </div>
+          <span class="className">
+Bar          </span>
+        </header>
+        <section class="groupBlock" id="Bar::Class Methods">
+          <header class="groupHeader">
+            <span class="groupName">
+Class Methods            </span>
+          </header>
+          <div class="memberBlock">
+            <div class="memberHeader">
+              <div class="indicator indicatorKindClassMethod">
+              </div>
+              <div class="indicator indicatorVisibilityPublic">
+              </div>
+              <span class="memberName">
+bar()              </span>
+            </div>
             <span class="memberComment">
             </span>
             <details class="memberCode">
@@ -77,40 +95,68 @@ Source code              </summary>
             </details>
           </div>
         </section>
-        <section id="Bar::Include Modules" class="groupBlock">
-          <header>
-Include Modules          </header>
-          <div class="memberBlock rbKindIncluded">
-            <span class="memberName">
-Foo            </span>
+        <section class="groupBlock" id="Bar::Include Modules">
+          <header class="groupHeader">
+            <span class="groupName">
+Include Modules            </span>
+          </header>
+          <div class="memberBlock">
+            <div class="memberHeader">
+              <div class="indicator indicatorKindIncluded">
+              </div>
+              <span class="memberName">
+Foo              </span>
+            </div>
             <span class="memberComment">
             </span>
           </div>
         </section>
       </article>
-      <article id="Baz">
-        <header class="classHeader rbKindClass">
-Baz        </header>
-        <section id="Baz::Extend Modules" class="groupBlock">
-          <header>
-Extend Modules          </header>
-          <div class="memberBlock rbKindExtended">
-            <span class="memberName">
-Foo            </span>
+      <article class="classBlock" id="Baz">
+        <header class="classHeader">
+          <div class="indicator indicatorKindClass">
+          </div>
+          <span class="className">
+Baz          </span>
+        </header>
+        <section class="groupBlock" id="Baz::Extend Modules">
+          <header class="groupHeader">
+            <span class="groupName">
+Extend Modules            </span>
+          </header>
+          <div class="memberBlock">
+            <div class="memberHeader">
+              <div class="indicator indicatorKindExtended">
+              </div>
+              <span class="memberName">
+Foo              </span>
+            </div>
             <span class="memberComment">
             </span>
           </div>
         </section>
       </article>
-      <article id="Foo">
-        <header class="classHeader rbKindModule">
-Foo        </header>
-        <section id="Foo::Instance Methods" class="groupBlock">
-          <header>
-Instance Methods          </header>
-          <div class="memberBlock rbKindMethod rbLevelInstance rbVisibilityPublic">
-            <span class="memberName">
-foo()            </span>
+      <article class="classBlock" id="Foo">
+        <header class="classHeader">
+          <div class="indicator indicatorKindModule">
+          </div>
+          <span class="className">
+Foo          </span>
+        </header>
+        <section class="groupBlock" id="Foo::Instance Methods">
+          <header class="groupHeader">
+            <span class="groupName">
+Instance Methods            </span>
+          </header>
+          <div class="memberBlock">
+            <div class="memberHeader">
+              <div class="indicator indicatorKindInstanceMethod">
+              </div>
+              <div class="indicator indicatorVisibilityPublic">
+              </div>
+              <span class="memberName">
+foo()              </span>
+            </div>
             <span class="memberComment">
             </span>
             <details class="memberCode">
