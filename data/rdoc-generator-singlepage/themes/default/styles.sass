@@ -9,9 +9,9 @@
 @mixin addLabel($color, $fontColor, $content)
   content: $content
   background-color: $color
-  padding: 2px 5px
+  padding: 3px 5px
   border-radius: 8px
-  font-size: 8px
+  font-size: 11px
   color: $fontColor
 
 body
@@ -19,41 +19,46 @@ body
   font-family: RobotoRegular
   font-size: 15px
 
-  .rbKind
-    &Method:before
-      @include addLabel(#dff0d8, #3c763d, 'method')
+  .indicator
+    display: inline-block
 
-    &Constant:before
-      @include addLabel(#dff0d8, #3c763d, 'constant')
+    &Kind
+      &Module:before
+        @include addLabel(#dff0d8, #3c763d, 'module')
 
-    &Attribute:before
-      @include addLabel(#dff0d8, #3c763d, 'attribute')
+      &Class:before
+        @include addLabel(#dff0d8, #3c763d, 'class')
 
-    &Extended:before
-      @include addLabel(#dff0d8, #3c763d, 'extended')
+      &Included:before
+        @include addLabel(#dff0d8, #3c763d, 'included')
 
-    &Class:before
-      @include addLabel(#dff0d8, #3c763d, 'class')
+      &Extended:before
+        @include addLabel(#dff0d8, #3c763d, 'extended')
 
-    &Module:before
-      @include addLabel(#dff0d8, #3c763d, 'module')
-  
-  .rbLevel
-    &Instance:before
-      @include addLabel(#d9edf7, #31708f, 'instance')
+      &Constant:before
+        @include addLabel(#dff0d8, #3c763d, 'constant')
 
-    &Class:before
-      @include addLabel(#d9edf7, #31708f, 'class')
+      &ClassMethod:before
+        @include addLabel(#dff0d8, #3c763d, 'class method')
 
-  .rbVisibility
-    &Public:before
-      @include addLabel(#fcf8e3, #8a6d3b, 'public')
-  
-    &Private:before
-      @include addLabel(#fcf8e3, #8a6d3b, 'private')
+      &InstanceMethod:before
+        @include addLabel(#d9edf7, #31708f, 'instance method')
 
-    &Protected:before
-      @include addLabel(#fcf8e3, #8a6d3b, 'protected')
+      &ClassAttribute:before
+        @include addLabel(#d9edf7, #31708f, 'class attribute')
+
+      &InstanceAttribute:before
+        @include addLabel(#dff0d8, #3c763d, 'instance attribute')
+
+    &Visibility
+      &Public:before
+        @include addLabel(#fcf8e3, #8a6d3b, 'public')
+
+      &Private:before
+        @include addLabel(#fcf8e3, #8a6d3b, 'private')
+
+      &Protected:before
+        @include addLabel(#fcf8e3, #8a6d3b, 'protected')
 
   header
     font-family: RalewaySemiBold

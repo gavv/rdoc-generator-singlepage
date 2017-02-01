@@ -159,29 +159,36 @@ class RDoc::Generator::RSinglePage
       doc.body do
         doc << theme[:body][:header] if theme[:body][:header]
 
-        doc.header do
+        doc.header(class: :mainHeader) do
           doc.text! title
         end
 
         doc.aside do
           classes.each do |klass|
             if klass[:groups].empty?
-              doc.div(class: css_classes(:tocClassBlock, klass)) do
+              doc.div(class: :tocClassBlock) do
+                klass[:indicators].each do |name|
+                  doc.div(class: "indicator #{name}") do
+                  end
+                end
                 doc.a(class: :tocClass, href: '#' + klass[:id]) do
                   doc.text! klass[:title]
                 end
               end
             else
-              doc.details(class: css_classes(:tocClassBlock, klass)) do
+              doc.details(class: :tocClassBlock) do
                 doc.summary do
+                  klass[:indicators].each do |name|
+                    doc.div(class: "indicator #{name}") do
+                    end
+                  end
                   doc.a(class: :tocClass, href: '#' + klass[:id]) do
                     doc.text! klass[:title]
                   end
                 end
                 doc.div(class: :tocGroupBlock) do
                   klass[:groups].each do |group|
-                    doc.a(class: css_classes(:tocGroup, group),
-                          href: '#' + group[:id]) do
+                    doc.a(class: :tocGroup, href: '#' + group[:id]) do
                       doc.text! group[:title]
                     end
                   end
@@ -193,20 +200,32 @@ class RDoc::Generator::RSinglePage
 
         doc.main do
           classes.each do |klass|
-            doc.article(id: klass[:id]) do
-              doc.header(class: css_classes(:classHeader, klass)) do
-                doc.text! klass[:title]
+            doc.article(class: :classBlock, id: klass[:id]) do
+              doc.header(class: :classHeader) do
+                klass[:indicators].each do |name|
+                  doc.div(class: "indicator #{name}") do
+                  end
+                end
+                doc.span(class: :className) do
+                  doc.text! klass[:title]
+                end
               end
 
               klass[:groups].each do |group|
-                doc.section(id: group[:id], class: :groupBlock) do
-                  doc.header do
-                    doc.text! group[:title]
+                doc.section(class: :groupBlock, id: group[:id]) do
+                  doc.header(class: :groupHeader) do
+                    doc.span(class: :groupName) do
+                      doc.text! group[:title]
+                    end
                   end
 
                   group[:members].each do |member|
-                    doc.div(class: css_classes(:memberBlock, member)) do
-                      if member[:id]
+                    doc.div(class: :memberBlock) do
+                      doc.div(class: :memberHeader) do
+                        member[:indicators].each do |name|
+                          doc.div(class: "indicator #{name}") do
+                          end
+                        end
                         doc.span(class: :memberName) do
                           doc.text! member[:id]
                         end
@@ -241,51 +260,6 @@ class RDoc::Generator::RSinglePage
     end
 
     doc
-  end
-
-  def css_classes(main_class, object)
-    classes = [main_class]
-    classes += css_indicator_classes(object)
-    classes.join(' ')
-  end
-
-  def css_indicator_classes(object)
-    classes = []
-
-    case object[:kind]
-    when :method
-      classes << :rbKindMethod
-    when :constant
-      classes << :rbKindConstant
-    when :attribute
-      classes << :rbKindAttribute
-    when :included
-      classes << :rbKindIncluded
-    when :extended
-      classes << :rbKindExtended
-    when :class
-      classes << :rbKindClass
-    when :module
-      classes << :rbKindModule
-    end
-
-    case object[:level]
-    when :instance
-      classes << :rbLevelInstance
-    when :class
-      classes << :rbLevelClass
-    end
-
-    case object[:visibility]
-    when :public
-      classes << :rbVisibilityPublic
-    when :private
-      classes << :rbVisibilityPrivate
-    when :protected
-      classes << :rbVisibilityProtected
-    end
-
-    classes
   end
 
   def self.themes_dir
@@ -407,7 +381,7 @@ class RDoc::Generator::RSinglePage
 
     classes.sort_by!(&:full_name)
 
-    classes.map do |klass|
+    classes = classes.map do |klass|
       {
         id:    klass.full_name,
         title: klass.full_name,
@@ -416,6 +390,8 @@ class RDoc::Generator::RSinglePage
         groups:  get_groups(klass)
       }
     end
+
+    add_indicators classes
   end
 
   def get_class_kind(store, class_name)
@@ -478,7 +454,7 @@ class RDoc::Generator::RSinglePage
     members.push(*extends_members)
     members.push(*include_members)
 
-    members
+    add_indicators members
   end
 
   def get_raw_members(member_list)
@@ -597,6 +573,53 @@ class RDoc::Generator::RSinglePage
         title: m[1]
       }
     end
+  end
+
+  def get_indicators(object)
+    indicators = []
+
+    case object[:kind]
+    when :module
+      indicators << :indicatorKindModule
+    when :class
+      indicators << :indicatorKindClass
+    when :included
+      indicators << :indicatorKindIncluded
+    when :extended
+      indicators << :indicatorKindExtended
+    when :constant
+      indicators << :indicatorKindConstant
+    when :method
+      if object[:level] == :class
+        indicators << :indicatorKindClassMethod
+      else
+        indicators << :indicatorKindInstanceMethod
+      end
+    when :attribute
+      if object[:level] == :class
+        indicators << :indicatorKindClassAttribute
+      else
+        indicators << :indicatorKindInstanceAttribute
+      end
+    end
+
+    case object[:visibility]
+    when :public
+      indicators << :indicatorVisibilityPublic
+    when :private
+      indicators << :indicatorVisibilityPrivate
+    when :protected
+      indicators << :indicatorVisibilityProtected
+    end
+
+    indicators
+  end
+
+  def add_indicators(array)
+    array.each do |object|
+      object[:indicators] = get_indicators(object)
+    end
+    array
   end
 
   def skip_class?(class_name)
