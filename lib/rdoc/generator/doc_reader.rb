@@ -142,17 +142,17 @@ class DocReader
     when :constant
       indicators << :indicatorKindConstant
     when :method
-      if object[:level] == :class
-        indicators << :indicatorKindClassMethod
-      else
-        indicators << :indicatorKindInstanceMethod
-      end
+      indicators << if object[:level] == :class
+                      :indicatorKindClassMethod
+                    else
+                      :indicatorKindInstanceMethod
+                    end
     when :attribute
-      if object[:level] == :class
-        indicators << :indicatorKindClassAttribute
-      else
-        indicators << :indicatorKindInstanceAttribute
-      end
+      indicators << if object[:level] == :class
+                      :indicatorKindClassAttribute
+                    else
+                      :indicatorKindInstanceAttribute
+                    end
     end
 
     case object[:visibility]

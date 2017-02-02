@@ -17,7 +17,7 @@
 module Waterfowl
   # Swimming helper.
   def swim
-    puts "swimming around"
+    puts 'swimming around'
   end
 end
 
@@ -30,9 +30,9 @@ class Bird
   # FIXME: maybe extract this to a base class +Animal+?
   #++
   def speak # :yields: text
-    puts "generic tweeting"
-    yield "tweet"
-    yield "tweet"
+    puts 'generic tweeting'
+    yield 'tweet'
+    yield 'tweet'
   end
 
   # Flying is the most critical feature of birds.
@@ -47,15 +47,15 @@ class Bird
   #
   #   fly(:south, 70)
   def fly(direction, velocity)
-    if RUBY_PLATFORM == "java"
+    if RUBY_PLATFORM == 'java'
       _fly_jruby(direction, velocity)
     else
       puts "flying away: direction=#{direction}, velocity=#{velocity}"
     end
   end
 
-  def _fly_jruby(direction, velocity) # :nodoc:
-    puts "flying away, but not that simple"
+  def _fly_jruby(_direction, _velocity) # :nodoc:
+    puts 'flying away, but not that simple'
   end
 end
 
@@ -86,7 +86,7 @@ class Duck
 
   # Implements quacking
   def quack
-    "quack"
+    'quack'
   end
 
   private :quack
