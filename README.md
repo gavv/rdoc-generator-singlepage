@@ -7,7 +7,9 @@ Single page HTML5 generator for Ruby RDoc.
 ## Features
 
 * Generate single page HTML5 documentation suitable for offline use.
+* Templates support using [Slim](http://slim-lang.com/).
 * Themes support.
+* Out of the box [Sass](http://sass-lang.com/) support.
 * Filter classes or members by regex.
 
 ## Example
@@ -56,16 +58,22 @@ Use custom directory and file name:
 $ rdoc -f rsinglepage --output superdoc --rsp-filename superdoc.html
 ```
 
+Specify template name:
+
+```
+$ rdoc -f rsinglepage --rsp-template onepage
+```
+
 Specify theme name:
 
 ```
-$ rdoc -f rsinglepage --rsp-theme default
+$ rdoc -f rsinglepage --rsp-theme light
 ```
 
 Specify additional theme that may partially override default one:
 
 ```
-$ rdoc -f rsinglepage --rsp-theme default --rsp-theme ./custom_theme.yml
+$ rdoc -f rsinglepage --rsp-theme light --rsp-theme ./custom_theme.yml
 ```
 
 Filter classes and members by regex:
@@ -82,11 +90,17 @@ $ rdoc -f rsinglepage --rsp-filter-classes '^Test.*' --rsp-filter-members '^test
 
 *todo*
 
-## Themes
+## Configuration
+
+#### Templates
+
+*todo*
+
+#### Themes
 
 *todo*
 
 ## License
 
 * The source code is licensed under [MIT](LICENSE) license.
-* Fonts have their own [licenses](data/rdoc-generator-singlepage/themes/fonts).
+* Fonts have their own [licenses](data/rdoc-generator-singlepage/themes/common/fonts).
