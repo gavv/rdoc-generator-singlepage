@@ -1,4 +1,5 @@
 require 'rdoc/rdoc'
+require 'sass'
 require 'builder'
 require 'yaml'
 require 'fileutils'
@@ -87,6 +88,8 @@ class RDoc::Generator::RSinglePage
     title = get_title
     classes = get_classes
 
+    generate_theme_files(theme)
+
     builder = new_builder(theme, title, classes)
     html = generate_html(builder)
 
@@ -107,8 +110,12 @@ class RDoc::Generator::RSinglePage
   def install_theme_files(theme)
     theme[:head].values.each do |files|
       files.each do |file|
-        if file[:src_path] && file[:dst_name]
-          FileUtils.copy_file(file[:src_path], file[:dst_name])
+        if file[:dst_name]
+          if file[:src_path]
+            FileUtils.copy_file(file[:src_path], file[:dst_name])
+          elsif file[:data]
+            File.write(file[:dst_name], file[:data])
+          end
         end
       end
     end
@@ -260,6 +267,31 @@ class RDoc::Generator::RSinglePage
     end
 
     doc
+  end
+
+  def generate_theme_files(theme)
+    theme[:head][:styles].each do |file|
+      if File.extname(file[:src_path]) == '.sass'
+        generate_css_from_sass(file)
+      end
+    end
+  end
+
+  def generate_css_from_sass(file)
+    options = {
+      cache:  false,
+      syntax: :sass,
+      style:  :default
+    }
+
+    input_data = File.read(file[:src_path])
+    renderer = Sass::Engine.new(input_data, options)
+    output_data = renderer.render
+
+    file.delete(:src_path)
+    file[:dst_name] = File.basename(file[:dst_name], '.*') + '.css'
+    file[:url] = get_url(file[:dst_name])
+    file[:data] = output_data
   end
 
   def self.themes_dir
