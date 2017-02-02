@@ -5,6 +5,8 @@ require 'sass'
 require 'slim'
 require 'recursive-open-struct'
 
+require_relative 'doc_reader'
+
 class RDoc::Options
   attr_accessor :rsp_filename
   attr_accessor :rsp_prefix
@@ -12,7 +14,6 @@ class RDoc::Options
   attr_accessor :rsp_themes
   attr_accessor :rsp_filter_classes
   attr_accessor :rsp_filter_members
-  attr_accessor :rsp_group_members
 end
 
 class RDoc::Generator::RSinglePage
@@ -78,14 +79,6 @@ class RDoc::Generator::RSinglePage
            'Include only members that match regex.') do |value|
       rdoc_options.rsp_filter_members = Regexp.new(value)
     end
-
-    opt.separator nil
-    opt.on('--rsp-group-members=REGEX', String,
-           'Group members by regex instead of default',
-           'grouping. First regex capture group is used',
-           'as a group name.') do |value|
-      rdoc_options.rsp_group_members = Regexp.new(value)
-    end
   end
 
   def initialize(store, options)
@@ -94,11 +87,13 @@ class RDoc::Generator::RSinglePage
   end
 
   def generate
+    doc_reader = DocReader.new(@store, @options)
+
     template = get_template
     theme = get_theme
 
     title = get_title
-    classes = get_classes
+    classes = doc_reader.classes
 
     generate_theme_files(theme)
 
@@ -318,272 +313,6 @@ class RDoc::Generator::RSinglePage
 
   def get_title
     @options.title
-  end
-
-  def get_classes
-    classes = @store.all_classes_and_modules
-
-    classes = classes.select do |klass|
-      !skip_class? klass.full_name
-    end
-
-    classes.sort_by!(&:full_name)
-
-    classes = classes.map do |klass|
-      {
-        id:    klass.full_name,
-        title: klass.full_name,
-        kind: get_class_kind(@store, klass.full_name),
-        comment: get_comment(klass),
-        groups:  get_groups(klass)
-      }
-    end
-
-    add_indicators classes
-  end
-
-  def get_class_kind(store, class_name)
-    if store.all_modules.select { |m| m.full_name == class_name }.size == 1
-      :module
-    else
-      :class
-    end
-  end
-
-  def get_groups(klass)
-    members = get_members(klass)
-    groups = {}
-
-    members.each do |member|
-      group = get_member_group(member)
-      next unless group
-
-      group_id = klass.full_name.strip + '::' + group[:title].strip
-
-      unless groups.include? group_id
-        groups[group_id] = group.merge(
-          id: group_id,
-          members: []
-        )
-      end
-
-      groups[group_id][:members] << member
-    end
-
-    groups.values
-  end
-
-  def get_members(klass)
-    members = []
-
-    method_members = get_raw_members klass.method_list do |member|
-      member[:kind] = :method
-    end
-
-    attr_members = get_raw_members klass.attributes do |member|
-      member[:kind] = :attribute
-    end
-
-    const_members = get_raw_members klass.constants do |member|
-      member[:kind] = :constant
-    end
-
-    extends_members = get_raw_members klass.extends do |member|
-      member[:kind] = :extended
-    end
-
-    include_members = get_raw_members klass.includes do |member|
-      member[:kind] = :included
-    end
-
-    members.push(*method_members)
-    members.push(*attr_members)
-    members.push(*const_members)
-    members.push(*extends_members)
-    members.push(*include_members)
-
-    add_indicators members
-  end
-
-  def get_raw_members(member_list)
-    members = []
-
-    member_list.each do |m|
-      next if skip_member? m.name
-
-      member = {}
-      member[:id] = if m.respond_to? :arglists
-                      if m.arglists
-                        m.arglists
-                      else
-                        m.name
-                      end
-                    else
-                      m.name
-                    end
-
-      member[:title] = m.name if m.name
-      member[:comment] = get_comment(m)
-
-      if m.respond_to? :markup_code
-        member[:code] = m.markup_code if m.markup_code && m.markup_code != ''
-      end
-
-      if m.respond_to? :type
-        member[:level] = m.type.to_sym if m.type
-      end
-
-      if m.respond_to? :visibility
-        member[:visibility] = m.visibility.to_sym if m.visibility
-      end
-
-      yield member
-
-      members << member
-    end
-
-    members
-  end
-
-  def get_comment(object)
-    if object.comment.respond_to? :text
-      object.description.strip
-    else
-      object.comment
-    end
-  end
-
-  def get_member_group(member)
-    if @options.rsp_group_members
-      get_member_group_from_match(member[:title])
-    else
-      get_member_group_with_default_grouping(member)
-    end
-  end
-
-  def get_member_group_with_default_grouping(member)
-    case member[:kind]
-    when :method
-      case member[:level]
-      when :instance
-        {
-          title: 'Instance Methods',
-          kind:  :method,
-          level: :instance
-        }
-      when :class
-        {
-          title: 'Class Methods',
-          kind:  :method,
-          level: :class
-        }
-      end
-    when :attribute
-      case member[:level]
-      when :instance
-        {
-          title: 'Instance Attributes',
-          kind:  :attribute,
-          level: :instance
-        }
-      when :class
-        {
-          title: 'Class Attributes',
-          kind:  :attribute,
-          level: :class
-        }
-      end
-    when :constant
-      {
-        title: 'Constants',
-        kind:  :constant
-      }
-    when :extended
-      {
-        title: 'Extend Modules',
-        kind:  :extended
-      }
-    when :included
-      {
-        title: 'Include Modules',
-        kind:  :included
-      }
-    end
-  end
-
-  def get_member_group_from_match(member_name)
-    if m = @options.rsp_group_members.match(member_name)
-      if m.length != 2
-        raise "Invalid group-members regex: /#{@options.rsp_group_members}/\n" \
-              'Expected exactly one capture group.'
-      end
-      {
-        title: m[1]
-      }
-    end
-  end
-
-  def get_indicators(object)
-    indicators = []
-
-    case object[:kind]
-    when :module
-      indicators << :indicatorKindModule
-    when :class
-      indicators << :indicatorKindClass
-    when :included
-      indicators << :indicatorKindIncluded
-    when :extended
-      indicators << :indicatorKindExtended
-    when :constant
-      indicators << :indicatorKindConstant
-    when :method
-      if object[:level] == :class
-        indicators << :indicatorKindClassMethod
-      else
-        indicators << :indicatorKindInstanceMethod
-      end
-    when :attribute
-      if object[:level] == :class
-        indicators << :indicatorKindClassAttribute
-      else
-        indicators << :indicatorKindInstanceAttribute
-      end
-    end
-
-    case object[:visibility]
-    when :public
-      indicators << :indicatorVisibilityPublic
-    when :private
-      indicators << :indicatorVisibilityPrivate
-    when :protected
-      indicators << :indicatorVisibilityProtected
-    end
-
-    indicators
-  end
-
-  def add_indicators(array)
-    array.each do |object|
-      object[:indicators] = get_indicators(object)
-    end
-    array
-  end
-
-  def skip_class?(class_name)
-    if @options.rsp_filter_classes
-      @options.rsp_filter_classes.match(class_name).nil?
-    else
-      false
-    end
-  end
-
-  def skip_member?(member_name)
-    if @options.rsp_filter_members
-      @options.rsp_filter_members.match(member_name).nil?
-    else
-      false
-    end
   end
 
   def check_one_of(message: '', expected: [], actual: '')
