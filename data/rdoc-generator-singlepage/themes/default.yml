@@ -1,7 +1,7 @@
 head:
   styles:
     -
-      file: default/styles.css
+      file: default/styles.sass
   fonts:
     -
       file: fonts/Roboto-Regular.ttf

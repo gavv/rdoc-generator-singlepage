@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'rdoc'
   spec.add_runtime_dependency 'builder'
+  spec.add_runtime_dependency 'sass'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
