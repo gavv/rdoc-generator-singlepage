@@ -1,0 +1,22 @@
+pre .ruby-constant {
+  color: #839496; }
+pre .ruby-keyword {
+  color: #1360a9;
+  font-weight: bold; }
+pre .ruby-ivar {
+  color: #2aa198; }
+pre .ruby-operator {
+  color: #859900; }
+pre .ruby-identifier {
+  color: #1d544c; }
+pre .ruby-node {
+  color: #a73407; }
+pre .ruby-comment {
+  color: #dc322f;
+  font-style: italic; }
+pre .ruby-regexp {
+  color: #ffa07a; }
+pre .ruby-value {
+  color: #009705; }
+pre .ruby-string {
+  color: #657b83; }

@@ -1,0 +1,16 @@
+head:
+  styles:
+    -
+      file: common/syntax/solarized.sass
+    -
+      file: light/main.sass
+  fonts:
+    -
+      file: common/fonts/Roboto-Regular.ttf
+      family: RobotoRegular
+    -
+      file: common/fonts/Raleway-Regular.ttf
+      family: RalewayRegular
+    -
+      file: common/fonts/Raleway-SemiBold.ttf
+      family: RalewaySemiBold
