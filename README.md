@@ -9,7 +9,7 @@ Single page HTML5 generator for Ruby RDoc.
 * Generate single page HTML5 documentation suitable for offline use.
 * Templates support using [Slim](http://slim-lang.com/).
 * Themes support.
-* Out of the box [SASS](http://sass-lang.com/) support.
+* Out of the box [Sass](http://sass-lang.com/) support.
 * Filter classes or members by regex.
 
 ## Example
