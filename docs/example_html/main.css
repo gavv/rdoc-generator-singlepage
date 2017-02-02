@@ -200,25 +200,3 @@ body main article section header {
   color: black; }
 body main article section pre {
   font-size: 12px; }
-body main article section pre .ruby-constant {
-  color: #839496; }
-body main article section pre .ruby-keyword {
-  color: #1360a9;
-  font-weight: bold; }
-body main article section pre .ruby-ivar {
-  color: #2aa198; }
-body main article section pre .ruby-operator {
-  color: #859900; }
-body main article section pre .ruby-identifier {
-  color: #1d544c; }
-body main article section pre .ruby-node {
-  color: #a73407; }
-body main article section pre .ruby-comment {
-  color: #dc322f;
-  font-style: italic; }
-body main article section pre .ruby-regexp {
-  color: #ffa07a; }
-body main article section pre .ruby-value {
-  color: #009705; }
-body main article section pre .ruby-string {
-  color: #657b83; }

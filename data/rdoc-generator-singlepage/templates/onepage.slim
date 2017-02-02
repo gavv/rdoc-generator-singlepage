@@ -1,0 +1,95 @@
+doctype html
+html
+  head
+    meta charset="UTF-8"
+
+    - theme.head.fonts.each do |file|
+      css:
+        @font-face {
+          font-family: '#{file.family}';
+          src: url('#{file.url}');
+        }
+
+    - theme.head.styles.each do |file|
+      link rel="stylesheet" href="#{file.url}"
+
+    - theme.head.scripts.each do |file|
+      script src="#{file.url}"
+
+    - theme.head.html.each do |file|
+      | #{{file.data}}
+
+  body
+    - if theme.body.header
+      | #{{theme.body.header.data}}
+
+    header class="mainHeader"
+      | #{title}
+
+    aside
+      - classes.each do |klass|
+
+        - if klass.groups.empty?
+          div class="tocClassBlock"
+            - klass.indicators.each do |name|
+              div class="indicator #{name}"
+
+            a class="tocClass" href="##{klass.id}"
+              | #{klass.title}
+
+        - else
+          details class="tocClassBlock"
+            summary
+              - klass.indicators.each do |name|
+                div class="indicator #{name}"
+
+              a class="tocClass" href="##{klass.id}"
+                | #{klass.title}
+
+            div class="tocGroupBlock"
+              - klass.groups.each do |group|
+                a class="tocGroup" href="##{group.id}"
+                  | #{group.title}
+
+    main
+      - classes.each do |klass|
+
+        article class="classBlock" id="#{klass.id}"
+
+          header class="classHeader"
+            - klass.indicators.each do |name|
+              div class="indicator #{name}"
+
+            span class="className"
+              | #{klass.title}
+
+          - klass.groups.each do |group|
+            section class="groupBlock" id="#{group.id}"
+
+              header class="groupHeader"
+                span class="groupName"
+                  | #{group.title}
+
+              - group.members.each do |member|
+                div class="memberBlock"
+
+                  div class="memberHeader"
+                    - member.indicators.each do |name|
+                      div class="indicator #{name}"
+
+                    span class="memberName"
+                      | #{member.id}
+
+                  - if member.comment
+                    span class="memberComment"
+                      | #{{member.comment}}
+
+                  - if member.code
+                    details class="memberCode"
+                      summary
+                        | Source code
+                      pre
+                        | #{{member.code}}
+
+    - if theme.body.footer
+      | #{{theme.body.footer.data}}

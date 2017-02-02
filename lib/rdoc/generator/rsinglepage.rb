@@ -1,12 +1,14 @@
 require 'rdoc/rdoc'
-require 'sass'
-require 'builder'
-require 'yaml'
 require 'fileutils'
+require 'yaml'
+require 'sass'
+require 'slim'
+require 'recursive-open-struct'
 
 class RDoc::Options
   attr_accessor :rsp_filename
   attr_accessor :rsp_prefix
+  attr_accessor :rsp_template
   attr_accessor :rsp_themes
   attr_accessor :rsp_filter_classes
   attr_accessor :rsp_filter_members
@@ -17,10 +19,12 @@ class RDoc::Generator::RSinglePage
   RDoc::RDoc.add_generator(self)
 
   DEFAULT_FILENAME = 'index.html'.freeze
-  DEFAULT_THEME    = 'default'.freeze
+  DEFAULT_TEMPLATE = 'onepage'.freeze
+  DEFAULT_THEME    = 'light'.freeze
 
   def self.setup_options(rdoc_options)
     rdoc_options.rsp_filename = DEFAULT_FILENAME
+    rdoc_options.rsp_template = DEFAULT_TEMPLATE
     rdoc_options.rsp_themes   = []
 
     opt = rdoc_options.option_parser
@@ -41,6 +45,16 @@ class RDoc::Generator::RSinglePage
     end
 
     opt.separator nil
+    opt.on('--rsp-template=NAME', String,
+           "Set template. Defaults to '#{DEFAULT_TEMPLATE}'.",
+           "If name contains slash, it's a path, and",
+           "otherwise it's a name of installed template.",
+           'Installed templates:',
+           *(templates_list.map { |s| " - #{s}" })) do |value|
+      rdoc_options.rsp_template = template_path(value)
+    end
+
+    opt.separator nil
     opt.on('--rsp-theme=NAME', String,
            "Set theme. Defaults to '#{DEFAULT_THEME}'. Specify",
            'multiple times to merge several themes. Every',
@@ -49,9 +63,6 @@ class RDoc::Generator::RSinglePage
            "and otherwise it's a name of installed theme.",
            'Installed themes:',
            *(themes_list.map { |s| " - #{s}" })) do |value|
-      # Expand path while parsing options, because later RDoc will
-      # chdir into the output directory and we'll not be able to
-      # resolve relative paths correctly.
       rdoc_options.rsp_themes << theme_path(value)
     end
 
@@ -83,15 +94,15 @@ class RDoc::Generator::RSinglePage
   end
 
   def generate
-    theme = load_theme
+    template = get_template
+    theme = get_theme
 
     title = get_title
     classes = get_classes
 
     generate_theme_files(theme)
 
-    builder = new_builder(theme, title, classes)
-    html = generate_html(builder)
+    html = generate_html(template, theme, title, classes)
 
     install_theme_files(theme)
     install_html_file(html)
@@ -127,146 +138,21 @@ class RDoc::Generator::RSinglePage
     end
   end
 
-  def generate_html(builder)
-    "<!DOCTYPE html>\n#{builder}"
-  end
+  def generate_html(template, theme, title, classes)
+    options = {
+      pretty: true
+    }
 
-  def new_builder(theme, title, classes)
-    doc = Builder::XmlMarkup.new(indent: 2)
+    vars = {
+      theme:   theme,
+      title:   title,
+      classes: classes
+    }
 
-    doc.html do
-      doc.head do
-        doc.meta(charset: 'UTF-8')
+    scope = RecursiveOpenStruct.new(vars, recurse_over_arrays: true)
 
-        unless theme[:head][:fonts].empty?
-          doc.style do
-            theme[:head][:fonts].each do |file|
-              doc << "@font-face {\n"
-              doc << "  font-family: '#{file[:family]}';\n"
-              doc << "  src: url('#{file[:url]}');\n"
-              doc << "}\n"
-            end
-          end
-        end
-
-        theme[:head][:styles].each do |file|
-          doc.link(rel: :stylesheet, href: file[:url])
-        end
-
-        theme[:head][:scripts].each do |file|
-          doc.script(src: file[:url]) do
-          end
-        end
-
-        theme[:head][:html].each do |file|
-          doc << file[:data]
-        end
-      end
-
-      doc.body do
-        doc << theme[:body][:header] if theme[:body][:header]
-
-        doc.header(class: :mainHeader) do
-          doc.text! title
-        end
-
-        doc.aside do
-          classes.each do |klass|
-            if klass[:groups].empty?
-              doc.div(class: :tocClassBlock) do
-                klass[:indicators].each do |name|
-                  doc.div(class: "indicator #{name}") do
-                  end
-                end
-                doc.a(class: :tocClass, href: '#' + klass[:id]) do
-                  doc.text! klass[:title]
-                end
-              end
-            else
-              doc.details(class: :tocClassBlock) do
-                doc.summary do
-                  klass[:indicators].each do |name|
-                    doc.div(class: "indicator #{name}") do
-                    end
-                  end
-                  doc.a(class: :tocClass, href: '#' + klass[:id]) do
-                    doc.text! klass[:title]
-                  end
-                end
-                doc.div(class: :tocGroupBlock) do
-                  klass[:groups].each do |group|
-                    doc.a(class: :tocGroup, href: '#' + group[:id]) do
-                      doc.text! group[:title]
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-
-        doc.main do
-          classes.each do |klass|
-            doc.article(class: :classBlock, id: klass[:id]) do
-              doc.header(class: :classHeader) do
-                klass[:indicators].each do |name|
-                  doc.div(class: "indicator #{name}") do
-                  end
-                end
-                doc.span(class: :className) do
-                  doc.text! klass[:title]
-                end
-              end
-
-              klass[:groups].each do |group|
-                doc.section(class: :groupBlock, id: group[:id]) do
-                  doc.header(class: :groupHeader) do
-                    doc.span(class: :groupName) do
-                      doc.text! group[:title]
-                    end
-                  end
-
-                  group[:members].each do |member|
-                    doc.div(class: :memberBlock) do
-                      doc.div(class: :memberHeader) do
-                        member[:indicators].each do |name|
-                          doc.div(class: "indicator #{name}") do
-                          end
-                        end
-                        doc.span(class: :memberName) do
-                          doc.text! member[:id]
-                        end
-                      end
-
-                      if member[:comment]
-                        doc.span(class: :memberComment) do
-                          doc << member[:comment]
-                        end
-                      end
-
-                      if member[:code]
-                        doc.details(class: :memberCode) do
-                          doc.summary do
-                            doc.text! 'Source code'
-                          end
-                          doc.pre do
-                            doc << member[:code]
-                          end
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end
-
-        doc << theme[:body][:footer] if theme[:body][:footer]
-      end
-    end
-
-    doc
+    template = Slim::Template.new(template, options)
+    template.render(scope)
   end
 
   def generate_theme_files(theme)
@@ -294,8 +180,38 @@ class RDoc::Generator::RSinglePage
     file[:data] = output_data
   end
 
+  def self.data_dir
+    File.join File.dirname(__FILE__), '../../../data/rdoc-generator-singlepage'
+  end
+
+  def self.templates_dir
+    File.join data_dir, 'templates'
+  end
+
+  def self.templates_list
+    Dir[File.join(templates_dir, '*.slim')].sort.map do |path|
+      File.basename path, '.slim'
+    end
+  end
+
+  def self.template_path(name)
+    if name.include? '/'
+      File.absolute_path name
+    else
+      name
+    end
+  end
+
+  def get_template
+    if @options.rsp_template.include? '/'
+      @options.rsp_template
+    else
+      File.join self.class.templates_dir, "#{@options.rsp_template}.slim"
+    end
+  end
+
   def self.themes_dir
-    File.join File.dirname(__FILE__), '../../../data/rdoc-generator-singlepage/themes'
+    File.join data_dir, 'themes'
   end
 
   def self.themes_list
@@ -316,7 +232,7 @@ class RDoc::Generator::RSinglePage
     File.join(File.dirname(theme_path), file_path)
   end
 
-  def load_theme
+  def get_theme
     theme = {
       head: {
         styles: [],
@@ -334,13 +250,13 @@ class RDoc::Generator::RSinglePage
                  end
 
     theme_list.each do |theme_path|
-      merge_theme(theme, theme_path)
+      add_theme(theme, theme_path)
     end
 
     theme
   end
 
-  def merge_theme(theme, theme_path)
+  def add_theme(theme, theme_path)
     config = YAML.load_file theme_path
 
     config.each do |section, content|
