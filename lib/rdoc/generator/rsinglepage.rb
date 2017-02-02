@@ -152,9 +152,7 @@ class RDoc::Generator::RSinglePage
 
   def generate_theme_files(theme)
     theme[:head][:styles].each do |file|
-      if File.extname(file[:src_path]) == '.sass'
-        generate_css_from_sass(file)
-      end
+      generate_css_from_sass(file) if File.extname(file[:src_path]) == '.sass'
     end
   end
 
