@@ -73,7 +73,7 @@ $ rdoc -f rsinglepage --rsp-theme light
 Specify additional theme that may partially override default one:
 
 ```
-$ rdoc -f rsinglepage --rsp-theme default --rsp-theme ./custom_theme.yml
+$ rdoc -f rsinglepage --rsp-theme light --rsp-theme ./custom_theme.yml
 ```
 
 Filter classes and members by regex:
