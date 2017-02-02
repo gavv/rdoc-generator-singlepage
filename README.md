@@ -58,10 +58,16 @@ Use custom directory and file name:
 $ rdoc -f rsinglepage --output superdoc --rsp-filename superdoc.html
 ```
 
+Specify template name:
+
+```
+$ rdoc -f rsinglepage --rsp-template onepage
+```
+
 Specify theme name:
 
 ```
-$ rdoc -f rsinglepage --rsp-theme default
+$ rdoc -f rsinglepage --rsp-theme light
 ```
 
 Specify additional theme that may partially override default one:
@@ -84,7 +90,13 @@ $ rdoc -f rsinglepage --rsp-filter-classes '^Test.*' --rsp-filter-members '^test
 
 *todo*
 
-## Themes
+## Configuration
+
+#### Templates
+
+*todo*
+
+#### Themes
 
 *todo*
 
