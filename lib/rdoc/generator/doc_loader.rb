@@ -13,8 +13,8 @@ class DocLoader
   def build_classes
     classes = @store.all_classes_and_modules
 
-    classes = classes.select do |klass|
-      !skip_class? klass.full_name
+    classes = classes.reject do |klass|
+      skip_class? klass.full_name
     end
 
     classes.sort_by!(&:full_name)

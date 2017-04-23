@@ -36,7 +36,7 @@ class RDoc::Generator::SolarFish
     opt.separator nil
     opt.on('--sf-jsonfile=FILE', String,
            'Set output JSON file name.',
-           "Empty by default.") do |value|
+           'Empty by default.') do |value|
       rdoc_options.sf_jsonfile = value
     end
 
@@ -46,8 +46,8 @@ class RDoc::Generator::SolarFish
            "If name contains slash, it's a path, and",
            "otherwise it's a name of installed template.",
            'Installed templates:',
-           *(TemplateLoader::templates_list().
-             map { |s| " - #{s}" })) do |value|
+           *(TemplateLoader.templates_list
+             .map { |s| " - #{s}" })) do |value|
       rdoc_options.sf_template = TemplateLoader.template_path(value)
     end
 
@@ -59,8 +59,8 @@ class RDoc::Generator::SolarFish
            "themes. If name contains slash, it's a path,",
            "and otherwise it's a name of installed theme.",
            'Installed themes:',
-           *(ThemeLoader::themes_list().
-              map { |s| " - #{s}" })) do |value|
+           *(ThemeLoader.themes_list
+              .map { |s| " - #{s}" })) do |value|
       rdoc_options.sf_themes ||= []
       rdoc_options.sf_themes << ThemeLoader.theme_path(value)
     end

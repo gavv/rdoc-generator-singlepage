@@ -9,7 +9,7 @@ class HTMLBuilder
     html = template.render(
       title:   @options.title,
       theme:   theme,
-      classes: classes,
+      classes: classes
     )
 
     install_theme(theme)
