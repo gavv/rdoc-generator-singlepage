@@ -29,7 +29,7 @@ class DocLoader
       }
     end
 
-    with_indicators ret
+    with_labels ret
   end
 
   def build_groups(klass)
@@ -84,7 +84,7 @@ class DocLoader
     members.push(*extends_members)
     members.push(*include_members)
 
-    with_indicators members
+    with_labels members
   end
 
   def build_members_from_list(member_list)
@@ -127,49 +127,49 @@ class DocLoader
     members
   end
 
-  def build_indicators(object)
-    indicators = []
+  def build_labels(object)
+    labels = []
 
     case object[:kind]
     when :module
-      indicators << :indicatorKindModule
+      labels << :labelKindModule
     when :class
-      indicators << :indicatorKindClass
+      labels << :labelKindClass
     when :included
-      indicators << :indicatorKindIncluded
+      labels << :labelKindIncluded
     when :extended
-      indicators << :indicatorKindExtended
+      labels << :labelKindExtended
     when :constant
-      indicators << :indicatorKindConstant
+      labels << :labelKindConstant
     when :method
-      indicators << if object[:level] == :class
-                      :indicatorKindClassMethod
-                    else
-                      :indicatorKindInstanceMethod
-                    end
+      labels << if object[:level] == :class
+                  :labelKindClassMethod
+                else
+                  :labelKindInstanceMethod
+                end
     when :attribute
-      indicators << if object[:level] == :class
-                      :indicatorKindClassAttribute
-                    else
-                      :indicatorKindInstanceAttribute
-                    end
+      labels << if object[:level] == :class
+                  :labelKindClassAttribute
+                else
+                  :labelKindInstanceAttribute
+                end
     end
 
     case object[:visibility]
     when :public
-      indicators << :indicatorVisibilityPublic
+      labels << :labelVisibilityPublic
     when :private
-      indicators << :indicatorVisibilityPrivate
+      labels << :labelVisibilityPrivate
     when :protected
-      indicators << :indicatorVisibilityProtected
+      labels << :labelVisibilityProtected
     end
 
-    indicators
+    labels
   end
 
-  def with_indicators(array)
+  def with_labels(array)
     array.each do |object|
-      object[:indicators] = build_indicators(object)
+      object[:labels] = build_labels(object)
     end
     array
   end
