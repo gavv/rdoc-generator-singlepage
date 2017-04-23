@@ -5,11 +5,11 @@ require_relative 'settings'
 
 class TemplateLoader
   def self.templates_dir
-    File.join Settings::data_dir, 'templates'
+    File.join Settings.data_dir, 'templates'
   end
 
   def self.templates_list
-    pattern = File.join self.templates_dir, '*.slim'
+    pattern = File.join templates_dir, '*.slim'
 
     Dir[pattern].sort.map do |path|
       File.basename path, '.slim'

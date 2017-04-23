@@ -6,7 +6,7 @@ require_relative 'settings'
 
 class ThemeLoader
   def self.themes_dir
-    File.join Settings::data_dir, 'themes'
+    File.join Settings.data_dir, 'themes'
   end
 
   def self.themes_list
@@ -57,7 +57,7 @@ class ThemeLoader
     config.each do |section, content|
       check_one_of(
         message:  'Unexpected section in theme config',
-        expected: %w(head body),
+        expected: %w[head body],
         actual:   section
       )
 
@@ -66,7 +66,7 @@ class ThemeLoader
         content.each do |key, files|
           check_one_of(
             message:  "Unexpected key in 'head'",
-            expected: %w(styles fonts scripts html),
+            expected: %w[styles fonts scripts html],
             actual:   key
           )
           section = key.to_sym
@@ -94,7 +94,7 @@ class ThemeLoader
         content.each do |key, path|
           check_one_of(
             message:  "Unexpected key in 'body'",
-            expected: %w(header footer),
+            expected: %w[header footer],
             actual:   key
           )
           theme[:body][key.to_sym] = File.read(theme_file(theme_path, path))
