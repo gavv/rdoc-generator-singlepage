@@ -1,4 +1,3 @@
-require 'fileutils'
 require 'slim'
 require 'recursive-open-struct'
 
@@ -25,8 +24,12 @@ class TemplateLoader
     end
   end
 
-  def load(path)
-    Template.new path
+  def initialize(options)
+    @options = options
+  end
+
+  def load
+    Template.new @options.sf_template
   end
 end
 

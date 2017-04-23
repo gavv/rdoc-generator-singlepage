@@ -14,7 +14,7 @@ Single page HTML5 generator for Ruby RDoc.
 
 ## Example
 
-See example output [here](https://rbdoc.github.io/rdoc-generator-solarfish/example_html/). It was generated from the [`example.rb`](docs/example.rb) in the [`docs`](docs) directory.
+See example output [HTML](https://rbdoc.github.io/rdoc-generator-solarfish/example_output/) and [JSON](docs/example_output/index.json). It was generated from the [`example.rb`](docs/example.rb) in the [`docs`](docs) directory.
 
 Generate locally:
 
@@ -55,7 +55,13 @@ $ rdoc -f solarfish --title "My Project"
 Use custom directory and file name:
 
 ```
-$ rdoc -f solarfish --output superdoc --sf-filename superdoc.html
+$ rdoc -f solarfish --output superdoc --sf-htmlfile superdoc.html
+```
+
+Additionally dump JSON:
+
+```
+$ rdoc -f solarfish --output superdoc --sf-htmlfile superdoc.html --sf-json superdoc.json
 ```
 
 Specify template name:
