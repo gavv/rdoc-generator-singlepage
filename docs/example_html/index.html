@@ -80,9 +80,9 @@
             </div>
             <span class="memberComment"><p>Produce some noise.</p></span><details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">speak</span> <span class="ruby-comment"># :yields: text</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;generic tweeting&quot;</span>
-  <span class="ruby-keyword">yield</span> <span class="ruby-string">&quot;tweet&quot;</span>
-  <span class="ruby-keyword">yield</span> <span class="ruby-string">&quot;tweet&quot;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;generic tweeting&#39;</span>
+  <span class="ruby-keyword">yield</span> <span class="ruby-string">&#39;tweet&#39;</span>
+  <span class="ruby-keyword">yield</span> <span class="ruby-string">&#39;tweet&#39;</span>
 <span class="ruby-keyword">end</span></pre></details>
           </div>
           <div class="memberBlock">
@@ -100,7 +100,7 @@
 <pre class="ruby"><span class="ruby-identifier">fly</span>(:<span class="ruby-identifier">south</span>, <span class="ruby-value">70</span>)
 </pre></span><details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fly</span>(<span class="ruby-identifier">direction</span>, <span class="ruby-identifier">velocity</span>)
-  <span class="ruby-keyword">if</span> <span class="ruby-constant">RUBY_PLATFORM</span> <span class="ruby-operator">==</span> <span class="ruby-string">&quot;java&quot;</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-constant">RUBY_PLATFORM</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;java&#39;</span>
     <span class="ruby-identifier">_fly_jruby</span>(<span class="ruby-identifier">direction</span>, <span class="ruby-identifier">velocity</span>)
   <span class="ruby-keyword">else</span>
     <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;flying away: direction=#{direction}, velocity=#{velocity}&quot;</span>
@@ -138,7 +138,7 @@
             </div>
             <span class="memberComment"><p>Implements quacking</p></span><details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 88</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">quack</span>
-  <span class="ruby-string">&quot;quack&quot;</span>
+  <span class="ruby-string">&#39;quack&#39;</span>
 <span class="ruby-keyword">end</span></pre></details>
           </div>
           <div class="memberBlock">
@@ -275,7 +275,7 @@
             </div>
             <span class="memberComment"><p>Swimming helper.</p></span><details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">swim</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-string">&quot;swimming around&quot;</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;swimming around&#39;</span>
 <span class="ruby-keyword">end</span></pre></details>
           </div>
         </section>

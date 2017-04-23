@@ -1,14 +1,10 @@
 require 'rdoc/rdoc'
-require 'fileutils'
-require 'yaml'
-require 'sass'
-require 'slim'
-require 'recursive-open-struct'
 
-require_relative 'doc_reader'
-require_relative 'data_dir'
-require_relative 'template_reader'
-require_relative 'theme_reader'
+require_relative 'settings'
+require_relative 'doc_loader'
+require_relative 'template_loader'
+require_relative 'theme_loader'
+require_relative 'html_builder'
 
 class RDoc::Options
   attr_accessor :rsp_filename
@@ -23,9 +19,9 @@ class RDoc::Generator::RSinglePage
   RDoc::RDoc.add_generator(self)
 
   def self.setup_options(rdoc_options)
-    rdoc_options.rsp_filename = DataDir::DEFAULT_FILENAME
-    rdoc_options.rsp_template = TemplateReader::DEFAULT_TEMPLATE
-    rdoc_options.rsp_themes   = []
+    rdoc_options.rsp_filename = Settings::DEFAULT_FILENAME
+    rdoc_options.rsp_template = Settings::DEFAULT_TEMPLATE
+    rdoc_options.rsp_themes   = nil
 
     opt = rdoc_options.option_parser
     opt.separator 'RSinglePage generator options:'
@@ -33,7 +29,7 @@ class RDoc::Generator::RSinglePage
     opt.separator nil
     opt.on('--rsp-filename=FILE', String,
            'Set output HTML file name.',
-           "Defaults to '#{DataDir::DEFAULT_FILENAME}'.") do |value|
+           "Defaults to '#{Settings::DEFAULT_FILENAME}'.") do |value|
       rdoc_options.rsp_filename = value
     end
 
@@ -46,26 +42,27 @@ class RDoc::Generator::RSinglePage
 
     opt.separator nil
     opt.on('--rsp-template=NAME', String,
-           "Set template. Defaults to '#{TemplateReader::DEFAULT_TEMPLATE}'.",
+           "Set template. Defaults to '#{Settings::DEFAULT_TEMPLATE}'.",
            "If name contains slash, it's a path, and",
            "otherwise it's a name of installed template.",
            'Installed templates:',
-           *(TemplateReader.templates_list(DataDir.path).
+           *(TemplateLoader::templates_list().
              map { |s| " - #{s}" })) do |value|
-      rdoc_options.rsp_template = TemplateReader.template_path(value)
+      rdoc_options.rsp_template = TemplateLoader.template_path(value)
     end
 
     opt.separator nil
     opt.on('--rsp-theme=NAME', String,
-           "Set theme. Defaults to '#{ThemeReader::DEFAULT_THEME}'. Specify",
+           "Set theme. Defaults to '#{Settings::DEFAULT_THEME}'. Specify",
            'multiple times to merge several themes. Every',
            'next theme overwrites options set by previous',
            "themes. If name contains slash, it's a path,",
            "and otherwise it's a name of installed theme.",
            'Installed themes:',
-           *(ThemeReader.themes_list(DataDir.path).
-             map { |s| " - #{s}" })) do |value|
-      rdoc_options.rsp_themes << ThemeReader.theme_path(value)
+           *(ThemeLoader::themes_list().
+              map { |s| " - #{s}" })) do |value|
+      rdoc_options.rsp_themes ||= []
+      rdoc_options.rsp_themes << ThemeLoader.theme_path(value)
     end
 
     opt.separator nil
@@ -87,26 +84,6 @@ class RDoc::Generator::RSinglePage
     @options = options
   end
 
-  def generate
-    doc_reader = DocReader.new(@store, @options)
-    classes = doc_reader.classes
-
-    theme_reader = ThemeReader.new(@options)
-    theme_dir = ThemeReader.theme_path(ThemeReader::DEFAULT_THEME, DataDir.path)
-    theme = theme_reader.read(theme_dir)
-    generate_theme_files(theme)
-
-    template_reader = TemplateReader.new(@options)
-    templates_dir = TemplateReader.templates_dir(DataDir.path)
-    template = template_reader.read(templates_dir)
-
-    title = get_title
-    html = generate_html(template, theme, title, classes)
-
-    install_theme_files(theme)
-    install_html_file(html)
-  end
-
   def class_dir
     nil
   end
@@ -115,69 +92,23 @@ class RDoc::Generator::RSinglePage
     nil
   end
 
-  private
+  def generate
+    theme_paths = @rsp_themes
+    theme_paths ||= [ThemeLoader.theme_path(Settings::DEFAULT_THEME)]
 
-  def install_theme_files(theme)
-    theme[:head].values.each do |files|
-      files.each do |file|
-        if file[:dst_name]
-          if file[:src_path]
-            FileUtils.copy_file(file[:src_path], file[:dst_name])
-          elsif file[:data]
-            File.write(file[:dst_name], file[:data])
-          end
-        end
-      end
-    end
-  end
+    template_path = @rsp_template
+    template_path ||= TemplateLoader.template_path(Settings::DEFAULT_TEMPLATE)
 
-  def install_html_file(html)
-    File.open(@options.rsp_filename, 'w') do |file|
-      file.write(html)
-    end
-  end
+    doc_loader = DocLoader.new(@options, @store)
+    classes = doc_loader.load
 
-  def generate_html(template, theme, title, classes)
-    options = {
-      pretty: true
-    }
+    theme_loader = ThemeLoader.new(@options)
+    theme = theme_loader.load(theme_paths)
 
-    vars = {
-      theme:   theme,
-      title:   title,
-      classes: classes
-    }
+    template_loader = TemplateLoader.new
+    template = template_loader.load(template_path)
 
-    scope = RecursiveOpenStruct.new(vars, recurse_over_arrays: true)
-
-    template = Slim::Template.new(template, options)
-    template.render(scope)
-  end
-
-  def generate_theme_files(theme)
-    theme[:head][:styles].each do |file|
-      generate_css_from_sass(file) if File.extname(file[:src_path]) == '.sass'
-    end
-  end
-
-  def generate_css_from_sass(file)
-    options = {
-      cache:  false,
-      syntax: :sass,
-      style:  :default
-    }
-
-    input_data = File.read(file[:src_path])
-    renderer = Sass::Engine.new(input_data, options)
-    output_data = renderer.render
-
-    file.delete(:src_path)
-    file[:dst_name] = File.basename(file[:dst_name], '.*') + '.css'
-    file[:url] = ThemeReader.build_url(file[:dst_name], @options.rsp_prefix)
-    file[:data] = output_data
-  end
-
-  def get_title
-    @options.title
+    builder = HTMLBuilder.new(@options)
+    builder.build(classes, theme, template)
   end
 end

@@ -1,10 +1,10 @@
-class DocReader
-  def initialize(store, options)
-    @store = store
+class DocLoader
+  def initialize(options, store)
     @options = options
+    @store = store
   end
 
-  def classes
+  def load
     build_classes
   end
 
