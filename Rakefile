@@ -4,7 +4,7 @@ task :example do
   sh 'cd docs &&' \
      ' rdoc' \
      ' -a' \
-     ' -f rsinglepage' \
+     ' -f solarfish' \
      ' -o example_html' \
-     " -t 'RDoc::Generator::RSinglePage Example'"
+     " -t 'RDoc::Generator::SolarFish Example'"
 end

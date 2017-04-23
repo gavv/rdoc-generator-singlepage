@@ -1,1 +1,1 @@
-require 'rsinglepage'
+require 'solarfish'

@@ -241,16 +241,16 @@ class DocLoader
   end
 
   def skip_class?(class_name)
-    if @options.rsp_filter_classes
-      @options.rsp_filter_classes.match(class_name).nil?
+    if @options.sf_filter_classes
+      @options.sf_filter_classes.match(class_name).nil?
     else
       false
     end
   end
 
   def skip_member?(member_name)
-    if @options.rsp_filter_members
-      @options.rsp_filter_members.match(member_name).nil?
+    if @options.sf_filter_members
+      @options.sf_filter_members.match(member_name).nil?
     else
       false
     end
