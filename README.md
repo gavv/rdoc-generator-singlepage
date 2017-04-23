@@ -1,4 +1,4 @@
-# RDoc::Generator::RSinglePage
+# RDoc::Generator::SolarFish
 
 Single page HTML5 generator for Ruby RDoc.
 
@@ -14,7 +14,7 @@ Single page HTML5 generator for Ruby RDoc.
 
 ## Example
 
-See example output [here](https://rbdoc.github.io/rdoc-generator-singlepage/example_html/). It was generated from the [`example.rb`](docs/example.rb) in the [`docs`](docs) directory.
+See example output [here](https://rbdoc.github.io/rdoc-generator-solarfish/example_html/). It was generated from the [`example.rb`](docs/example.rb) in the [`docs`](docs) directory.
 
 Generate locally:
 
@@ -49,37 +49,37 @@ $ rdoc --help
 Generate documentation under the `doc/` directory:
 
 ```
-$ rdoc -f rsinglepage --title "My Project"
+$ rdoc -f solarfish --title "My Project"
 ```
 
 Use custom directory and file name:
 
 ```
-$ rdoc -f rsinglepage --output superdoc --rsp-filename superdoc.html
+$ rdoc -f solarfish --output superdoc --sf-filename superdoc.html
 ```
 
 Specify template name:
 
 ```
-$ rdoc -f rsinglepage --rsp-template onepage
+$ rdoc -f solarfish --sf-template onepage
 ```
 
 Specify theme name:
 
 ```
-$ rdoc -f rsinglepage --rsp-theme light
+$ rdoc -f solarfish --sf-theme light
 ```
 
 Specify additional theme that may partially override default one:
 
 ```
-$ rdoc -f rsinglepage --rsp-theme light --rsp-theme ./custom_theme.yml
+$ rdoc -f solarfish --sf-theme light --sf-theme ./custom_theme.yml
 ```
 
 Filter classes and members by regex:
 
 ```
-$ rdoc -f rsinglepage --rsp-filter-classes '^Test.*' --rsp-filter-members '^test_.*'
+$ rdoc -f solarfish --sf-filter-classes '^Test.*' --sf-filter-members '^test_.*'
 ```
 
 #### From code
@@ -103,4 +103,4 @@ $ rdoc -f rsinglepage --rsp-filter-classes '^Test.*' --rsp-filter-members '^test
 ## License
 
 * The source code is licensed under [MIT](LICENSE) license.
-* Fonts have their own [licenses](data/rdoc-generator-singlepage/themes/common/fonts).
+* Fonts have their own [licenses](data/rdoc-generator-solarfish/themes/common/fonts).

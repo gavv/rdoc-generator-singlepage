@@ -31,7 +31,7 @@ class HTMLBuilder
   end
 
   def install_html(html)
-    File.open(@options.rsp_filename, 'w') do |file|
+    File.open(@options.sf_filename, 'w') do |file|
       file.write(html)
     end
   end

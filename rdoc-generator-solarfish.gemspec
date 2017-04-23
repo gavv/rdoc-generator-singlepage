@@ -2,13 +2,13 @@ lib = File.expand_path('lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
-  spec.name        = 'rdoc-generator-singlepage'
+  spec.name        = 'rdoc-generator-solarfish'
   spec.version     = '0.0.1'
   spec.authors     = ['Victor Gaydov', 'Dmitriy Shilin', 'Valeria Khomyakova']
   spec.email       = ['victor@enise.org']
   spec.description = 'Single page HTML5 generator for Ruby RDoc'
   spec.summary     = 'Exposes a new HTML formatter for RDoc'
-  spec.homepage    = 'https://github.com/rbdoc/rdoc-generator-singlepage'
+  spec.homepage    = 'https://github.com/rbdoc/rdoc-generator-solarfish'
   spec.license     = 'MIT'
 
   spec.files         = `git ls-files`.split($INPUT_RECORD_SEPARATOR)

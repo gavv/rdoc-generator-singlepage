@@ -133,7 +133,7 @@ class ThemeLoader
   end
 
   def theme_url(name)
-    url = @options.rsp_prefix || ''
+    url = @options.sf_prefix || ''
     url += '/' if !url.empty? && !url.end_with?('/')
     url + name
   end
