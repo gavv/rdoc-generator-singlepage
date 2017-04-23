@@ -20,7 +20,7 @@ class RDoc::Generator::SolarFish
 
   def self.setup_options(rdoc_options)
     rdoc_options.sf_filename = Settings::DEFAULT_FILENAME
-    rdoc_options.sf_template = Settings::DEFAULT_TEMPLATE
+    rdoc_options.sf_template = nil
     rdoc_options.sf_themes   = nil
 
     opt = rdoc_options.option_parser
@@ -93,10 +93,10 @@ class RDoc::Generator::SolarFish
   end
 
   def generate
-    theme_paths = @sf_themes
+    theme_paths = @options.sf_themes
     theme_paths ||= [ThemeLoader.theme_path(Settings::DEFAULT_THEME)]
 
-    template_path = @sf_template
+    template_path = @options.sf_template
     template_path ||= TemplateLoader.template_path(Settings::DEFAULT_TEMPLATE)
 
     doc_loader = DocLoader.new(@options, @store)
