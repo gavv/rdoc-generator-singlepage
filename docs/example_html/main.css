@@ -3,86 +3,86 @@ body {
   margin: 0 20px;
   font-family: RobotoRegular;
   font-size: 15px; }
-body .indicator {
+body .label {
   display: inline-block; }
-body .indicatorKindModule:before {
+body .labelKindModule:before {
   content: "module";
   background-color: #dff0d8;
   padding: 3px 5px;
   border-radius: 8px;
   font-size: 11px;
   color: #3c763d; }
-body .indicatorKindClass:before {
+body .labelKindClass:before {
   content: "class";
   background-color: #dff0d8;
   padding: 3px 5px;
   border-radius: 8px;
   font-size: 11px;
   color: #3c763d; }
-body .indicatorKindIncluded:before {
+body .labelKindIncluded:before {
   content: "included";
   background-color: #dff0d8;
   padding: 3px 5px;
   border-radius: 8px;
   font-size: 11px;
   color: #3c763d; }
-body .indicatorKindExtended:before {
+body .labelKindExtended:before {
   content: "extended";
   background-color: #dff0d8;
   padding: 3px 5px;
   border-radius: 8px;
   font-size: 11px;
   color: #3c763d; }
-body .indicatorKindConstant:before {
+body .labelKindConstant:before {
   content: "constant";
   background-color: #dff0d8;
   padding: 3px 5px;
   border-radius: 8px;
   font-size: 11px;
   color: #3c763d; }
-body .indicatorKindClassMethod:before {
+body .labelKindClassMethod:before {
   content: "class method";
   background-color: #dff0d8;
   padding: 3px 5px;
   border-radius: 8px;
   font-size: 11px;
   color: #3c763d; }
-body .indicatorKindInstanceMethod:before {
+body .labelKindInstanceMethod:before {
   content: "instance method";
   background-color: #d9edf7;
   padding: 3px 5px;
   border-radius: 8px;
   font-size: 11px;
   color: #31708f; }
-body .indicatorKindClassAttribute:before {
+body .labelKindClassAttribute:before {
   content: "class attribute";
   background-color: #d9edf7;
   padding: 3px 5px;
   border-radius: 8px;
   font-size: 11px;
   color: #31708f; }
-body .indicatorKindInstanceAttribute:before {
+body .labelKindInstanceAttribute:before {
   content: "instance attribute";
   background-color: #dff0d8;
   padding: 3px 5px;
   border-radius: 8px;
   font-size: 11px;
   color: #3c763d; }
-body .indicatorVisibilityPublic:before {
+body .labelVisibilityPublic:before {
   content: "public";
   background-color: #fcf8e3;
   padding: 3px 5px;
   border-radius: 8px;
   font-size: 11px;
   color: #8a6d3b; }
-body .indicatorVisibilityPrivate:before {
+body .labelVisibilityPrivate:before {
   content: "private";
   background-color: #fcf8e3;
   padding: 3px 5px;
   border-radius: 8px;
   font-size: 11px;
   color: #8a6d3b; }
-body .indicatorVisibilityProtected:before {
+body .labelVisibilityProtected:before {
   content: "protected";
   background-color: #fcf8e3;
   padding: 3px 5px;
