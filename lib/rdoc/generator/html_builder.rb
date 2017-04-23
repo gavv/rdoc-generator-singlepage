@@ -1,3 +1,5 @@
+require 'fileutils'
+
 class HTMLBuilder
   def initialize(options)
     @options = options
@@ -31,7 +33,7 @@ class HTMLBuilder
   end
 
   def install_html(html)
-    File.open(@options.sf_filename, 'w') do |file|
+    File.open(@options.sf_htmlfile, 'w') do |file|
       file.write(html)
     end
   end

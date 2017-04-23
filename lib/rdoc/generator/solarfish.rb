@@ -2,12 +2,14 @@ require 'rdoc/rdoc'
 
 require_relative 'settings'
 require_relative 'doc_loader'
-require_relative 'template_loader'
 require_relative 'theme_loader'
+require_relative 'template_loader'
+require_relative 'json_builder'
 require_relative 'html_builder'
 
 class RDoc::Options
-  attr_accessor :sf_filename
+  attr_accessor :sf_htmlfile
+  attr_accessor :sf_jsonfile
   attr_accessor :sf_prefix
   attr_accessor :sf_template
   attr_accessor :sf_themes
@@ -19,25 +21,23 @@ class RDoc::Generator::SolarFish
   RDoc::RDoc.add_generator(self)
 
   def self.setup_options(rdoc_options)
-    rdoc_options.sf_filename = Settings::DEFAULT_FILENAME
-    rdoc_options.sf_template = nil
-    rdoc_options.sf_themes   = nil
+    rdoc_options.sf_htmlfile = Settings::DEFAULT_HTMLFILE
 
     opt = rdoc_options.option_parser
     opt.separator 'SolarFish generator options:'
 
     opt.separator nil
-    opt.on('--sf-filename=FILE', String,
+    opt.on('--sf-htmlfile=FILE', String,
            'Set output HTML file name.',
-           "Defaults to '#{Settings::DEFAULT_FILENAME}'.") do |value|
-      rdoc_options.sf_filename = value
+           "Defaults to '#{Settings::DEFAULT_HTMLFILE}'.") do |value|
+      rdoc_options.sf_htmlfile = value
     end
 
     opt.separator nil
-    opt.on('--sf-prefix=PREFIX', String,
-           'Set URL prefix for links to stylesheets and',
-           'scripts in generated HTML. Empty by default.') do |value|
-      rdoc_options.sf_prefix = value
+    opt.on('--sf-jsonfile=FILE', String,
+           'Set output JSON file name.',
+           "Empty by default.") do |value|
+      rdoc_options.sf_jsonfile = value
     end
 
     opt.separator nil
@@ -63,6 +63,13 @@ class RDoc::Generator::SolarFish
               map { |s| " - #{s}" })) do |value|
       rdoc_options.sf_themes ||= []
       rdoc_options.sf_themes << ThemeLoader.theme_path(value)
+    end
+
+    opt.separator nil
+    opt.on('--sf-prefix=PREFIX', String,
+           'Set URL prefix for links to stylesheets and',
+           'scripts in generated HTML. Empty by default.') do |value|
+      rdoc_options.sf_prefix = value
     end
 
     opt.separator nil
@@ -93,22 +100,26 @@ class RDoc::Generator::SolarFish
   end
 
   def generate
-    theme_paths = @options.sf_themes
-    theme_paths ||= [ThemeLoader.theme_path(Settings::DEFAULT_THEME)]
-
-    template_path = @options.sf_template
-    template_path ||= TemplateLoader.template_path(Settings::DEFAULT_TEMPLATE)
+    @options.sf_themes ||= [ThemeLoader.theme_path(Settings::DEFAULT_THEME)]
+    @options.sf_template ||= TemplateLoader.template_path(Settings::DEFAULT_TEMPLATE)
 
     doc_loader = DocLoader.new(@options, @store)
     classes = doc_loader.load
 
-    theme_loader = ThemeLoader.new(@options)
-    theme = theme_loader.load(theme_paths)
+    if @options.sf_jsonfile
+      json_builder = JSONBuilder.new(@options)
+      json_builder.build(classes)
+    end
 
-    template_loader = TemplateLoader.new
-    template = template_loader.load(template_path)
+    if @options.sf_htmlfile
+      theme_loader = ThemeLoader.new(@options)
+      theme = theme_loader.load
 
-    builder = HTMLBuilder.new(@options)
-    builder.build(classes, theme, template)
+      template_loader = TemplateLoader.new(@options)
+      template = template_loader.load
+
+      html_builder = HTMLBuilder.new(@options)
+      html_builder.build(classes, theme, template)
+    end
   end
 end

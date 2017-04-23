@@ -29,7 +29,7 @@ class ThemeLoader
     @options = options
   end
 
-  def load(theme_paths)
+  def load
     theme = {
       head: {
         styles:  [],
@@ -40,7 +40,7 @@ class ThemeLoader
       body: {}
     }
 
-    theme_paths.each do |theme_path|
+    @options.sf_themes.each do |theme_path|
       load_theme(theme, theme_path)
     end
 
