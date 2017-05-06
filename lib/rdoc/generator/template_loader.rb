@@ -38,14 +38,14 @@ class Template
     @path = path
   end
 
-  def render(vars)
+  def render(scope)
     opts = {
       pretty: true
     }
 
-    scope = RecursiveOpenStruct.new(vars, recurse_over_arrays: true)
+    vars = RecursiveOpenStruct.new(scope, recurse_over_arrays: true)
 
     template = Slim::Template.new(@path, opts)
-    template.render(scope)
+    template.render(vars)
   end
 end

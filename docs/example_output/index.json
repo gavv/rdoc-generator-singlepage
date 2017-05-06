@@ -1,278 +1,325 @@
-[
-  {
-    "id": "Bird",
-    "title": "Bird",
-    "kind": "class",
-    "comment": "<p>The base class for all birds.</p>",
-    "groups": [
-      {
-        "title": "Instance Methods",
-        "kind": "method",
-        "level": "instance",
-        "id": "Bird::Instance Methods",
-        "members": [
-          {
-            "id": "speak() { |text| ... }",
-            "title": "speak",
-            "comment": "<p>Produce some noise.</p>",
-            "code": "<span class=\"ruby-comment\"># File example.rb, line 32</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">speak</span> <span class=\"ruby-comment\"># :yields: text</span>\n  <span class=\"ruby-identifier\">puts</span> <span class=\"ruby-string\">&#39;generic tweeting&#39;</span>\n  <span class=\"ruby-keyword\">yield</span> <span class=\"ruby-string\">&#39;tweet&#39;</span>\n  <span class=\"ruby-keyword\">yield</span> <span class=\"ruby-string\">&#39;tweet&#39;</span>\n<span class=\"ruby-keyword\">end</span>",
-            "level": "instance",
-            "visibility": "public",
-            "kind": "method",
-            "labels": [
-              "labelKindInstanceMethod",
-              "labelVisibilityPublic"
-            ]
-          },
-          {
-            "id": "Bird.fly(symbol, number) -> bool\nBird.fly(string, number) -> bool\n",
-            "title": "fly",
-            "comment": "<p>Flying is the most critical feature of birds.</p>\n\n<h1 id=\"method-i-fly-label-Example\">Example<span><a href=\"#method-i-fly-label-Example\">&para;</a> <a href=\"#top\">&uarr;</a></span></h1>\n\n<pre class=\"ruby\"><span class=\"ruby-identifier\">fly</span>(:<span class=\"ruby-identifier\">south</span>, <span class=\"ruby-value\">70</span>)\n</pre>",
-            "code": "<span class=\"ruby-comment\"># File example.rb, line 49</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">fly</span>(<span class=\"ruby-identifier\">direction</span>, <span class=\"ruby-identifier\">velocity</span>)\n  <span class=\"ruby-keyword\">if</span> <span class=\"ruby-constant\">RUBY_PLATFORM</span> <span class=\"ruby-operator\">==</span> <span class=\"ruby-string\">&#39;java&#39;</span>\n    <span class=\"ruby-identifier\">_fly_jruby</span>(<span class=\"ruby-identifier\">direction</span>, <span class=\"ruby-identifier\">velocity</span>)\n  <span class=\"ruby-keyword\">else</span>\n    <span class=\"ruby-identifier\">puts</span> <span class=\"ruby-node\">&quot;flying away: direction=#{direction}, velocity=#{velocity}&quot;</span>\n  <span class=\"ruby-keyword\">end</span>\n<span class=\"ruby-keyword\">end</span>",
-            "level": "instance",
-            "visibility": "public",
-            "kind": "method",
-            "labels": [
-              "labelKindInstanceMethod",
-              "labelVisibilityPublic"
-            ]
-          }
-        ]
-      }
-    ],
-    "labels": [
-      "labelKindClass"
-    ]
+{
+  "title": "RDoc::Generator::SolarFish Example",
+  "theme": {
+    "head": {
+      "styles": [
+        {
+          "dst_name": "solarized.css",
+          "url": "solarized.css",
+          "data": "pre .ruby-constant {\n  color: #839496; }\npre .ruby-keyword {\n  color: #1360a9;\n  font-weight: bold; }\npre .ruby-ivar {\n  color: #2aa198; }\npre .ruby-operator {\n  color: #859900; }\npre .ruby-identifier {\n  color: #1d544c; }\npre .ruby-node {\n  color: #a73407; }\npre .ruby-comment {\n  color: #dc322f;\n  font-style: italic; }\npre .ruby-regexp {\n  color: #ffa07a; }\npre .ruby-value {\n  color: #009705; }\npre .ruby-string {\n  color: #657b83; }\n"
+        },
+        {
+          "dst_name": "main.css",
+          "url": "main.css",
+          "data": "@charset \"UTF-8\";\nbody {\n  margin: 0 20px;\n  font-family: RobotoRegular;\n  font-size: 15px; }\nbody .label {\n  display: inline-block; }\nbody .labelKindModule:before {\n  content: \"module\";\n  background-color: #dff0d8;\n  padding: 3px 5px;\n  border-radius: 8px;\n  font-size: 11px;\n  color: #3c763d; }\nbody .labelKindClass:before {\n  content: \"class\";\n  background-color: #dff0d8;\n  padding: 3px 5px;\n  border-radius: 8px;\n  font-size: 11px;\n  color: #3c763d; }\nbody .labelKindIncluded:before {\n  content: \"included\";\n  background-color: #dff0d8;\n  padding: 3px 5px;\n  border-radius: 8px;\n  font-size: 11px;\n  color: #3c763d; }\nbody .labelKindExtended:before {\n  content: \"extended\";\n  background-color: #dff0d8;\n  padding: 3px 5px;\n  border-radius: 8px;\n  font-size: 11px;\n  color: #3c763d; }\nbody .labelKindConstant:before {\n  content: \"constant\";\n  background-color: #dff0d8;\n  padding: 3px 5px;\n  border-radius: 8px;\n  font-size: 11px;\n  color: #3c763d; }\nbody .labelKindClassMethod:before {\n  content: \"class method\";\n  background-color: #dff0d8;\n  padding: 3px 5px;\n  border-radius: 8px;\n  font-size: 11px;\n  color: #3c763d; }\nbody .labelKindInstanceMethod:before {\n  content: \"instance method\";\n  background-color: #d9edf7;\n  padding: 3px 5px;\n  border-radius: 8px;\n  font-size: 11px;\n  color: #31708f; }\nbody .labelKindClassAttribute:before {\n  content: \"class attribute\";\n  background-color: #d9edf7;\n  padding: 3px 5px;\n  border-radius: 8px;\n  font-size: 11px;\n  color: #31708f; }\nbody .labelKindInstanceAttribute:before {\n  content: \"instance attribute\";\n  background-color: #dff0d8;\n  padding: 3px 5px;\n  border-radius: 8px;\n  font-size: 11px;\n  color: #3c763d; }\nbody .labelVisibilityPublic:before {\n  content: \"public\";\n  background-color: #fcf8e3;\n  padding: 3px 5px;\n  border-radius: 8px;\n  font-size: 11px;\n  color: #8a6d3b; }\nbody .labelVisibilityPrivate:before {\n  content: \"private\";\n  background-color: #fcf8e3;\n  padding: 3px 5px;\n  border-radius: 8px;\n  font-size: 11px;\n  color: #8a6d3b; }\nbody .labelVisibilityProtected:before {\n  content: \"protected\";\n  background-color: #fcf8e3;\n  padding: 3px 5px;\n  border-radius: 8px;\n  font-size: 11px;\n  color: #8a6d3b; }\nbody header {\n  font-family: RalewaySemiBold; }\nbody a {\n  color: black;\n  text-decoration: none; }\nbody summary {\n  outline: none;\n  display: inline-block; }\nbody summary::-webkit-details-marker {\n  display: none; }\nbody > header {\n  font-size: 32px;\n  font-weight: 600;\n  padding: 10px 0;\n  margin: 10px 0 30px 350px; }\nbody aside {\n  float: left;\n  width: 325px;\n  overflow: hidden;\n  position: fixed;\n  overflow-y: scroll;\n  bottom: 0;\n  top: 0;\n  margin-top: 17px; }\nbody aside summary:after {\n  content: \"+\";\n  color: #000;\n  font-size: 20px;\n  text-align: center;\n  width: 20px;\n  position: absolute;\n  width: 40px;\n  top: 9%;\n  right: 0px; }\nbody aside details[open] summary:after {\n  content: \"−\"; }\nbody aside a {\n  display: inline-block; }\nbody aside .tocGroupBlock {\n  background-color: white; }\nbody aside .tocGroupBlock .tocGroup {\n  display: block;\n  padding: 5px 20px;\n  border-bottom: 1px solid #f2f2f2;\n  border-left: 3px solid transparent; }\nbody aside .tocGroupBlock .tocGroup:hover {\n  border-left: 3px solid #f25158; }\nbody aside .tocGroupBlock .tocGroup:last-child {\n  border-bottom: none; }\nbody aside .tocClassBlock {\n  border: 1px solid rgba(136, 136, 136, 0.12);\n  background-color: #fafafa;\n  border-radius: 3px;\n  margin: 7px;\n  width: 300px;\n  position: relative; }\nbody aside .tocClassBlock:first-child {\n  margin-top: 0; }\nbody aside .tocClassBlock .tocClass {\n  width: 190px;\n  word-wrap: break-word;\n  padding: 5px; }\nbody main {\n  margin-left: 340px; }\nbody main article {\n  border: 1px solid #d9d9d9;\n  border-radius: 5px;\n  margin-top: 15px; }\nbody main article header {\n  background: #f3f3f3;\n  color: black;\n  padding: 5px;\n  font-size: 22px; }\nbody main article section:first-of-type {\n  border-top: none; }\nbody main article section {\n  border-top: 1px solid #d9d9d9;\n  padding: 5px 5px 0 5px;\n  border-radius: 5px; }\nbody main article section summary:before {\n  content: \"+\";\n  color: #000;\n  font-size: 20px;\n  text-align: center;\n  padding: 10px 20px;\n  width: 20px; }\nbody main article section details {\n  border: 1px solid #d9d9d9;\n  border-radius: 6px;\n  overflow: hidden;\n  background: #fdf6e3;\n  padding: 5px; }\nbody main article section details[open] summary:before {\n  content: \"−\"; }\nbody main article section header {\n  padding: 7px; }\nbody main article section .memberBlock {\n  padding-bottom: 15px;\n  border-bottom: 1px solid #d9d9d9;\n  margin: 10px 30px 0 30px; }\nbody main article section .memberBlock:last-child {\n  border-bottom: none; }\nbody main article section .memberBlock .memberName {\n  font-weight: bolder; }\nbody main article section .memberBlock .memberComment {\n  font-size: 14px; }\nbody main article section header {\n  background: none;\n  color: black; }\nbody main article section pre {\n  font-size: 12px; }\n"
+        }
+      ],
+      "fonts": [
+        {
+          "src_path": "/home/victor/.gem/ruby/2.1.0/gems/rdoc-generator-solarfish-0.0.1/lib/rdoc/generator/../../../data/rdoc-generator-solarfish/themes/common/fonts/Roboto-Regular.ttf",
+          "dst_name": "Roboto-Regular.ttf",
+          "url": "Roboto-Regular.ttf",
+          "family": "RobotoRegular"
+        },
+        {
+          "src_path": "/home/victor/.gem/ruby/2.1.0/gems/rdoc-generator-solarfish-0.0.1/lib/rdoc/generator/../../../data/rdoc-generator-solarfish/themes/common/fonts/Raleway-Regular.ttf",
+          "dst_name": "Raleway-Regular.ttf",
+          "url": "Raleway-Regular.ttf",
+          "family": "RalewayRegular"
+        },
+        {
+          "src_path": "/home/victor/.gem/ruby/2.1.0/gems/rdoc-generator-solarfish-0.0.1/lib/rdoc/generator/../../../data/rdoc-generator-solarfish/themes/common/fonts/Raleway-SemiBold.ttf",
+          "dst_name": "Raleway-SemiBold.ttf",
+          "url": "Raleway-SemiBold.ttf",
+          "family": "RalewaySemiBold"
+        }
+      ],
+      "scripts": [
+
+      ],
+      "html": [
+
+      ]
+    },
+    "body": {
+    }
   },
-  {
-    "id": "Duck",
-    "title": "Duck",
-    "kind": "class",
-    "comment": "<p>A duck is a <a href=\"Waterfowl.html\">Waterfowl</a> <a\nhref=\"Bird.html\">Bird</a>.</p>\n\n<p>Features:</p>\n\n<pre>bird::\n\n  * speak\n  * fly\n\nwaterfowl::\n\n  * swim</pre>",
-    "groups": [
-      {
-        "title": "Instance Methods",
-        "kind": "method",
-        "level": "instance",
-        "id": "Duck::Instance Methods",
-        "members": [
-          {
-            "id": "speak() { |speech| ... }",
-            "title": "speak",
-            "comment": "<p><a href=\"Duck.html\">Duck</a> overrides generic implementation.</p>",
-            "code": "<span class=\"ruby-comment\"># File example.rb, line 82</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">speak</span>\n  <span class=\"ruby-identifier\">speech</span> = <span class=\"ruby-identifier\">quack</span>\n  <span class=\"ruby-keyword\">yield</span> <span class=\"ruby-identifier\">speech</span>\n<span class=\"ruby-keyword\">end</span>",
-            "level": "instance",
-            "visibility": "public",
-            "kind": "method",
-            "labels": [
-              "labelKindInstanceMethod",
-              "labelVisibilityPublic"
-            ]
-          },
-          {
-            "id": "quack()",
-            "title": "quack",
-            "comment": "<p>Implements quacking</p>",
-            "code": "<span class=\"ruby-comment\"># File example.rb, line 88</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">quack</span>\n  <span class=\"ruby-string\">&#39;quack&#39;</span>\n<span class=\"ruby-keyword\">end</span>",
-            "level": "instance",
-            "visibility": "private",
-            "kind": "method",
-            "labels": [
-              "labelKindInstanceMethod",
-              "labelVisibilityPrivate"
-            ]
-          },
-          {
-            "id": "Bird.useful? -> bool",
-            "title": "useful?",
-            "comment": "<p>Checks if this duck is a useful one.</p>",
-            "code": "<span class=\"ruby-comment\"># File example.rb, line 126</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">useful?</span>\n  <span class=\"ruby-ivar\">@domestic</span> <span class=\"ruby-operator\">||</span> <span class=\"ruby-ivar\">@rubber</span>\n<span class=\"ruby-keyword\">end</span>",
-            "level": "instance",
-            "visibility": "public",
-            "kind": "method",
-            "labels": [
-              "labelKindInstanceMethod",
-              "labelVisibilityPublic"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Class Methods",
-        "kind": "method",
-        "level": "class",
-        "id": "Duck::Class Methods",
-        "members": [
-          {
-            "id": "rubber_ducks()",
-            "title": "rubber_ducks",
-            "comment": "<p>Returns list of all rubber ducks.</p>",
-            "code": "<span class=\"ruby-comment\"># File example.rb, line 111</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-keyword\">self</span>.<span class=\"ruby-identifier\">rubber_ducks</span>\n  <span class=\"ruby-identifier\">@@rubber_ducks</span>\n<span class=\"ruby-keyword\">end</span>",
-            "level": "class",
-            "visibility": "public",
-            "kind": "method",
-            "labels": [
-              "labelKindClassMethod",
-              "labelVisibilityPublic"
-            ]
-          },
-          {
-            "id": "new(domestic, rubber)",
-            "title": "new",
-            "comment": "<p>Creates a new duck.</p>",
-            "code": "<span class=\"ruby-comment\"># File example.rb, line 116</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">initialize</span>(<span class=\"ruby-identifier\">domestic</span>, <span class=\"ruby-identifier\">rubber</span>)\n  <span class=\"ruby-ivar\">@domestic</span> = <span class=\"ruby-identifier\">domestic</span>\n  <span class=\"ruby-ivar\">@rubber</span> = <span class=\"ruby-identifier\">rubber</span>\n  <span class=\"ruby-identifier\">@@rubber_ducks</span> <span class=\"ruby-operator\">&lt;&lt;</span> <span class=\"ruby-keyword\">self</span> <span class=\"ruby-keyword\">if</span> <span class=\"ruby-identifier\">rubber</span>\n<span class=\"ruby-keyword\">end</span>",
-            "level": "class",
-            "visibility": "public",
-            "kind": "method",
-            "labels": [
-              "labelKindClassMethod",
-              "labelVisibilityPublic"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Instance Attributes",
-        "kind": "attribute",
-        "level": "instance",
-        "id": "Duck::Instance Attributes",
-        "members": [
-          {
-            "id": "domestic",
-            "title": "domestic",
-            "comment": "<p>True for domestic ducks.</p>",
-            "level": "instance",
-            "visibility": "public",
-            "kind": "attribute",
-            "labels": [
-              "labelKindInstanceAttribute",
-              "labelVisibilityPublic"
-            ]
-          },
-          {
-            "id": "rubber",
-            "title": "rubber",
-            "comment": "<p>True for rubber ducks.</p>",
-            "level": "instance",
-            "visibility": "public",
-            "kind": "attribute",
-            "labels": [
-              "labelKindInstanceAttribute",
-              "labelVisibilityPublic"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Constants",
-        "kind": "constant",
-        "id": "Duck::Constants",
-        "members": [
-          {
-            "id": "MAX_VELOCITY",
-            "title": "MAX_VELOCITY",
-            "comment": "",
-            "kind": "constant",
-            "labels": [
-              "labelKindConstant"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Extend Modules",
-        "kind": "extended",
-        "id": "Duck::Extend Modules",
-        "members": [
-          {
-            "id": "Animal",
-            "title": "Animal",
-            "comment": "",
-            "kind": "extended",
-            "labels": [
-              "labelKindExtended"
-            ]
-          }
-        ]
-      },
-      {
-        "title": "Include Modules",
-        "kind": "included",
-        "id": "Duck::Include Modules",
-        "members": [
-          {
-            "id": "Waterfowl",
-            "title": "Waterfowl",
-            "comment": "",
-            "kind": "included",
-            "labels": [
-              "labelKindIncluded"
-            ]
-          }
-        ]
-      }
-    ],
-    "labels": [
-      "labelKindClass"
-    ]
-  },
-  {
-    "id": "Object",
-    "title": "Object",
-    "kind": "class",
-    "comment": "",
-    "groups": [
-      {
-        "title": "Constants",
-        "kind": "constant",
-        "id": "Object::Constants",
-        "members": [
-          {
-            "id": "DEFAULT_DUCK_VELOCITY",
-            "title": "DEFAULT_DUCK_VELOCITY",
-            "comment": "<p>Default velocity for a flying duck.</p>",
-            "kind": "constant",
-            "labels": [
-              "labelKindConstant"
-            ]
-          }
-        ]
-      }
-    ],
-    "labels": [
-      "labelKindClass"
-    ]
-  },
-  {
-    "id": "Waterfowl",
-    "title": "Waterfowl",
-    "kind": "module",
-    "comment": "<p>A mixin for waterfowl creatures.</p>",
-    "groups": [
-      {
-        "title": "Instance Methods",
-        "kind": "method",
-        "level": "instance",
-        "id": "Waterfowl::Instance Methods",
-        "members": [
-          {
-            "id": "swim()",
-            "title": "swim",
-            "comment": "<p>Swimming helper.</p>",
-            "code": "<span class=\"ruby-comment\"># File example.rb, line 19</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">swim</span>\n  <span class=\"ruby-identifier\">puts</span> <span class=\"ruby-string\">&#39;swimming around&#39;</span>\n<span class=\"ruby-keyword\">end</span>",
-            "level": "instance",
-            "visibility": "public",
-            "kind": "method",
-            "labels": [
-              "labelKindInstanceMethod",
-              "labelVisibilityPublic"
-            ]
-          }
-        ]
-      }
-    ],
-    "labels": [
-      "labelKindModule"
-    ]
-  }
-]
+  "classes": [
+    {
+      "id": "Bird",
+      "title": "Bird",
+      "kind": "class",
+      "comment": "<p>The base class for all birds.</p>",
+      "groups": [
+        {
+          "title": "Instance Methods",
+          "kind": "method",
+          "level": "instance",
+          "id": "Bird::Instance Methods",
+          "members": [
+            {
+              "id": "speak() { |text| ... }",
+              "title": "speak",
+              "comment": "<p>Produce some noise.</p>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 32</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">speak</span> <span class=\"ruby-comment\"># :yields: text</span>\n  <span class=\"ruby-identifier\">puts</span> <span class=\"ruby-string\">&#39;generic tweeting&#39;</span>\n  <span class=\"ruby-keyword\">yield</span> <span class=\"ruby-string\">&#39;tweet&#39;</span>\n  <span class=\"ruby-keyword\">yield</span> <span class=\"ruby-string\">&#39;tweet&#39;</span>\n<span class=\"ruby-keyword\">end</span>",
+              "level": "instance",
+              "visibility": "public",
+              "kind": "method",
+              "labels": [
+                "labelKindInstanceMethod",
+                "labelVisibilityPublic"
+              ]
+            },
+            {
+              "id": "Bird.fly(symbol, number) -> bool\nBird.fly(string, number) -> bool\n",
+              "title": "fly",
+              "comment": "<p>Flying is the most critical feature of birds.</p>\n\n<h1 id=\"method-i-fly-label-Example\">Example<span><a href=\"#method-i-fly-label-Example\">&para;</a> <a href=\"#top\">&uarr;</a></span></h1>\n\n<pre class=\"ruby\"><span class=\"ruby-identifier\">fly</span>(:<span class=\"ruby-identifier\">south</span>, <span class=\"ruby-value\">70</span>)\n</pre>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 49</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">fly</span>(<span class=\"ruby-identifier\">direction</span>, <span class=\"ruby-identifier\">velocity</span>)\n  <span class=\"ruby-keyword\">if</span> <span class=\"ruby-constant\">RUBY_PLATFORM</span> <span class=\"ruby-operator\">==</span> <span class=\"ruby-string\">&#39;java&#39;</span>\n    <span class=\"ruby-identifier\">_fly_jruby</span>(<span class=\"ruby-identifier\">direction</span>, <span class=\"ruby-identifier\">velocity</span>)\n  <span class=\"ruby-keyword\">else</span>\n    <span class=\"ruby-identifier\">puts</span> <span class=\"ruby-node\">&quot;flying away: direction=#{direction}, velocity=#{velocity}&quot;</span>\n  <span class=\"ruby-keyword\">end</span>\n<span class=\"ruby-keyword\">end</span>",
+              "level": "instance",
+              "visibility": "public",
+              "kind": "method",
+              "labels": [
+                "labelKindInstanceMethod",
+                "labelVisibilityPublic"
+              ]
+            }
+          ]
+        }
+      ],
+      "labels": [
+        "labelKindClass"
+      ]
+    },
+    {
+      "id": "Duck",
+      "title": "Duck",
+      "kind": "class",
+      "comment": "<p>A duck is a <a href=\"Waterfowl.html\">Waterfowl</a> <a\nhref=\"Bird.html\">Bird</a>.</p>\n\n<p>Features:</p>\n\n<pre>bird::\n\n  * speak\n  * fly\n\nwaterfowl::\n\n  * swim</pre>",
+      "groups": [
+        {
+          "title": "Instance Methods",
+          "kind": "method",
+          "level": "instance",
+          "id": "Duck::Instance Methods",
+          "members": [
+            {
+              "id": "speak() { |speech| ... }",
+              "title": "speak",
+              "comment": "<p><a href=\"Duck.html\">Duck</a> overrides generic implementation.</p>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 82</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">speak</span>\n  <span class=\"ruby-identifier\">speech</span> = <span class=\"ruby-identifier\">quack</span>\n  <span class=\"ruby-keyword\">yield</span> <span class=\"ruby-identifier\">speech</span>\n<span class=\"ruby-keyword\">end</span>",
+              "level": "instance",
+              "visibility": "public",
+              "kind": "method",
+              "labels": [
+                "labelKindInstanceMethod",
+                "labelVisibilityPublic"
+              ]
+            },
+            {
+              "id": "quack()",
+              "title": "quack",
+              "comment": "<p>Implements quacking</p>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 88</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">quack</span>\n  <span class=\"ruby-string\">&#39;quack&#39;</span>\n<span class=\"ruby-keyword\">end</span>",
+              "level": "instance",
+              "visibility": "private",
+              "kind": "method",
+              "labels": [
+                "labelKindInstanceMethod",
+                "labelVisibilityPrivate"
+              ]
+            },
+            {
+              "id": "Bird.useful? -> bool",
+              "title": "useful?",
+              "comment": "<p>Checks if this duck is a useful one.</p>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 126</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">useful?</span>\n  <span class=\"ruby-ivar\">@domestic</span> <span class=\"ruby-operator\">||</span> <span class=\"ruby-ivar\">@rubber</span>\n<span class=\"ruby-keyword\">end</span>",
+              "level": "instance",
+              "visibility": "public",
+              "kind": "method",
+              "labels": [
+                "labelKindInstanceMethod",
+                "labelVisibilityPublic"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Class Methods",
+          "kind": "method",
+          "level": "class",
+          "id": "Duck::Class Methods",
+          "members": [
+            {
+              "id": "rubber_ducks()",
+              "title": "rubber_ducks",
+              "comment": "<p>Returns list of all rubber ducks.</p>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 111</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-keyword\">self</span>.<span class=\"ruby-identifier\">rubber_ducks</span>\n  <span class=\"ruby-identifier\">@@rubber_ducks</span>\n<span class=\"ruby-keyword\">end</span>",
+              "level": "class",
+              "visibility": "public",
+              "kind": "method",
+              "labels": [
+                "labelKindClassMethod",
+                "labelVisibilityPublic"
+              ]
+            },
+            {
+              "id": "new(domestic, rubber)",
+              "title": "new",
+              "comment": "<p>Creates a new duck.</p>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 116</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">initialize</span>(<span class=\"ruby-identifier\">domestic</span>, <span class=\"ruby-identifier\">rubber</span>)\n  <span class=\"ruby-ivar\">@domestic</span> = <span class=\"ruby-identifier\">domestic</span>\n  <span class=\"ruby-ivar\">@rubber</span> = <span class=\"ruby-identifier\">rubber</span>\n  <span class=\"ruby-identifier\">@@rubber_ducks</span> <span class=\"ruby-operator\">&lt;&lt;</span> <span class=\"ruby-keyword\">self</span> <span class=\"ruby-keyword\">if</span> <span class=\"ruby-identifier\">rubber</span>\n<span class=\"ruby-keyword\">end</span>",
+              "level": "class",
+              "visibility": "public",
+              "kind": "method",
+              "labels": [
+                "labelKindClassMethod",
+                "labelVisibilityPublic"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Instance Attributes",
+          "kind": "attribute",
+          "level": "instance",
+          "id": "Duck::Instance Attributes",
+          "members": [
+            {
+              "id": "domestic",
+              "title": "domestic",
+              "comment": "<p>True for domestic ducks.</p>",
+              "level": "instance",
+              "visibility": "public",
+              "kind": "attribute",
+              "labels": [
+                "labelKindInstanceAttribute",
+                "labelVisibilityPublic"
+              ]
+            },
+            {
+              "id": "rubber",
+              "title": "rubber",
+              "comment": "<p>True for rubber ducks.</p>",
+              "level": "instance",
+              "visibility": "public",
+              "kind": "attribute",
+              "labels": [
+                "labelKindInstanceAttribute",
+                "labelVisibilityPublic"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Constants",
+          "kind": "constant",
+          "id": "Duck::Constants",
+          "members": [
+            {
+              "id": "MAX_VELOCITY",
+              "title": "MAX_VELOCITY",
+              "comment": "",
+              "kind": "constant",
+              "labels": [
+                "labelKindConstant"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Extend Modules",
+          "kind": "extended",
+          "id": "Duck::Extend Modules",
+          "members": [
+            {
+              "id": "Animal",
+              "title": "Animal",
+              "comment": "",
+              "kind": "extended",
+              "labels": [
+                "labelKindExtended"
+              ]
+            }
+          ]
+        },
+        {
+          "title": "Include Modules",
+          "kind": "included",
+          "id": "Duck::Include Modules",
+          "members": [
+            {
+              "id": "Waterfowl",
+              "title": "Waterfowl",
+              "comment": "",
+              "kind": "included",
+              "labels": [
+                "labelKindIncluded"
+              ]
+            }
+          ]
+        }
+      ],
+      "labels": [
+        "labelKindClass"
+      ]
+    },
+    {
+      "id": "Object",
+      "title": "Object",
+      "kind": "class",
+      "comment": "",
+      "groups": [
+        {
+          "title": "Constants",
+          "kind": "constant",
+          "id": "Object::Constants",
+          "members": [
+            {
+              "id": "DEFAULT_DUCK_VELOCITY",
+              "title": "DEFAULT_DUCK_VELOCITY",
+              "comment": "<p>Default velocity for a flying duck.</p>",
+              "kind": "constant",
+              "labels": [
+                "labelKindConstant"
+              ]
+            }
+          ]
+        }
+      ],
+      "labels": [
+        "labelKindClass"
+      ]
+    },
+    {
+      "id": "Waterfowl",
+      "title": "Waterfowl",
+      "kind": "module",
+      "comment": "<p>A mixin for waterfowl creatures.</p>",
+      "groups": [
+        {
+          "title": "Instance Methods",
+          "kind": "method",
+          "level": "instance",
+          "id": "Waterfowl::Instance Methods",
+          "members": [
+            {
+              "id": "swim()",
+              "title": "swim",
+              "comment": "<p>Swimming helper.</p>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 19</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">swim</span>\n  <span class=\"ruby-identifier\">puts</span> <span class=\"ruby-string\">&#39;swimming around&#39;</span>\n<span class=\"ruby-keyword\">end</span>",
+              "level": "instance",
+              "visibility": "public",
+              "kind": "method",
+              "labels": [
+                "labelKindInstanceMethod",
+                "labelVisibilityPublic"
+              ]
+            }
+          ]
+        }
+      ],
+      "labels": [
+        "labelKindModule"
+      ]
+    }
+  ]
+}
