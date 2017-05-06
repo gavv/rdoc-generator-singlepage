@@ -76,7 +76,7 @@ class RDoc::Generator::SolarFish
     opt.on('--sf-filter-classes=REGEX', String,
            'Include only classes and modules that',
            'match regex.') do |value|
-      rdoc_options.sf_filter_classes = Regexpn.new(value)
+      rdoc_options.sf_filter_classes = Regexp.new(value)
     end
 
     opt.separator nil
@@ -106,20 +106,26 @@ class RDoc::Generator::SolarFish
     doc_loader = DocLoader.new(@options, @store)
     classes = doc_loader.load
 
+    theme_loader = ThemeLoader.new(@options)
+    theme = theme_loader.load
+
+    scope = {
+      title:   @options.title,
+      theme:   theme,
+      classes: classes
+    }
+
     if @options.sf_jsonfile
       json_builder = JSONBuilder.new(@options)
-      json_builder.build(classes)
+      json_builder.build(scope)
     end
 
     if @options.sf_htmlfile
-      theme_loader = ThemeLoader.new(@options)
-      theme = theme_loader.load
-
       template_loader = TemplateLoader.new(@options)
       template = template_loader.load
 
       html_builder = HTMLBuilder.new(@options)
-      html_builder.build(classes, theme, template)
+      html_builder.build(scope, theme, template)
     end
   end
 end

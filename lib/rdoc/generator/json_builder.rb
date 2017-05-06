@@ -5,8 +5,8 @@ class JSONBuilder
     @options = options
   end
 
-  def build(classes)
-    json = JSON.pretty_generate(classes)
+  def build(scope)
+    json = JSON.pretty_generate(scope)
 
     File.open(@options.sf_jsonfile, 'w') do |file|
       file.write(json)

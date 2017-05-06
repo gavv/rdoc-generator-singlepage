@@ -5,13 +5,8 @@ class HTMLBuilder
     @options = options
   end
 
-  def build(classes, theme, template)
-    html = template.render(
-      title:   @options.title,
-      theme:   theme,
-      classes: classes
-    )
-
+  def build(scope, theme, template)
+    html = template.render(scope)
     install_theme(theme)
     install_html(html)
   end
