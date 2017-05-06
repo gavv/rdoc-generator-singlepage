@@ -40,18 +40,20 @@ class ThemeLoader
       body: {}
     }
 
+    theme_files = []
+
     @options.sf_themes.each do |theme_path|
-      load_theme(theme, theme_path)
+      load_theme(theme, theme_files, theme_path)
     end
 
-    build_theme(theme)
+    build_files(theme_files)
 
-    theme
+    [theme, theme_files]
   end
 
   private
 
-  def load_theme(theme, theme_path)
+  def load_theme(theme, theme_files, theme_path)
     config = YAML.load_file theme_path
 
     config.each do |section, content|
@@ -75,18 +77,24 @@ class ThemeLoader
             case section
             when :styles, :scripts, :fonts
               name = File.basename(path)
-              file = {
+              fh = {
+                url: theme_url(name)
+              }
+              if section == :fonts
+                fh[:family] = file_info['family']
+              end
+              fp = {
                 src_path: path,
                 dst_name: name,
-                url:      theme_url(name)
+                dst_info: fh,
               }
             when :html
-              file = {
+              fh = {
                 data: File.read(path)
               }
             end
-            file[:family] = file_info['family'] if section == :fonts
-            theme[:head][section] << file
+            theme[:head][section] << fh
+            theme_files << fp if fp
           end
         end
 
@@ -105,8 +113,8 @@ class ThemeLoader
     raise "Can't load theme - #{theme_path}\n#{error}"
   end
 
-  def build_theme(theme)
-    theme[:head][:styles].each do |file|
+  def build_files(theme_files)
+    theme_files.each do |file|
       build_css_from_sass(file) if File.extname(file[:src_path]) == '.sass'
     end
   end
@@ -124,7 +132,7 @@ class ThemeLoader
 
     file.delete(:src_path)
     file[:dst_name] = File.basename(file[:dst_name], '.*') + '.css'
-    file[:url] = theme_url(file[:dst_name])
+    file[:dst_info][:url] = theme_url(file[:dst_name])
     file[:data] = output_data
   end
 

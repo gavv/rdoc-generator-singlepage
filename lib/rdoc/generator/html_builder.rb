@@ -5,23 +5,21 @@ class HTMLBuilder
     @options = options
   end
 
-  def build(scope, theme, template)
+  def build(scope, theme_files, template)
     html = template.render(scope)
-    install_theme(theme)
+    install_theme(theme_files)
     install_html(html)
   end
 
   private
 
-  def install_theme(theme)
-    theme[:head].values.each do |files|
-      files.each do |file|
-        if file[:dst_name]
-          if file[:src_path]
-            FileUtils.copy_file(file[:src_path], file[:dst_name])
-          elsif file[:data]
-            File.write(file[:dst_name], file[:data])
-          end
+  def install_theme(theme_files)
+    theme_files.each do |file|
+      if file[:dst_name]
+        if file[:src_path]
+          FileUtils.copy_file(file[:src_path], file[:dst_name])
+        elsif file[:data]
+          File.write(file[:dst_name], file[:data])
         end
       end
     end
