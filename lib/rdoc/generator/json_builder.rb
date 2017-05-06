@@ -1,5 +1,6 @@
 require 'json'
 
+# JSONBuilder builds JSON file and installs it to the output directory.
 class JSONBuilder
   def initialize(options)
     @options = options
