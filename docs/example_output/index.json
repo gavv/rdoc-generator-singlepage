@@ -32,6 +32,12 @@
       ]
     },
     "body": {
+      "header": [
+
+      ],
+      "footer": [
+
+      ]
     }
   },
   "classes": [
@@ -45,7 +51,7 @@
           "title": "Instance Methods",
           "kind": "method",
           "level": "instance",
-          "id": "Bird::Instance Methods",
+          "id": "Bird::InstanceMethods",
           "members": [
             {
               "id": "speak() { |text| ... }",
@@ -90,7 +96,7 @@
           "title": "Instance Methods",
           "kind": "method",
           "level": "instance",
-          "id": "Duck::Instance Methods",
+          "id": "Duck::InstanceMethods",
           "members": [
             {
               "id": "speak() { |speech| ... }",
@@ -137,7 +143,7 @@
           "title": "Class Methods",
           "kind": "method",
           "level": "class",
-          "id": "Duck::Class Methods",
+          "id": "Duck::ClassMethods",
           "members": [
             {
               "id": "rubber_ducks()",
@@ -171,7 +177,7 @@
           "title": "Instance Attributes",
           "kind": "attribute",
           "level": "instance",
-          "id": "Duck::Instance Attributes",
+          "id": "Duck::InstanceAttributes",
           "members": [
             {
               "id": "domestic",
@@ -218,7 +224,7 @@
         {
           "title": "Extend Modules",
           "kind": "extended",
-          "id": "Duck::Extend Modules",
+          "id": "Duck::ExtendModules",
           "members": [
             {
               "id": "Animal",
@@ -234,7 +240,7 @@
         {
           "title": "Include Modules",
           "kind": "included",
-          "id": "Duck::Include Modules",
+          "id": "Duck::IncludeModules",
           "members": [
             {
               "id": "Waterfowl",
@@ -289,7 +295,7 @@
           "title": "Instance Methods",
           "kind": "method",
           "level": "instance",
-          "id": "Waterfowl::Instance Methods",
+          "id": "Waterfowl::InstanceMethods",
           "members": [
             {
               "id": "swim()",

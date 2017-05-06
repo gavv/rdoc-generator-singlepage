@@ -42,7 +42,7 @@ class DocLoader
       group = get_member_group(member)
       next unless group
 
-      group_id = klass.full_name.strip + '::' + group[:title].strip
+      group_id = klass.full_name.strip + '::' + group[:title].strip.sub(' ', '')
 
       unless groups.include? group_id
         groups[group_id] = group.merge(
