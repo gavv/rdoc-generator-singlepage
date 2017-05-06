@@ -116,16 +116,22 @@ class ThemeLoader
 
   def build_files(theme_files)
     theme_files.each do |file|
-      build_css_from_sass(file) if File.extname(file[:src_path]) == '.sass'
+      ext = File.extname file[:src_path]
+      build_css_file file, ext if %w[.sass .scss].include? ext
     end
   end
 
-  def build_css_from_sass(file)
+  def build_css_file(file, ext)
     options = {
       cache:  false,
-      syntax: :sass,
       style:  :default
     }
+
+    options[:syntax] = if ext == '.sass'
+                         :sass
+                       else
+                         :scss
+                       end
 
     input_data = File.read(file[:src_path])
     renderer = Sass::Engine.new(input_data, options)
