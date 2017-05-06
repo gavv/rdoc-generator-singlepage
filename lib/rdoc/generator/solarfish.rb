@@ -107,7 +107,7 @@ class RDoc::Generator::SolarFish
     classes = doc_loader.load
 
     theme_loader = ThemeLoader.new(@options)
-    theme = theme_loader.load
+    theme, theme_files = theme_loader.load
 
     scope = {
       title:   @options.title,
@@ -125,7 +125,7 @@ class RDoc::Generator::SolarFish
       template = template_loader.load
 
       html_builder = HTMLBuilder.new(@options)
-      html_builder.build(scope, theme, template)
+      html_builder.build(scope, theme_files, template)
     end
   end
 end
