@@ -1,3 +1,5 @@
+# DocLoader reads RDoc documentation from RDoc store and builds a hash that
+# will be passed to HTML template or written to JSON file.
 class DocLoader
   def initialize(options, store)
     @options = options

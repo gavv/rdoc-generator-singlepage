@@ -4,6 +4,9 @@ require 'sass'
 
 require_relative 'settings'
 
+# ThemeLoader reads theme files from `.yml' files and builds a hash that
+# will be passed to HTML template or written to JSON file, and a list
+# of theme files to be installed along with the HTML file.
 class ThemeLoader
   def self.themes_dir
     File.join Settings.data_dir, 'themes'
@@ -80,13 +83,11 @@ class ThemeLoader
               fh = {
                 url: theme_url(name)
               }
-              if section == :fonts
-                fh[:family] = file_info['family']
-              end
+              fh[:family] = file_info['family'] if section == :fonts
               fp = {
                 src_path: path,
                 dst_name: name,
-                dst_info: fh,
+                dst_info: fh
               }
             when :html
               fh = {

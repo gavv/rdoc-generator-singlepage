@@ -3,6 +3,8 @@ require 'recursive-open-struct'
 
 require_relative 'settings'
 
+# TemplateLoader reads a template from `.slim' file and builds a Template object
+# that may render HTML given a hash with documentation and theme.
 class TemplateLoader
   def self.templates_dir
     File.join Settings.data_dir, 'templates'
@@ -33,6 +35,7 @@ class TemplateLoader
   end
 end
 
+# Template allows to render HTML given a hash with documentation and theme.
 class Template
   def initialize(path)
     @path = path

@@ -1,5 +1,7 @@
 require 'fileutils'
 
+# HTMLBuilder builds HTML file from a template and installs HTML and
+# theme files to the output directory.
 class HTMLBuilder
   def initialize(options)
     @options = options

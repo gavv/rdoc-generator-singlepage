@@ -7,6 +7,7 @@ require_relative 'template_loader'
 require_relative 'json_builder'
 require_relative 'html_builder'
 
+# SolarFish generator options.
 class RDoc::Options
   attr_accessor :sf_htmlfile
   attr_accessor :sf_jsonfile
@@ -17,6 +18,9 @@ class RDoc::Options
   attr_accessor :sf_filter_members
 end
 
+# SolarFish generator.
+# Registers command line options and generates HTML and/or JSON output for given
+# RDoc documentation and options.
 class RDoc::Generator::SolarFish
   RDoc::RDoc.add_generator(self)
 
