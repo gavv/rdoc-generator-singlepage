@@ -19,6 +19,7 @@ See example output [HTML](https://rbdoc.github.io/rdoc-generator-solarfish/examp
 Generate locally:
 
 ```
+$ rake install
 $ rake example
 ```
 
@@ -61,7 +62,7 @@ $ rdoc -f solarfish --output superdoc --sf-htmlfile superdoc.html
 Additionally dump JSON:
 
 ```
-$ rdoc -f solarfish --output superdoc --sf-htmlfile superdoc.html --sf-json superdoc.json
+$ rdoc -f solarfish --output superdoc --sf-htmlfile superdoc.html --sf-jsonfile superdoc.json
 ```
 
 Specify template name:
@@ -90,11 +91,36 @@ $ rdoc -f solarfish --sf-filter-classes '^Test.*' --sf-filter-members '^test_.*'
 
 #### From code
 
-*todo*
+```ruby
+require 'rdoc/rdoc'
+
+options = RDoc::Options.new
+options.setup_generator 'solarfish'
+
+options.files = ['input_file.rb']
+options.op_dir = 'output_dir'
+options.title = 'Page title'
+
+options.sf_htmlfile = 'output_file.html'
+options.sf_jsonfile = 'output_file.json'
+
+options.sf_prefix = '/url_prefix'
+
+options.sf_template = '/path/to/template.slim'
+options.sf_themes = ['/path/to/theme.yml']
+
+options.sf_filter_classes = '^Test.*'
+options.sf_filter_members = '^test_.*'
+
+rdoc = RDoc::RDoc.new
+rdoc.document options
+```
 
 #### From rake
 
-*todo*
+```
+todo
+```
 
 ## Configuration
 
