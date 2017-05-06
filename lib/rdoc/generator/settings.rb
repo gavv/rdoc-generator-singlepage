@@ -1,3 +1,5 @@
+require 'pathname'
+
 # Predefined configuration.
 module Settings
   DEFAULT_HTMLFILE = 'index.html'.freeze
@@ -5,6 +7,10 @@ module Settings
   DEFAULT_THEME    = 'light'.freeze
 
   def self.data_dir
-    File.join(File.dirname(__FILE__), '../../../data/rdoc-generator-solarfish').cleanpath
+    pn = Pathname.new(
+      File.join(File.dirname(__FILE__), '../../../data/rdoc-generator-solarfish')
+    )
+    pn = pn.cleanpath
+    pn.to_s
   end
 end
