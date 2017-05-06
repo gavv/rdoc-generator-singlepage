@@ -40,7 +40,10 @@ class ThemeLoader
         scripts: [],
         html:    []
       },
-      body: {}
+      body: {
+        header: [],
+        footer: []
+      }
     }
 
     theme_files = []
@@ -100,13 +103,19 @@ class ThemeLoader
         end
 
       when 'body'
-        content.each do |key, path|
+        content.each do |key, files|
           check_one_of(
             message:  "Unexpected key in 'body'",
             expected: %w[header footer],
             actual:   key
           )
-          theme[:body][key.to_sym] = File.read(theme_file(theme_path, path))
+          files.each do |file_info|
+            path = theme_file(theme_path, file_info['file'])
+            fh = {
+              data: File.read(path)
+            }
+            theme[:body][key.to_sym] << fh
+          end
         end
       end
     end

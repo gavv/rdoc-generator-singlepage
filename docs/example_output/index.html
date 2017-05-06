@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <title>RDoc::Generator::SolarFish Example</title>
     <style type="text/css">
       @font-face {
         font-family: 'RobotoRegular';
@@ -28,37 +29,29 @@
       RDoc::Generator::SolarFish Example
     </header>
     <aside>
-      <details class="tocClassBlock"><summary>
-          <div class="label labelKindClass"></div>
-          <a class="tocClass" href="#Bird">Bird</a></summary>
+      <details class="tocClassBlock"><summary><span class="label labelKindClass"></span><a class="tocClass" href="#Bird">Bird</a></summary>
         <div class="tocGroupBlock">
-          <a class="tocGroup" href="#Bird::Instance Methods">Instance Methods</a>
+          <a class="tocGroup" href="#Bird::InstanceMethods">Instance Methods</a>
         </div>
       </details>
-      <details class="tocClassBlock"><summary>
-          <div class="label labelKindClass"></div>
-          <a class="tocClass" href="#Duck">Duck</a></summary>
+      <details class="tocClassBlock"><summary><span class="label labelKindClass"></span><a class="tocClass" href="#Duck">Duck</a></summary>
         <div class="tocGroupBlock">
-          <a class="tocGroup" href="#Duck::Instance Methods">Instance Methods</a>
-          <a class="tocGroup" href="#Duck::Class Methods">Class Methods</a>
-          <a class="tocGroup" href="#Duck::Instance Attributes">Instance Attributes</a>
+          <a class="tocGroup" href="#Duck::InstanceMethods">Instance Methods</a>
+          <a class="tocGroup" href="#Duck::ClassMethods">Class Methods</a>
+          <a class="tocGroup" href="#Duck::InstanceAttributes">Instance Attributes</a>
           <a class="tocGroup" href="#Duck::Constants">Constants</a>
-          <a class="tocGroup" href="#Duck::Extend Modules">Extend Modules</a>
-          <a class="tocGroup" href="#Duck::Include Modules">Include Modules</a>
+          <a class="tocGroup" href="#Duck::ExtendModules">Extend Modules</a>
+          <a class="tocGroup" href="#Duck::IncludeModules">Include Modules</a>
         </div>
       </details>
-      <details class="tocClassBlock"><summary>
-          <div class="label labelKindClass"></div>
-          <a class="tocClass" href="#Object">Object</a></summary>
+      <details class="tocClassBlock"><summary><span class="label labelKindClass"></span><a class="tocClass" href="#Object">Object</a></summary>
         <div class="tocGroupBlock">
           <a class="tocGroup" href="#Object::Constants">Constants</a>
         </div>
       </details>
-      <details class="tocClassBlock"><summary>
-          <div class="label labelKindModule"></div>
-          <a class="tocClass" href="#Waterfowl">Waterfowl</a></summary>
+      <details class="tocClassBlock"><summary><span class="label labelKindModule"></span><a class="tocClass" href="#Waterfowl">Waterfowl</a></summary>
         <div class="tocGroupBlock">
-          <a class="tocGroup" href="#Waterfowl::Instance Methods">Instance Methods</a>
+          <a class="tocGroup" href="#Waterfowl::InstanceMethods">Instance Methods</a>
         </div>
       </details>
     </aside>
@@ -68,7 +61,7 @@
           <div class="label labelKindClass"></div>
           <span class="className">Bird</span>
         </header>
-        <section class="groupBlock" id="Bird::Instance Methods">
+        <section class="groupBlock" id="Bird::InstanceMethods">
           <header class="groupHeader">
             <span class="groupName">Instance Methods</span>
           </header>
@@ -78,7 +71,10 @@
               <div class="label labelVisibilityPublic"></div>
               <span class="memberName">speak() { |text| ... }</span>
             </div>
-            <span class="memberComment"><p>Produce some noise.</p></span><details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 32</span>
+            <div class="memberComment">
+              <p>Produce some noise.</p>
+            </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 32</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">speak</span> <span class="ruby-comment"># :yields: text</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;generic tweeting&#39;</span>
   <span class="ruby-keyword">yield</span> <span class="ruby-string">&#39;tweet&#39;</span>
@@ -93,12 +89,14 @@
                 Bird.fly(string, number) -&gt; bool
                 </span>
             </div>
-            <span class="memberComment"><p>Flying is the most critical feature of birds.</p>
+            <div class="memberComment"><p>Flying is the most critical feature of birds.</p>
 
 <h1 id="method-i-fly-label-Example">Example<span><a href="#method-i-fly-label-Example">&para;</a> <a href="#top">&uarr;</a></span></h1>
 
 <pre class="ruby"><span class="ruby-identifier">fly</span>(:<span class="ruby-identifier">south</span>, <span class="ruby-value">70</span>)
-</pre></span><details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 49</span>
+</pre>
+            </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 49</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">fly</span>(<span class="ruby-identifier">direction</span>, <span class="ruby-identifier">velocity</span>)
   <span class="ruby-keyword">if</span> <span class="ruby-constant">RUBY_PLATFORM</span> <span class="ruby-operator">==</span> <span class="ruby-string">&#39;java&#39;</span>
     <span class="ruby-identifier">_fly_jruby</span>(<span class="ruby-identifier">direction</span>, <span class="ruby-identifier">velocity</span>)
@@ -114,7 +112,7 @@
           <div class="label labelKindClass"></div>
           <span class="className">Duck</span>
         </header>
-        <section class="groupBlock" id="Duck::Instance Methods">
+        <section class="groupBlock" id="Duck::InstanceMethods">
           <header class="groupHeader">
             <span class="groupName">Instance Methods</span>
           </header>
@@ -124,7 +122,10 @@
               <div class="label labelVisibilityPublic"></div>
               <span class="memberName">speak() { |speech| ... }</span>
             </div>
-            <span class="memberComment"><p><a href="Duck.html">Duck</a> overrides generic implementation.</p></span><details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 82</span>
+            <div class="memberComment">
+              <p><a href="Duck.html">Duck</a> overrides generic implementation.</p>
+            </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 82</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">speak</span>
   <span class="ruby-identifier">speech</span> = <span class="ruby-identifier">quack</span>
   <span class="ruby-keyword">yield</span> <span class="ruby-identifier">speech</span>
@@ -136,7 +137,10 @@
               <div class="label labelVisibilityPrivate"></div>
               <span class="memberName">quack()</span>
             </div>
-            <span class="memberComment"><p>Implements quacking</p></span><details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 88</span>
+            <div class="memberComment">
+              <p>Implements quacking</p>
+            </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 88</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">quack</span>
   <span class="ruby-string">&#39;quack&#39;</span>
 <span class="ruby-keyword">end</span></pre></details>
@@ -147,13 +151,16 @@
               <div class="label labelVisibilityPublic"></div>
               <span class="memberName">Bird.useful? -&gt; bool</span>
             </div>
-            <span class="memberComment"><p>Checks if this duck is a useful one.</p></span><details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 126</span>
+            <div class="memberComment">
+              <p>Checks if this duck is a useful one.</p>
+            </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 126</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">useful?</span>
   <span class="ruby-ivar">@domestic</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@rubber</span>
 <span class="ruby-keyword">end</span></pre></details>
           </div>
         </section>
-        <section class="groupBlock" id="Duck::Class Methods">
+        <section class="groupBlock" id="Duck::ClassMethods">
           <header class="groupHeader">
             <span class="groupName">Class Methods</span>
           </header>
@@ -163,7 +170,10 @@
               <div class="label labelVisibilityPublic"></div>
               <span class="memberName">rubber_ducks()</span>
             </div>
-            <span class="memberComment"><p>Returns list of all rubber ducks.</p></span><details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 111</span>
+            <div class="memberComment">
+              <p>Returns list of all rubber ducks.</p>
+            </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 111</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">rubber_ducks</span>
   <span class="ruby-identifier">@@rubber_ducks</span>
 <span class="ruby-keyword">end</span></pre></details>
@@ -174,7 +184,10 @@
               <div class="label labelVisibilityPublic"></div>
               <span class="memberName">new(domestic, rubber)</span>
             </div>
-            <span class="memberComment"><p>Creates a new duck.</p></span><details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 116</span>
+            <div class="memberComment">
+              <p>Creates a new duck.</p>
+            </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 116</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">domestic</span>, <span class="ruby-identifier">rubber</span>)
   <span class="ruby-ivar">@domestic</span> = <span class="ruby-identifier">domestic</span>
   <span class="ruby-ivar">@rubber</span> = <span class="ruby-identifier">rubber</span>
@@ -182,7 +195,7 @@
 <span class="ruby-keyword">end</span></pre></details>
           </div>
         </section>
-        <section class="groupBlock" id="Duck::Instance Attributes">
+        <section class="groupBlock" id="Duck::InstanceAttributes">
           <header class="groupHeader">
             <span class="groupName">Instance Attributes</span>
           </header>
@@ -192,7 +205,9 @@
               <div class="label labelVisibilityPublic"></div>
               <span class="memberName">domestic</span>
             </div>
-            <span class="memberComment"><p>True for domestic ducks.</p></span>
+            <div class="memberComment">
+              <p>True for domestic ducks.</p>
+            </div>
           </div>
           <div class="memberBlock">
             <div class="memberHeader">
@@ -200,7 +215,9 @@
               <div class="label labelVisibilityPublic"></div>
               <span class="memberName">rubber</span>
             </div>
-            <span class="memberComment"><p>True for rubber ducks.</p></span>
+            <div class="memberComment">
+              <p>True for rubber ducks.</p>
+            </div>
           </div>
         </section>
         <section class="groupBlock" id="Duck::Constants">
@@ -212,10 +229,12 @@
               <div class="label labelKindConstant"></div>
               <span class="memberName">MAX_VELOCITY</span>
             </div>
-            <span class="memberComment"></span>
+            <div class="memberComment">
+              
+            </div>
           </div>
         </section>
-        <section class="groupBlock" id="Duck::Extend Modules">
+        <section class="groupBlock" id="Duck::ExtendModules">
           <header class="groupHeader">
             <span class="groupName">Extend Modules</span>
           </header>
@@ -224,10 +243,12 @@
               <div class="label labelKindExtended"></div>
               <span class="memberName">Animal</span>
             </div>
-            <span class="memberComment"></span>
+            <div class="memberComment">
+              
+            </div>
           </div>
         </section>
-        <section class="groupBlock" id="Duck::Include Modules">
+        <section class="groupBlock" id="Duck::IncludeModules">
           <header class="groupHeader">
             <span class="groupName">Include Modules</span>
           </header>
@@ -236,7 +257,9 @@
               <div class="label labelKindIncluded"></div>
               <span class="memberName">Waterfowl</span>
             </div>
-            <span class="memberComment"></span>
+            <div class="memberComment">
+              
+            </div>
           </div>
         </section>
       </article>
@@ -254,7 +277,9 @@
               <div class="label labelKindConstant"></div>
               <span class="memberName">DEFAULT_DUCK_VELOCITY</span>
             </div>
-            <span class="memberComment"><p>Default velocity for a flying duck.</p></span>
+            <div class="memberComment">
+              <p>Default velocity for a flying duck.</p>
+            </div>
           </div>
         </section>
       </article>
@@ -263,7 +288,7 @@
           <div class="label labelKindModule"></div>
           <span class="className">Waterfowl</span>
         </header>
-        <section class="groupBlock" id="Waterfowl::Instance Methods">
+        <section class="groupBlock" id="Waterfowl::InstanceMethods">
           <header class="groupHeader">
             <span class="groupName">Instance Methods</span>
           </header>
@@ -273,7 +298,10 @@
               <div class="label labelVisibilityPublic"></div>
               <span class="memberName">swim()</span>
             </div>
-            <span class="memberComment"><p>Swimming helper.</p></span><details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 19</span>
+            <div class="memberComment">
+              <p>Swimming helper.</p>
+            </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 19</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier">swim</span>
   <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;swimming around&#39;</span>
 <span class="ruby-keyword">end</span></pre></details>

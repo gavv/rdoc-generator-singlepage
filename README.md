@@ -108,6 +108,18 @@ $ rdoc -f solarfish --sf-filter-classes '^Test.*' --sf-filter-members '^test_.*'
 
 ## Development
 
+Install development dependencies:
+
+```
+$ bundle
+```
+
+Run tests:
+
+```
+$ rake test
+```
+
 Run linters:
 
 ```

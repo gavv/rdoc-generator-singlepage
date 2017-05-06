@@ -3,6 +3,9 @@ html
   head
     meta charset="UTF-8"
 
+    title
+      | #{title}
+
     - theme.head.fonts.each do |file|
       css:
         @font-face {
@@ -20,8 +23,8 @@ html
       | #{{file.data}}
 
   body
-    - if theme.body.header
-      | #{{theme.body.header.data}}
+    - theme.body.header.each do |file|
+      | #{{file.data}}
 
     header class="mainHeader"
       | #{title}
@@ -41,7 +44,7 @@ html
           details class="tocClassBlock"
             summary
               - klass.labels.each do |name|
-                div class="label #{name}"
+                span class="label #{name}"
 
               a class="tocClass" href="##{klass.id}"
                 | #{klass.title}
@@ -81,7 +84,7 @@ html
                       | #{member.id}
 
                   - if member.comment
-                    span class="memberComment"
+                    div class="memberComment"
                       | #{{member.comment}}
 
                   - if member.code
@@ -91,5 +94,5 @@ html
                       pre
                         | #{{member.code}}
 
-    - if theme.body.footer
-      | #{{theme.body.footer.data}}
+    - theme.body.footer.each do |file|
+      | #{{file.data}}
