@@ -106,6 +106,20 @@ $ rdoc -f solarfish --sf-filter-classes '^Test.*' --sf-filter-members '^test_.*'
 
 *todo*
 
+## Development
+
+Run linters:
+
+```
+$ rake rubocop
+```
+
+Automatically fix some linter errors:
+
+```
+$ rake rubocop:auto_correct
+```
+
 ## License
 
 * The source code is licensed under [MIT](LICENSE) license.
