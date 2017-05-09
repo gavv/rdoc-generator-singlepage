@@ -1,64 +1,14 @@
-@mixin customDetails
-  content: "+"
-  color: #000
-  font-size: 20px
-  text-align: center
-  padding: 10px 20px
-  width: 20px
-
-@mixin addLabel($color, $fontColor, $content)
-  content: $content
-  background-color: $color
+@mixin label($bgColor, $textColor)
+  background-color: $bgColor
+  color: $textColor
+  font-size: 11px
   padding: 3px 5px
   border-radius: 8px
-  font-size: 11px
-  color: $fontColor
 
 body
-  margin: 0 20px
+  margin: 0 10px 10px 2px
   font-family: RobotoRegular
   font-size: 15px
-
-  .label
-    display: inline-block
-
-    &Kind
-      &Module:before
-        @include addLabel(#dff0d8, #3c763d, 'module')
-
-      &Class:before
-        @include addLabel(#dff0d8, #3c763d, 'class')
-
-      &Included:before
-        @include addLabel(#dff0d8, #3c763d, 'included')
-
-      &Extended:before
-        @include addLabel(#dff0d8, #3c763d, 'extended')
-
-      &Constant:before
-        @include addLabel(#dff0d8, #3c763d, 'constant')
-
-      &ClassMethod:before
-        @include addLabel(#dff0d8, #3c763d, 'class method')
-
-      &InstanceMethod:before
-        @include addLabel(#d9edf7, #31708f, 'instance method')
-
-      &ClassAttribute:before
-        @include addLabel(#d9edf7, #31708f, 'class attribute')
-
-      &InstanceAttribute:before
-        @include addLabel(#dff0d8, #3c763d, 'instance attribute')
-
-    &Visibility
-      &Public:before
-        @include addLabel(#fcf8e3, #8a6d3b, 'public')
-
-      &Private:before
-        @include addLabel(#fcf8e3, #8a6d3b, 'private')
-
-      &Protected:before
-        @include addLabel(#fcf8e3, #8a6d3b, 'protected')
 
   header
     font-family: RalewaySemiBold
@@ -74,12 +24,51 @@ body
     &::-webkit-details-marker
       display: none
 
+  .label
+    display: inline-block
+    margin: 0 2px 0 2px
 
-  & > header
+    &Module
+      @include label(#dff0d8, #3c763d)
+
+    &Class
+      @include label(#dff0d8, #3c763d)
+
+    &Included
+      @include label(#dff0d8, #3c763d)
+
+    &Extended
+      @include label(#dff0d8, #3c763d)
+
+    &Constant
+      @include label(#dff0d8, #3c763d)
+
+    &ClassMethod
+      @include label(#dff0d8, #3c763d)
+
+    &InstanceMethod
+      @include label(#d9edf7, #31708f)
+
+    &ClassAttribute
+      @include label(#d9edf7, #31708f)
+
+    &InstanceAttribute
+      @include label(#dff0d8, #3c763d)
+
+    &Public
+      @include label(#fcf8e3, #8a6d3b)
+
+    &Private
+      @include label(#fcf8e3, #8a6d3b)
+
+    &Protected
+      @include label(#fcf8e3, #8a6d3b)
+
+  .mainHeader
     font-size: 32px
     font-weight: 600
     padding: 10px 0
-    margin: 10px 0 30px 350px
+    margin: 10px 0 10px 350px
 
   aside
     float: left
@@ -89,40 +78,11 @@ body
     overflow-y: scroll
     bottom: 0
     top: 0
-    margin-top: 17px
-
-    summary:after
-      content: "+"
-      color: #000
-      font-size: 20px
-      text-align: center
-      width: 20px
-      position: absolute
-      width: 40px
-      top: 9%
-      right: 0px
-
-    details[open] summary:after
-      content: "−"
+    padding-top: 10px
+    padding-right: 8px
 
     a
       display: inline-block
-
-
-    .tocGroupBlock
-      background-color: white
-
-      .tocGroup
-        display: block
-        padding: 5px 20px
-        border-bottom: 1px solid #f2f2f2
-        border-left: 3px solid transparent
-
-        &:hover
-          border-left: 3px solid #f25158
-
-        &:last-child
-          border-bottom: none
 
     .tocClassBlock
       border: 1px solid rgba(136,136,136,0.12)
@@ -131,51 +91,83 @@ body
       margin: 7px
       width: 300px
       position: relative
+      padding: 0px 2px 0px 2px
 
       &:first-child
         margin-top: 0
 
+      summary
+        display: flex
+        align-items: center
+        justify-content: center
+
+        &:after
+          content: "+"
+          color: #000
+          font-size: 20px
+          text-align: center
+          width: 20px
+          position: absolute
+          width: 40px
+          top: 9%
+          right: 0px
+
+      &[open] summary:after
+        content: "−"
+
       .tocClass
+        flex-grow: 1
         width: 190px
         word-wrap: break-word
-        padding: 5px
+        padding: 5px 3px 5px 3px
+
+      .tocGroupBlock
+        background-color: white
+
+        .tocGroup
+          display: block
+          padding: 5px 20px
+          border-bottom: 1px solid #f2f2f2
+          border-left: 3px solid transparent
+
+          &:hover
+            border-left: 3px solid #f25158
+
+          &:last-child
+            border-bottom: none
 
   main
     margin-left: 340px
 
-    article
+    .classBlock
       border: 1px solid #d9d9d9
       border-radius: 5px
       margin-top: 15px
 
-      header
+      .classHeader
+        display: flex
+        align-items: center
+        justify-content: center
         background: #f3f3f3
         color: black
         padding: 5px
         font-size: 22px
 
-      section:first-of-type
-        border-top: none
+        .className
+          flex-grow: 1
+          padding-left: 4px
 
-      section
+      .groupBlock
         border-top: 1px solid #d9d9d9
         padding: 5px 5px 0 5px
         border-radius: 5px
 
-        summary:before
-          @include customDetails
+        &:first-of-type
+          border-top: none
 
-        details
-          border: 1px solid #d9d9d9
-          border-radius: 6px
-          overflow: hidden
-          background: #fdf6e3
-          padding: 5px
-
-          &[open] summary:before
-            content: "−"
-
-        header
+        .groupHeader
+          background: none
+          color: black
           padding: 7px
 
         .memberBlock
@@ -186,15 +178,36 @@ body
           &:last-child
             border-bottom: none
 
-          .memberName
-            font-weight: bolder
+          .memberHeader
+            display: flex
+            align-items: center
+            justify-content: center
+
+            .memberName
+              flex-grow: 1
+              font-weight: bolder
+              padding-left: 4px
 
           .memberComment
             font-size: 14px
 
-        header
-          background: none
-          color: black
+          .memberCode
+            border: 1px solid #d9d9d9
+            border-radius: 6px
+            overflow: hidden
+            background: #fdf6e3
+            padding: 5px
 
-        pre
-          font-size: 12px
+            summary:before
+              content: "+"
+              color: #000
+              font-size: 20px
+              text-align: center
+              padding: 10px 20px
+              width: 20px
+
+            &[open] summary:before
+              content: "−"
+
+            pre
+              font-size: 12px

@@ -133,37 +133,44 @@ class DocLoader
     labels = []
 
     case object[:kind]
-    when :module
-      labels << :labelKindModule
-    when :class
-      labels << :labelKindClass
-    when :included
-      labels << :labelKindIncluded
-    when :extended
-      labels << :labelKindExtended
-    when :constant
-      labels << :labelKindConstant
+    when :module, :class, :constant, :included, :extended
+      labels << {
+        id:    object[:kind].capitalize,
+        title: object[:kind].to_s
+      }
+
     when :method
       labels << if object[:level] == :class
-                  :labelKindClassMethod
+                  {
+                    id:    :ClassMethod,
+                    title: 'class method'
+                  }
                 else
-                  :labelKindInstanceMethod
+                  {
+                    id:    :InstanceMethod,
+                    title: 'instance method'
+                  }
                 end
+
     when :attribute
       labels << if object[:level] == :class
-                  :labelKindClassAttribute
+                  {
+                    id:    :ClassAttribute,
+                    title: 'class attribute'
+                  }
                 else
-                  :labelKindInstanceAttribute
+                  {
+                    id:    :InstanceAttribute,
+                    title: 'instance attribute'
+                  }
                 end
     end
 
-    case object[:visibility]
-    when :public
-      labels << :labelVisibilityPublic
-    when :private
-      labels << :labelVisibilityPrivate
-    when :protected
-      labels << :labelVisibilityProtected
+    if object[:visibility]
+      labels << {
+        id:    object[:visibility].capitalize,
+        title: object[:visibility].to_s
+      }
     end
 
     labels

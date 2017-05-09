@@ -62,8 +62,14 @@
               "visibility": "public",
               "kind": "method",
               "labels": [
-                "labelKindInstanceMethod",
-                "labelVisibilityPublic"
+                {
+                  "id": "InstanceMethod",
+                  "title": "instance method"
+                },
+                {
+                  "id": "Public",
+                  "title": "public"
+                }
               ]
             },
             {
@@ -75,15 +81,24 @@
               "visibility": "public",
               "kind": "method",
               "labels": [
-                "labelKindInstanceMethod",
-                "labelVisibilityPublic"
+                {
+                  "id": "InstanceMethod",
+                  "title": "instance method"
+                },
+                {
+                  "id": "Public",
+                  "title": "public"
+                }
               ]
             }
           ]
         }
       ],
       "labels": [
-        "labelKindClass"
+        {
+          "id": "Class",
+          "title": "class"
+        }
       ]
     },
     {
@@ -107,8 +122,14 @@
               "visibility": "public",
               "kind": "method",
               "labels": [
-                "labelKindInstanceMethod",
-                "labelVisibilityPublic"
+                {
+                  "id": "InstanceMethod",
+                  "title": "instance method"
+                },
+                {
+                  "id": "Public",
+                  "title": "public"
+                }
               ]
             },
             {
@@ -120,8 +141,14 @@
               "visibility": "private",
               "kind": "method",
               "labels": [
-                "labelKindInstanceMethod",
-                "labelVisibilityPrivate"
+                {
+                  "id": "InstanceMethod",
+                  "title": "instance method"
+                },
+                {
+                  "id": "Private",
+                  "title": "private"
+                }
               ]
             },
             {
@@ -133,8 +160,14 @@
               "visibility": "public",
               "kind": "method",
               "labels": [
-                "labelKindInstanceMethod",
-                "labelVisibilityPublic"
+                {
+                  "id": "InstanceMethod",
+                  "title": "instance method"
+                },
+                {
+                  "id": "Public",
+                  "title": "public"
+                }
               ]
             }
           ]
@@ -154,8 +187,14 @@
               "visibility": "public",
               "kind": "method",
               "labels": [
-                "labelKindClassMethod",
-                "labelVisibilityPublic"
+                {
+                  "id": "ClassMethod",
+                  "title": "class method"
+                },
+                {
+                  "id": "Public",
+                  "title": "public"
+                }
               ]
             },
             {
@@ -167,8 +206,14 @@
               "visibility": "public",
               "kind": "method",
               "labels": [
-                "labelKindClassMethod",
-                "labelVisibilityPublic"
+                {
+                  "id": "ClassMethod",
+                  "title": "class method"
+                },
+                {
+                  "id": "Public",
+                  "title": "public"
+                }
               ]
             }
           ]
@@ -187,8 +232,14 @@
               "visibility": "public",
               "kind": "attribute",
               "labels": [
-                "labelKindInstanceAttribute",
-                "labelVisibilityPublic"
+                {
+                  "id": "InstanceAttribute",
+                  "title": "instance attribute"
+                },
+                {
+                  "id": "Public",
+                  "title": "public"
+                }
               ]
             },
             {
@@ -199,8 +250,14 @@
               "visibility": "public",
               "kind": "attribute",
               "labels": [
-                "labelKindInstanceAttribute",
-                "labelVisibilityPublic"
+                {
+                  "id": "InstanceAttribute",
+                  "title": "instance attribute"
+                },
+                {
+                  "id": "Public",
+                  "title": "public"
+                }
               ]
             }
           ]
@@ -216,7 +273,10 @@
               "comment": "",
               "kind": "constant",
               "labels": [
-                "labelKindConstant"
+                {
+                  "id": "Constant",
+                  "title": "constant"
+                }
               ]
             }
           ]
@@ -232,7 +292,10 @@
               "comment": "",
               "kind": "extended",
               "labels": [
-                "labelKindExtended"
+                {
+                  "id": "Extended",
+                  "title": "extended"
+                }
               ]
             }
           ]
@@ -248,14 +311,20 @@
               "comment": "",
               "kind": "included",
               "labels": [
-                "labelKindIncluded"
+                {
+                  "id": "Included",
+                  "title": "included"
+                }
               ]
             }
           ]
         }
       ],
       "labels": [
-        "labelKindClass"
+        {
+          "id": "Class",
+          "title": "class"
+        }
       ]
     },
     {
@@ -275,14 +344,20 @@
               "comment": "<p>Default velocity for a flying duck.</p>",
               "kind": "constant",
               "labels": [
-                "labelKindConstant"
+                {
+                  "id": "Constant",
+                  "title": "constant"
+                }
               ]
             }
           ]
         }
       ],
       "labels": [
-        "labelKindClass"
+        {
+          "id": "Class",
+          "title": "class"
+        }
       ]
     },
     {
@@ -306,15 +381,24 @@
               "visibility": "public",
               "kind": "method",
               "labels": [
-                "labelKindInstanceMethod",
-                "labelVisibilityPublic"
+                {
+                  "id": "InstanceMethod",
+                  "title": "instance method"
+                },
+                {
+                  "id": "Public",
+                  "title": "public"
+                }
               ]
             }
           ]
         }
       ],
       "labels": [
-        "labelKindModule"
+        {
+          "id": "Module",
+          "title": "module"
+        }
       ]
     }
   ]

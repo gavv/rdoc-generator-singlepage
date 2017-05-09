@@ -1,94 +1,8 @@
 @charset "UTF-8";
 body {
-  margin: 0 20px;
+  margin: 0 10px 10px 2px;
   font-family: RobotoRegular;
   font-size: 15px; }
-body .label {
-  display: inline-block; }
-body .labelKindModule:before {
-  content: "module";
-  background-color: #dff0d8;
-  padding: 3px 5px;
-  border-radius: 8px;
-  font-size: 11px;
-  color: #3c763d; }
-body .labelKindClass:before {
-  content: "class";
-  background-color: #dff0d8;
-  padding: 3px 5px;
-  border-radius: 8px;
-  font-size: 11px;
-  color: #3c763d; }
-body .labelKindIncluded:before {
-  content: "included";
-  background-color: #dff0d8;
-  padding: 3px 5px;
-  border-radius: 8px;
-  font-size: 11px;
-  color: #3c763d; }
-body .labelKindExtended:before {
-  content: "extended";
-  background-color: #dff0d8;
-  padding: 3px 5px;
-  border-radius: 8px;
-  font-size: 11px;
-  color: #3c763d; }
-body .labelKindConstant:before {
-  content: "constant";
-  background-color: #dff0d8;
-  padding: 3px 5px;
-  border-radius: 8px;
-  font-size: 11px;
-  color: #3c763d; }
-body .labelKindClassMethod:before {
-  content: "class method";
-  background-color: #dff0d8;
-  padding: 3px 5px;
-  border-radius: 8px;
-  font-size: 11px;
-  color: #3c763d; }
-body .labelKindInstanceMethod:before {
-  content: "instance method";
-  background-color: #d9edf7;
-  padding: 3px 5px;
-  border-radius: 8px;
-  font-size: 11px;
-  color: #31708f; }
-body .labelKindClassAttribute:before {
-  content: "class attribute";
-  background-color: #d9edf7;
-  padding: 3px 5px;
-  border-radius: 8px;
-  font-size: 11px;
-  color: #31708f; }
-body .labelKindInstanceAttribute:before {
-  content: "instance attribute";
-  background-color: #dff0d8;
-  padding: 3px 5px;
-  border-radius: 8px;
-  font-size: 11px;
-  color: #3c763d; }
-body .labelVisibilityPublic:before {
-  content: "public";
-  background-color: #fcf8e3;
-  padding: 3px 5px;
-  border-radius: 8px;
-  font-size: 11px;
-  color: #8a6d3b; }
-body .labelVisibilityPrivate:before {
-  content: "private";
-  background-color: #fcf8e3;
-  padding: 3px 5px;
-  border-radius: 8px;
-  font-size: 11px;
-  color: #8a6d3b; }
-body .labelVisibilityProtected:before {
-  content: "protected";
-  background-color: #fcf8e3;
-  padding: 3px 5px;
-  border-radius: 8px;
-  font-size: 11px;
-  color: #8a6d3b; }
 body header {
   font-family: RalewaySemiBold; }
 body a {
@@ -99,11 +13,86 @@ body summary {
   display: inline-block; }
 body summary::-webkit-details-marker {
   display: none; }
-body > header {
+body .label {
+  display: inline-block;
+  margin: 0 2px 0 2px; }
+body .labelModule {
+  background-color: #dff0d8;
+  color: #3c763d;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 8px; }
+body .labelClass {
+  background-color: #dff0d8;
+  color: #3c763d;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 8px; }
+body .labelIncluded {
+  background-color: #dff0d8;
+  color: #3c763d;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 8px; }
+body .labelExtended {
+  background-color: #dff0d8;
+  color: #3c763d;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 8px; }
+body .labelConstant {
+  background-color: #dff0d8;
+  color: #3c763d;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 8px; }
+body .labelClassMethod {
+  background-color: #dff0d8;
+  color: #3c763d;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 8px; }
+body .labelInstanceMethod {
+  background-color: #d9edf7;
+  color: #31708f;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 8px; }
+body .labelClassAttribute {
+  background-color: #d9edf7;
+  color: #31708f;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 8px; }
+body .labelInstanceAttribute {
+  background-color: #dff0d8;
+  color: #3c763d;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 8px; }
+body .labelPublic {
+  background-color: #fcf8e3;
+  color: #8a6d3b;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 8px; }
+body .labelPrivate {
+  background-color: #fcf8e3;
+  color: #8a6d3b;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 8px; }
+body .labelProtected {
+  background-color: #fcf8e3;
+  color: #8a6d3b;
+  font-size: 11px;
+  padding: 3px 5px;
+  border-radius: 8px; }
+body .mainHeader {
   font-size: 32px;
   font-weight: 600;
   padding: 10px 0;
-  margin: 10px 0 30px 350px; }
+  margin: 10px 0 10px 350px; }
 body aside {
   float: left;
   width: 325px;
@@ -112,8 +101,25 @@ body aside {
   overflow-y: scroll;
   bottom: 0;
   top: 0;
-  margin-top: 17px; }
-body aside summary:after {
+  padding-top: 10px;
+  padding-right: 8px; }
+body aside a {
+  display: inline-block; }
+body aside .tocClassBlock {
+  border: 1px solid rgba(136, 136, 136, 0.12);
+  background-color: #fafafa;
+  border-radius: 3px;
+  margin: 7px;
+  width: 300px;
+  position: relative;
+  padding: 0px 2px 0px 2px; }
+body aside .tocClassBlock:first-child {
+  margin-top: 0; }
+body aside .tocClassBlock summary {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+body aside .tocClassBlock summary:after {
   content: "+";
   color: #000;
   font-size: 20px;
@@ -123,80 +129,81 @@ body aside summary:after {
   width: 40px;
   top: 9%;
   right: 0px; }
-body aside details[open] summary:after {
+body aside .tocClassBlock[open] summary:after {
   content: "−"; }
-body aside a {
-  display: inline-block; }
-body aside .tocGroupBlock {
+body aside .tocClassBlock .tocClass {
+  flex-grow: 1;
+  width: 190px;
+  word-wrap: break-word;
+  padding: 5px 3px 5px 3px; }
+body aside .tocClassBlock .tocGroupBlock {
   background-color: white; }
-body aside .tocGroupBlock .tocGroup {
+body aside .tocClassBlock .tocGroupBlock .tocGroup {
   display: block;
   padding: 5px 20px;
   border-bottom: 1px solid #f2f2f2;
   border-left: 3px solid transparent; }
-body aside .tocGroupBlock .tocGroup:hover {
+body aside .tocClassBlock .tocGroupBlock .tocGroup:hover {
   border-left: 3px solid #f25158; }
-body aside .tocGroupBlock .tocGroup:last-child {
+body aside .tocClassBlock .tocGroupBlock .tocGroup:last-child {
   border-bottom: none; }
-body aside .tocClassBlock {
-  border: 1px solid rgba(136, 136, 136, 0.12);
-  background-color: #fafafa;
-  border-radius: 3px;
-  margin: 7px;
-  width: 300px;
-  position: relative; }
-body aside .tocClassBlock:first-child {
-  margin-top: 0; }
-body aside .tocClassBlock .tocClass {
-  width: 190px;
-  word-wrap: break-word;
-  padding: 5px; }
 body main {
   margin-left: 340px; }
-body main article {
+body main .classBlock {
   border: 1px solid #d9d9d9;
   border-radius: 5px;
   margin-top: 15px; }
-body main article header {
+body main .classBlock .classHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #f3f3f3;
   color: black;
   padding: 5px;
   font-size: 22px; }
-body main article section:first-of-type {
-  border-top: none; }
-body main article section {
+body main .classBlock .classHeader .className {
+  flex-grow: 1;
+  padding-left: 4px; }
+body main .classBlock .groupBlock {
   border-top: 1px solid #d9d9d9;
   padding: 5px 5px 0 5px;
   border-radius: 5px; }
-body main article section summary:before {
+body main .classBlock .groupBlock:first-of-type {
+  border-top: none; }
+body main .classBlock .groupBlock .groupHeader {
+  background: none;
+  color: black;
+  padding: 7px; }
+body main .classBlock .groupBlock .memberBlock {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #d9d9d9;
+  margin: 10px 30px 0 30px; }
+body main .classBlock .groupBlock .memberBlock:last-child {
+  border-bottom: none; }
+body main .classBlock .groupBlock .memberBlock .memberHeader {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+body main .classBlock .groupBlock .memberBlock .memberHeader .memberName {
+  flex-grow: 1;
+  font-weight: bolder;
+  padding-left: 4px; }
+body main .classBlock .groupBlock .memberBlock .memberComment {
+  font-size: 14px; }
+body main .classBlock .groupBlock .memberBlock .memberCode {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fdf6e3;
+  padding: 5px; }
+body main .classBlock .groupBlock .memberBlock .memberCode summary:before {
   content: "+";
   color: #000;
   font-size: 20px;
   text-align: center;
   padding: 10px 20px;
   width: 20px; }
-body main article section details {
-  border: 1px solid #d9d9d9;
-  border-radius: 6px;
-  overflow: hidden;
-  background: #fdf6e3;
-  padding: 5px; }
-body main article section details[open] summary:before {
+body main .classBlock .groupBlock .memberBlock .memberCode[open] summary:before {
   content: "−"; }
-body main article section header {
-  padding: 7px; }
-body main article section .memberBlock {
-  padding-bottom: 15px;
-  border-bottom: 1px solid #d9d9d9;
-  margin: 10px 30px 0 30px; }
-body main article section .memberBlock:last-child {
-  border-bottom: none; }
-body main article section .memberBlock .memberName {
-  font-weight: bolder; }
-body main article section .memberBlock .memberComment {
-  font-size: 14px; }
-body main article section header {
-  background: none;
-  color: black; }
-body main article section pre {
+body main .classBlock .groupBlock .memberBlock .memberCode pre {
   font-size: 12px; }

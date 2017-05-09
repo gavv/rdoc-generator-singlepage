@@ -34,8 +34,9 @@ html
 
         - if klass.groups.empty?
           div class="tocClassBlock"
-            - klass.labels.each do |name|
-              div class="label #{name}"
+            - klass.labels.each do |label|
+              div class="label label#{label.id}"
+                | #{label.title}
 
             a class="tocClass" href="##{klass.id}"
               | #{klass.title}
@@ -43,8 +44,9 @@ html
         - else
           details class="tocClassBlock"
             summary
-              - klass.labels.each do |name|
-                span class="label #{name}"
+              - klass.labels.each do |label|
+                span class="label label#{label.id}"
+                  | #{label.title}
 
               a class="tocClass" href="##{klass.id}"
                 | #{klass.title}
@@ -60,8 +62,9 @@ html
         article class="classBlock" id="#{klass.id}"
 
           header class="classHeader"
-            - klass.labels.each do |name|
-              div class="label #{name}"
+            - klass.labels.each do |label|
+              div class="label label#{label.id}"
+                | #{label.title}
 
             span class="className"
               | #{klass.title}
@@ -77,8 +80,9 @@ html
                 div class="memberBlock"
 
                   div class="memberHeader"
-                    - member.labels.each do |name|
-                      div class="label #{name}"
+                    - member.labels.each do |label|
+                      div class="label label#{label.id}"
+                        | #{label.title}
 
                     span class="memberName"
                       | #{member.id}
