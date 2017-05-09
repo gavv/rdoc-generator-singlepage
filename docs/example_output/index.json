@@ -4,7 +4,7 @@
     "head": {
       "styles": [
         {
-          "url": "solarized.css"
+          "url": "onelight.css"
         },
         {
           "url": "main.css"

@@ -1,7 +1,7 @@
 head:
   styles:
     -
-      file: common/syntax/solarized.sass
+      file: common/syntax/onelight.sass
     -
       file: light/main.sass
   fonts:

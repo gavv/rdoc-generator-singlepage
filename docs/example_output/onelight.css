@@ -1,0 +1,22 @@
+.memberCode {
+  background: #fafafa; }
+.memberCode .ruby-constant {
+  color: #986801; }
+.memberCode .ruby-keyword {
+  color: #a626a4; }
+.memberCode .ruby-ivar {
+  color: #e45649; }
+.memberCode .ruby-operator {
+  color: #4078f2; }
+.memberCode .ruby-identifier {
+  color: #986801; }
+.memberCode .ruby-node {
+  color: #c18401; }
+.memberCode .ruby-comment {
+  color: #0120bc; }
+.memberCode .ruby-regexp {
+  color: #0184bc; }
+.memberCode .ruby-value {
+  color: #ca1243; }
+.memberCode .ruby-string {
+  color: #50a14f; }
