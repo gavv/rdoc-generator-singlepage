@@ -1,13 +1,13 @@
 require 'json'
 
-# JSONBuilder builds JSON file and installs it to the output directory.
-class JSONBuilder
+# JSONWriter builds JSON file and copies it to the output directory.
+class JSONWriter
   def initialize(options)
     @options = options
   end
 
-  def build(scope)
-    json = JSON.pretty_generate(scope)
+  def write(data)
+    json = JSON.pretty_generate(data)
 
     File.open(@options.sf_jsonfile, 'w') do |file|
       file.write(json)

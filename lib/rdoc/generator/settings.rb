@@ -7,10 +7,11 @@ module Settings
   DEFAULT_THEME    = 'light'.freeze
 
   def self.data_dir
-    pn = Pathname.new(
-      File.join(File.dirname(__FILE__), '../../../data/rdoc-generator-solarfish')
-    )
-    pn = pn.cleanpath
-    pn.to_s
+    Pathname.new(
+      File.join(
+        File.dirname(__FILE__),
+        '../../../data/rdoc-generator-solarfish'
+      )
+    ).cleanpath.to_s
   end
 end

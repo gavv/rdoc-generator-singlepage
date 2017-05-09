@@ -1,14 +1,14 @@
 require 'fileutils'
 
-# HTMLBuilder builds HTML file from a template and installs HTML and
+# HTMLWriter builds HTML file from a template and copies HTML and
 # theme files to the output directory.
-class HTMLBuilder
+class HTMLWriter
   def initialize(options)
     @options = options
   end
 
-  def build(scope, theme_files, template)
-    html = template.render(scope)
+  def write(data, theme_files, template)
+    html = template.render(data)
     install_theme(theme_files)
     install_html(html)
   end

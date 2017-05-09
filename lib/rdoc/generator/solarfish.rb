@@ -4,8 +4,8 @@ require_relative 'settings'
 require_relative 'doc_loader'
 require_relative 'theme_loader'
 require_relative 'template_loader'
-require_relative 'json_builder'
-require_relative 'html_builder'
+require_relative 'json_writer'
+require_relative 'html_writer'
 
 # SolarFish generator options.
 class RDoc::Options
@@ -113,23 +113,23 @@ class RDoc::Generator::SolarFish
     theme_loader = ThemeLoader.new(@options)
     theme, theme_files = theme_loader.load
 
-    scope = {
+    data = {
       title:   @options.title,
       theme:   theme,
       classes: classes
     }
 
     if @options.sf_jsonfile
-      json_builder = JSONBuilder.new(@options)
-      json_builder.build(scope)
+      json_writer = JSONWriter.new(@options)
+      json_writer.write(data)
     end
 
     if @options.sf_htmlfile
       template_loader = TemplateLoader.new(@options)
       template = template_loader.load
 
-      html_builder = HTMLBuilder.new(@options)
-      html_builder.build(scope, theme_files, template)
+      html_writer = HTMLWriter.new(@options)
+      html_writer.write(data, theme_files, template)
     end
   end
 end

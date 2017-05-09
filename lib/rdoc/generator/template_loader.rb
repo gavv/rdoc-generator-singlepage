@@ -35,18 +35,18 @@ class TemplateLoader
   end
 end
 
-# Template allows to render HTML given a hash with documentation and theme.
+# Template allows to render HTML from a given hash with documentation and theme.
 class Template
   def initialize(path)
     @path = path
   end
 
-  def render(scope)
+  def render(data)
     opts = {
       pretty: true
     }
 
-    vars = RecursiveOpenStruct.new(scope, recurse_over_arrays: true)
+    vars = RecursiveOpenStruct.new(data, recurse_over_arrays: true)
 
     template = Slim::Template.new(@path, opts)
     template.render(vars)
