@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rbdoc/rdoc-generator-solarfish.svg?branch=master)](https://travis-ci.org/rbdoc/rdoc-generator-solarfish)
+
 # RDoc::Generator::SolarFish
 
 Single page HTML5 generator for Ruby RDoc.
