@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/rbdoc/rdoc-generator-solarfish.svg?branch=master)](https://travis-ci.org/rbdoc/rdoc-generator-solarfish)
-
 # RDoc::Generator::SolarFish
+
+[![Build Status](https://travis-ci.org/rbdoc/rdoc-generator-solarfish.svg?branch=master)](https://travis-ci.org/rbdoc/rdoc-generator-solarfish)
 
 Single page HTML5 generator for Ruby RDoc.
 
@@ -11,7 +11,7 @@ Single page HTML5 generator for Ruby RDoc.
 * Generate single page HTML5 documentation suitable for offline use.
 * Templates support using [Slim](http://slim-lang.com/).
 * Themes support.
-* Out of the box [Sass](http://sass-lang.com/) support.
+* Out of the box [Sass](http://sass-lang.com/) and SCSS support.
 * Filter classes or members by regex.
 
 ## Example
