@@ -36,12 +36,12 @@
       </details>
       <details class="tocClassBlock"><summary><span class="label labelClass">class</span><a class="tocClass" href="#Duck">Duck</a></summary>
         <div class="tocGroupBlock">
-          <a class="tocGroup" href="#Duck::InstanceMethods">Instance Methods</a>
+          <a class="tocGroup" href="#Duck::ExtendedClasses">Extended Classes</a>
+          <a class="tocGroup" href="#Duck::IncludedModules">Included Modules</a>
+          <a class="tocGroup" href="#Duck::Constants">Constants</a>
           <a class="tocGroup" href="#Duck::ClassMethods">Class Methods</a>
           <a class="tocGroup" href="#Duck::InstanceAttributes">Instance Attributes</a>
-          <a class="tocGroup" href="#Duck::Constants">Constants</a>
-          <a class="tocGroup" href="#Duck::ExtendModules">Extend Modules</a>
-          <a class="tocGroup" href="#Duck::IncludeModules">Include Modules</a>
+          <a class="tocGroup" href="#Duck::InstanceMethods">Instance Methods</a>
         </div>
       </details>
       <details class="tocClassBlock"><summary><span class="label labelClass">class</span><a class="tocClass" href="#Object">Object</a></summary>
@@ -67,27 +67,7 @@
           <header class="groupHeader">
             <span class="groupName">Instance Methods</span>
           </header>
-          <div class="memberBlock">
-            <div class="memberHeader">
-              <div class="label labelInstanceMethod">
-                instance method
-              </div>
-              <div class="label labelPublic">
-                public
-              </div>
-              <span class="memberName">speak() { |text| ... }</span>
-            </div>
-            <div class="memberComment">
-              <p>Produce some noise.</p>
-            </div>
-            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 32</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">speak</span> <span class="ruby-comment"># :yields: text</span>
-  <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;generic tweeting&#39;</span>
-  <span class="ruby-keyword">yield</span> <span class="ruby-string">&#39;tweet&#39;</span>
-  <span class="ruby-keyword">yield</span> <span class="ruby-string">&#39;tweet&#39;</span>
-<span class="ruby-keyword">end</span></pre></details>
-          </div>
-          <div class="memberBlock">
+          <div class="memberBlock" id="Bird::fly">
             <div class="memberHeader">
               <div class="label labelInstanceMethod">
                 instance method
@@ -115,6 +95,26 @@
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre></details>
           </div>
+          <div class="memberBlock" id="Bird::speak">
+            <div class="memberHeader">
+              <div class="label labelInstanceMethod">
+                instance method
+              </div>
+              <div class="label labelPublic">
+                public
+              </div>
+              <span class="memberName">speak() { |text| ... }</span>
+            </div>
+            <div class="memberComment">
+              <p>Produce some noise.</p>
+            </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">speak</span> <span class="ruby-comment"># :yields: text</span>
+  <span class="ruby-identifier">puts</span> <span class="ruby-string">&#39;generic tweeting&#39;</span>
+  <span class="ruby-keyword">yield</span> <span class="ruby-string">&#39;tweet&#39;</span>
+  <span class="ruby-keyword">yield</span> <span class="ruby-string">&#39;tweet&#39;</span>
+<span class="ruby-keyword">end</span></pre></details>
+          </div>
         </section>
       </article>
       <article class="classBlock" id="Duck">
@@ -124,89 +124,59 @@
           </div>
           <span class="className">Duck</span>
         </header>
-        <section class="groupBlock" id="Duck::InstanceMethods">
+        <section class="groupBlock" id="Duck::ExtendedClasses">
           <header class="groupHeader">
-            <span class="groupName">Instance Methods</span>
+            <span class="groupName">Extended Classes</span>
           </header>
-          <div class="memberBlock">
+          <div class="memberBlock" id="Duck::Animal">
             <div class="memberHeader">
-              <div class="label labelInstanceMethod">
-                instance method
+              <div class="label labelExtended">
+                extended
               </div>
-              <div class="label labelPublic">
-                public
-              </div>
-              <span class="memberName">speak() { |speech| ... }</span>
+              <span class="memberName">Animal</span>
             </div>
             <div class="memberComment">
-              <p><a href="Duck.html">Duck</a> overrides generic implementation.</p>
+              
             </div>
-            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 82</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">speak</span>
-  <span class="ruby-identifier">speech</span> = <span class="ruby-identifier">quack</span>
-  <span class="ruby-keyword">yield</span> <span class="ruby-identifier">speech</span>
-<span class="ruby-keyword">end</span></pre></details>
           </div>
-          <div class="memberBlock">
+        </section>
+        <section class="groupBlock" id="Duck::IncludedModules">
+          <header class="groupHeader">
+            <span class="groupName">Included Modules</span>
+          </header>
+          <div class="memberBlock" id="Duck::Waterfowl">
             <div class="memberHeader">
-              <div class="label labelInstanceMethod">
-                instance method
+              <div class="label labelIncluded">
+                included
               </div>
-              <div class="label labelPrivate">
-                private
-              </div>
-              <span class="memberName">quack()</span>
+              <span class="memberName">Waterfowl</span>
             </div>
             <div class="memberComment">
-              <p>Implements quacking</p>
+              
             </div>
-            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 88</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">quack</span>
-  <span class="ruby-string">&#39;quack&#39;</span>
-<span class="ruby-keyword">end</span></pre></details>
           </div>
-          <div class="memberBlock">
+        </section>
+        <section class="groupBlock" id="Duck::Constants">
+          <header class="groupHeader">
+            <span class="groupName">Constants</span>
+          </header>
+          <div class="memberBlock" id="Duck::MAX_VELOCITY">
             <div class="memberHeader">
-              <div class="label labelInstanceMethod">
-                instance method
+              <div class="label labelConstant">
+                constant
               </div>
-              <div class="label labelPublic">
-                public
-              </div>
-              <span class="memberName">Bird.useful? -&gt; bool</span>
+              <span class="memberName">MAX_VELOCITY</span>
             </div>
             <div class="memberComment">
-              <p>Checks if this duck is a useful one.</p>
+              
             </div>
-            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 126</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier">useful?</span>
-  <span class="ruby-ivar">@domestic</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@rubber</span>
-<span class="ruby-keyword">end</span></pre></details>
           </div>
         </section>
         <section class="groupBlock" id="Duck::ClassMethods">
           <header class="groupHeader">
             <span class="groupName">Class Methods</span>
           </header>
-          <div class="memberBlock">
-            <div class="memberHeader">
-              <div class="label labelClassMethod">
-                class method
-              </div>
-              <div class="label labelPublic">
-                public
-              </div>
-              <span class="memberName">rubber_ducks()</span>
-            </div>
-            <div class="memberComment">
-              <p>Returns list of all rubber ducks.</p>
-            </div>
-            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 111</span>
-<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">rubber_ducks</span>
-  <span class="ruby-identifier">@@rubber_ducks</span>
-<span class="ruby-keyword">end</span></pre></details>
-          </div>
-          <div class="memberBlock">
+          <div class="memberBlock" id="Duck::new">
             <div class="memberHeader">
               <div class="label labelClassMethod">
                 class method
@@ -226,12 +196,30 @@
   <span class="ruby-identifier">@@rubber_ducks</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword">self</span> <span class="ruby-keyword">if</span> <span class="ruby-identifier">rubber</span>
 <span class="ruby-keyword">end</span></pre></details>
           </div>
+          <div class="memberBlock" id="Duck::rubber_ducks">
+            <div class="memberHeader">
+              <div class="label labelClassMethod">
+                class method
+              </div>
+              <div class="label labelPublic">
+                public
+              </div>
+              <span class="memberName">rubber_ducks()</span>
+            </div>
+            <div class="memberComment">
+              <p>Returns list of all rubber ducks.</p>
+            </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 111</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">rubber_ducks</span>
+  <span class="ruby-identifier">@@rubber_ducks</span>
+<span class="ruby-keyword">end</span></pre></details>
+          </div>
         </section>
         <section class="groupBlock" id="Duck::InstanceAttributes">
           <header class="groupHeader">
             <span class="groupName">Instance Attributes</span>
           </header>
-          <div class="memberBlock">
+          <div class="memberBlock" id="Duck::domestic">
             <div class="memberHeader">
               <div class="label labelInstanceAttribute">
                 instance attribute
@@ -245,7 +233,7 @@
               <p>True for domestic ducks.</p>
             </div>
           </div>
-          <div class="memberBlock">
+          <div class="memberBlock" id="Duck::rubber">
             <div class="memberHeader">
               <div class="label labelInstanceAttribute">
                 instance attribute
@@ -260,52 +248,64 @@
             </div>
           </div>
         </section>
-        <section class="groupBlock" id="Duck::Constants">
+        <section class="groupBlock" id="Duck::InstanceMethods">
           <header class="groupHeader">
-            <span class="groupName">Constants</span>
+            <span class="groupName">Instance Methods</span>
           </header>
-          <div class="memberBlock">
+          <div class="memberBlock" id="Duck::quack">
             <div class="memberHeader">
-              <div class="label labelConstant">
-                constant
+              <div class="label labelInstanceMethod">
+                instance method
               </div>
-              <span class="memberName">MAX_VELOCITY</span>
+              <div class="label labelPrivate">
+                private
+              </div>
+              <span class="memberName">quack()</span>
             </div>
             <div class="memberComment">
-              
+              <p>Implements quacking</p>
             </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 88</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">quack</span>
+  <span class="ruby-string">&#39;quack&#39;</span>
+<span class="ruby-keyword">end</span></pre></details>
           </div>
-        </section>
-        <section class="groupBlock" id="Duck::ExtendModules">
-          <header class="groupHeader">
-            <span class="groupName">Extend Modules</span>
-          </header>
-          <div class="memberBlock">
+          <div class="memberBlock" id="Duck::speak">
             <div class="memberHeader">
-              <div class="label labelExtended">
-                extended
+              <div class="label labelInstanceMethod">
+                instance method
               </div>
-              <span class="memberName">Animal</span>
+              <div class="label labelPublic">
+                public
+              </div>
+              <span class="memberName">speak() { |speech| ... }</span>
             </div>
             <div class="memberComment">
-              
+              <p><a href="Duck.html">Duck</a> overrides generic implementation.</p>
             </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 82</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">speak</span>
+  <span class="ruby-identifier">speech</span> = <span class="ruby-identifier">quack</span>
+  <span class="ruby-keyword">yield</span> <span class="ruby-identifier">speech</span>
+<span class="ruby-keyword">end</span></pre></details>
           </div>
-        </section>
-        <section class="groupBlock" id="Duck::IncludeModules">
-          <header class="groupHeader">
-            <span class="groupName">Include Modules</span>
-          </header>
-          <div class="memberBlock">
+          <div class="memberBlock" id="Duck::useful?">
             <div class="memberHeader">
-              <div class="label labelIncluded">
-                included
+              <div class="label labelInstanceMethod">
+                instance method
               </div>
-              <span class="memberName">Waterfowl</span>
+              <div class="label labelPublic">
+                public
+              </div>
+              <span class="memberName">Bird.useful? -&gt; bool</span>
             </div>
             <div class="memberComment">
-              
+              <p>Checks if this duck is a useful one.</p>
             </div>
+            <details class="memberCode"><summary>Source code</summary><pre><span class="ruby-comment"># File example.rb, line 126</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">useful?</span>
+  <span class="ruby-ivar">@domestic</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@rubber</span>
+<span class="ruby-keyword">end</span></pre></details>
           </div>
         </section>
       </article>
@@ -320,7 +320,7 @@
           <header class="groupHeader">
             <span class="groupName">Constants</span>
           </header>
-          <div class="memberBlock">
+          <div class="memberBlock" id="Object::DEFAULT_DUCK_VELOCITY">
             <div class="memberHeader">
               <div class="label labelConstant">
                 constant
@@ -344,7 +344,7 @@
           <header class="groupHeader">
             <span class="groupName">Instance Methods</span>
           </header>
-          <div class="memberBlock">
+          <div class="memberBlock" id="Waterfowl::swim">
             <div class="memberHeader">
               <div class="label labelInstanceMethod">
                 instance method

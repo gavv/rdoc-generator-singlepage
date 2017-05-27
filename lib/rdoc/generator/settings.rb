@@ -34,7 +34,7 @@ module Settings
       end
     end
 
-    files
+    files.uniq
   end
 
   def self.data_dirs(subdir)
