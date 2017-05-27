@@ -8,24 +8,12 @@ require_relative 'settings'
 # will be passed to HTML template or written to JSON file, and a list
 # of theme files to be installed along with the HTML file.
 class ThemeLoader
-  def self.themes_dir
-    File.join Settings.data_dir, 'themes'
-  end
-
   def self.themes_list
-    pattern = File.join themes_dir, '*.yml'
-
-    Dir[pattern].sort.map do |path|
-      File.basename path, '.yml'
-    end
+    Settings.list_file_names 'themes', '.yml'
   end
 
   def self.theme_path(name)
-    if name.include? '/'
-      File.absolute_path name
-    else
-      File.join themes_dir, "#{name}.yml"
-    end
+    Settings.find_file 'themes', '.yml', name
   end
 
   def initialize(options)

@@ -6,24 +6,12 @@ require_relative 'settings'
 # TemplateLoader reads a template from `.slim' file and builds a Template object
 # that may render HTML given a hash with documentation and theme.
 class TemplateLoader
-  def self.templates_dir
-    File.join Settings.data_dir, 'templates'
-  end
-
   def self.templates_list
-    pattern = File.join templates_dir, '*.slim'
-
-    Dir[pattern].sort.map do |path|
-      File.basename path, '.slim'
-    end
+    Settings.list_file_names 'templates', '.slim'
   end
 
   def self.template_path(name)
-    if name.include? '/'
-      File.absolute_path name
-    else
-      File.join templates_dir, "#{name}.slim"
-    end
+    Settings.find_file 'templates', '.slim', name
   end
 
   def initialize(options)
