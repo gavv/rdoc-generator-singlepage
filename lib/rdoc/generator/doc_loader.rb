@@ -19,11 +19,9 @@ class DocLoader
       skip_class? klass.full_name
     end
 
-    classes.sort_by!(&:full_name)
-
-    ret = classes.map do |klass|
+    class_list = classes.map do |klass|
       {
-        id:      klass.full_name,
+        id:      klass.full_name.strip,
         title:   klass.full_name,
         kind:    get_class_kind(klass.full_name),
         comment: get_comment(klass),
@@ -31,7 +29,11 @@ class DocLoader
       }
     end
 
-    with_labels ret
+    stable_sort_by! class_list do |klass|
+      klass[:id]
+    end
+
+    with_labels class_list
   end
 
   def build_groups(klass)
@@ -39,10 +41,10 @@ class DocLoader
     groups = {}
 
     members.each do |member|
-      group = get_member_group(member)
+      group = get_builtin_group(member)
       next unless group
 
-      group_id = klass.full_name.strip + '::' + group[:title].strip.sub(' ', '')
+      group_id = make_id(klass, group[:type].to_s)
 
       unless groups.include? group_id
         groups[group_id] = group.merge(
@@ -54,29 +56,41 @@ class DocLoader
       groups[group_id][:members] << member
     end
 
-    groups.values
+    group_list = groups.values
+
+    group_list.each do |group|
+      stable_sort_by! group[:members] do |member|
+        member[:id]
+      end
+    end
+
+    stable_sort_by! group_list do |group|
+      builtin_group_order.index group[:type]
+    end
+
+    group_list
   end
 
   def build_members(klass)
     members = []
 
-    method_members = build_members_from_list klass.method_list do |member|
+    method_members = build_members_from_list klass, klass.method_list do |member|
       member[:kind] = :method
     end
 
-    attr_members = build_members_from_list klass.attributes do |member|
+    attr_members = build_members_from_list klass, klass.attributes do |member|
       member[:kind] = :attribute
     end
 
-    const_members = build_members_from_list klass.constants do |member|
+    const_members = build_members_from_list klass, klass.constants do |member|
       member[:kind] = :constant
     end
 
-    extends_members = build_members_from_list klass.extends do |member|
+    extends_members = build_members_from_list klass, klass.extends do |member|
       member[:kind] = :extended
     end
 
-    include_members = build_members_from_list klass.includes do |member|
+    include_members = build_members_from_list klass, klass.includes do |member|
       member[:kind] = :included
     end
 
@@ -89,24 +103,16 @@ class DocLoader
     with_labels members
   end
 
-  def build_members_from_list(member_list)
+  def build_members_from_list(klass, member_list)
     members = []
 
     member_list.each do |m|
       next if skip_member? m.name
 
       member = {}
-      member[:id] = if m.respond_to? :arglists
-                      if m.arglists
-                        m.arglists
-                      else
-                        m.name
-                      end
-                    else
-                      m.name
-                    end
 
-      member[:title] = m.name if m.name
+      member[:id] = make_id(klass, m.name)
+      member[:title] = get_title(m)
       member[:comment] = get_comment(m)
 
       if m.respond_to? :markup_code
@@ -142,12 +148,12 @@ class DocLoader
     when :method
       labels << if object[:level] == :class
                   {
-                    id:    :ClassMethod,
+                    id:    'ClassMethod',
                     title: 'class method'
                   }
                 else
                   {
-                    id:    :InstanceMethod,
+                    id:    'InstanceMethod',
                     title: 'instance method'
                   }
                 end
@@ -155,12 +161,12 @@ class DocLoader
     when :attribute
       labels << if object[:level] == :class
                   {
-                    id:    :ClassAttribute,
+                    id:    'ClassAttribute',
                     title: 'class attribute'
                   }
                 else
                   {
-                    id:    :InstanceAttribute,
+                    id:    'InstanceAttribute',
                     title: 'instance attribute'
                   }
                 end
@@ -183,6 +189,17 @@ class DocLoader
     array
   end
 
+  def make_id(klass, name)
+    klass.full_name.strip + '::' + name
+  end
+
+  def get_title(object)
+    if object.respond_to? :arglists
+      return object.arglists if object.arglists
+    end
+    object.name
+  end
+
   def get_comment(object)
     if object.comment.respond_to? :text
       object.description.strip
@@ -199,19 +216,33 @@ class DocLoader
     end
   end
 
-  def get_member_group(member)
+  def builtin_group_order
+    %i[
+      ExtendedClasses
+      IncludedModules
+      Constants
+      ClassAttributes
+      ClassMethods
+      InstanceAttributes
+      InstanceMethods
+    ]
+  end
+
+  def get_builtin_group(member)
     case member[:kind]
     when :method
       case member[:level]
       when :instance
         {
           title: 'Instance Methods',
+          type:  :InstanceMethods,
           kind:  :method,
           level: :instance
         }
       when :class
         {
           title: 'Class Methods',
+          type:  :ClassMethods,
           kind:  :method,
           level: :class
         }
@@ -221,12 +252,14 @@ class DocLoader
       when :instance
         {
           title: 'Instance Attributes',
+          type:  :InstanceAttributes,
           kind:  :attribute,
           level: :instance
         }
       when :class
         {
           title: 'Class Attributes',
+          type:  :ClassAttributes,
           kind:  :attribute,
           level: :class
         }
@@ -234,19 +267,29 @@ class DocLoader
     when :constant
       {
         title: 'Constants',
+        type:  :Constants,
         kind:  :constant
       }
     when :extended
       {
-        title: 'Extend Modules',
+        title: 'Extended Classes',
+        type:  :ExtendedClasses,
         kind:  :extended
       }
     when :included
       {
-        title: 'Include Modules',
+        title: 'Included Modules',
+        type:  :IncludedModules,
         kind:  :included
       }
     end
+  end
+
+  def stable_sort_by!(array)
+    sorted = array.each_with_index.sort_by do |e, n|
+      [yield(e), n]
+    end
+    array.replace(sorted.map(&:first))
   end
 
   def skip_class?(class_name)
