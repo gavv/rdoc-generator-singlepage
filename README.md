@@ -163,4 +163,4 @@ $ rake rubocop:auto_correct
 ## License
 
 * The source code is licensed under [MIT](LICENSE) license.
-* Fonts have their own [licenses](data/rdoc-generator-solarfish/themes/common/fonts).
+* [Fonts](data/rdoc-generator-solarfish/themes/common/fonts) and [syntax themes](data/rdoc-generator-solarfish/themes/common/syntax) have their own licenses.
