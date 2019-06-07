@@ -31,7 +31,7 @@ $ rake example
 From rubygems:
 
 ```
-gem install rdoc-generator-solarfish
+$ gem install rdoc-generator-solarfish
 ```
 
 From sources:
