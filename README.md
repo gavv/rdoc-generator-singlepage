@@ -4,8 +4,6 @@
 
 Single page HTML5 generator for Ruby RDoc.
 
-*Work in progress!*
-
 ## Features
 
 * Generate single page HTML5 documentation suitable for offline use.
@@ -16,7 +14,12 @@ Single page HTML5 generator for Ruby RDoc.
 
 ## Example
 
-See example output [HTML](https://rbdoc.github.io/rdoc-generator-solarfish/example_output/) and [JSON](docs/example_output/index.json). It was generated from the [`example.rb`](docs/example.rb) in the [`docs`](docs) directory.
+See example output:
+
+* [HTML](https://rbdoc.github.io/rdoc-generator-solarfish/example_output/)
+* [JSON](docs/example_output/index.json)
+
+It was generated from the [`example.rb`](docs/example.rb) in the [`docs`](docs) directory.
 
 Generate locally:
 
@@ -30,7 +33,7 @@ $ rake example
 From rubygems:
 
 ```
-todo
+TODO
 ```
 
 From sources:
@@ -118,21 +121,27 @@ rdoc = RDoc::RDoc.new
 rdoc.document options
 ```
 
-#### From rake
-
-```
-todo
-```
-
 ## Configuration
 
 #### Templates
 
-*todo*
+The HTML page layout is defined by a [Slim](http://slim-lang.com/) template.
+
+Only one template is available out of the box:
+
+* ["onepage" template](https://github.com/rbdoc/rdoc-generator-solarfish/blob/master/data/rdoc-generator-solarfish/templates/onepage.slim)
+
+You can configure what template to use with the `--sf-template` option. Its value may be either a path or a name. In the later case, the template is searched in all locally installed gems that provide `data/rdoc-generator-solarfish/templates` directory.
 
 #### Themes
 
-*todo*
+The HTML page style is defined by a YAML theme. A theme file may contain Sass and SCSS stylesheet files and font files.
+
+Only one theme is available out of the box:
+
+* ["light" theme](https://github.com/rbdoc/rdoc-generator-solarfish/blob/master/data/rdoc-generator-solarfish/themes/light.yml)
+
+You can configure what theme to use with the `--sf-theme` option. Its value may be either a path or a name. In the later case, the theme is searched in all locally installed gems that provide `data/rdoc-generator-solarfish/themes` directory.
 
 ## Development
 
