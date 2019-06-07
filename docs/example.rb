@@ -35,6 +35,8 @@ class Bird
     yield 'tweet'
   end
 
+  # Fly somewhere.
+  #
   # Flying is the most critical feature of birds.
   #
   # :args: direction, velocity
@@ -47,15 +49,11 @@ class Bird
   #
   #   fly(:south, 70)
   def fly(direction, velocity)
-    if RUBY_PLATFORM == 'java'
-      _fly_jruby(direction, velocity)
-    else
-      puts "flying away: direction=#{direction}, velocity=#{velocity}"
-    end
+    _fly_impl(direction, velocity)
   end
 
-  def _fly_jruby(_direction, _velocity) # :nodoc:
-    puts 'flying away, but not that simple'
+  def _fly_impl(_direction, _velocity) # :nodoc:
+    puts "flying away: direction=#{direction}, velocity=#{velocity}"
   end
 end
 
@@ -140,5 +138,5 @@ $default_rubber_duck = Duck.new(false, true)
 # Domestic rubber duck.
 #
 # *Note:*
-#  This is weird... Thus not making it global yet.
+#  This is weird... Thus not making it global.
 domestic_rubber_duck = Duck.new(true, true)

@@ -2,7 +2,7 @@
 body {
   margin: 0 10px 10px 2px;
   font-family: RobotoRegular;
-  font-size: 15px; }
+  font-size: 16px; }
 body header {
   font-family: RalewaySemiBold; }
 body a {
@@ -19,73 +19,73 @@ body .label {
 body .labelModule {
   background-color: #dff0d8;
   color: #3c763d;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 5px;
   border-radius: 8px; }
 body .labelClass {
   background-color: #dff0d8;
   color: #3c763d;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 5px;
   border-radius: 8px; }
 body .labelIncluded {
   background-color: #dff0d8;
   color: #3c763d;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 5px;
   border-radius: 8px; }
 body .labelExtended {
   background-color: #dff0d8;
   color: #3c763d;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 5px;
   border-radius: 8px; }
 body .labelConstant {
   background-color: #dff0d8;
   color: #3c763d;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 5px;
   border-radius: 8px; }
 body .labelClassMethod {
   background-color: #dff0d8;
   color: #3c763d;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 5px;
   border-radius: 8px; }
 body .labelInstanceMethod {
   background-color: #d9edf7;
   color: #31708f;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 5px;
   border-radius: 8px; }
 body .labelClassAttribute {
   background-color: #d9edf7;
   color: #31708f;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 5px;
   border-radius: 8px; }
 body .labelInstanceAttribute {
   background-color: #dff0d8;
   color: #3c763d;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 5px;
   border-radius: 8px; }
 body .labelPublic {
   background-color: #fcf8e3;
   color: #8a6d3b;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 5px;
   border-radius: 8px; }
 body .labelPrivate {
   background-color: #fcf8e3;
   color: #8a6d3b;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 5px;
   border-radius: 8px; }
 body .labelProtected {
   background-color: #fcf8e3;
   color: #8a6d3b;
-  font-size: 11px;
+  font-size: 12px;
   padding: 3px 5px;
   border-radius: 8px; }
 body .mainHeader {
@@ -164,16 +164,17 @@ body main .classBlock .classHeader {
 body main .classBlock .classHeader .className {
   flex-grow: 1;
   padding-left: 4px; }
+body main .classBlock .classComment {
+  padding: 5px 5px 0 13px; }
 body main .classBlock .groupBlock {
   border-top: 1px solid #d9d9d9;
   padding: 5px 5px 0 5px;
   border-radius: 5px; }
-body main .classBlock .groupBlock:first-of-type {
-  border-top: none; }
 body main .classBlock .groupBlock .groupHeader {
   background: none;
   color: black;
-  padding: 7px; }
+  padding: 7px;
+  font-size: 18px; }
 body main .classBlock .groupBlock .memberBlock {
   padding-bottom: 15px;
   border-bottom: 1px solid #d9d9d9;
@@ -188,8 +189,10 @@ body main .classBlock .groupBlock .memberBlock .memberHeader .memberName {
   flex-grow: 1;
   font-weight: bolder;
   padding-left: 4px; }
+body main .classBlock .groupBlock .memberBlock .memberSignature {
+  font-size: 15px; }
 body main .classBlock .groupBlock .memberBlock .memberComment {
-  font-size: 14px; }
+  font-size: 16px; }
 body main .classBlock .groupBlock .memberBlock .memberCode {
   border: 1px solid #d9d9d9;
   border-radius: 6px; }
@@ -203,5 +206,5 @@ body main .classBlock .groupBlock .memberBlock .memberCode summary:before {
 body main .classBlock .groupBlock .memberBlock .memberCode[open] summary:before {
   content: "−"; }
 body main .classBlock .groupBlock .memberBlock .memberCode pre {
-  font-size: 12px;
-  padding: 0 8px 0 8px; }
+  padding: 0 8px 0 8px;
+  font-size: 14px; }

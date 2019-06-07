@@ -56,9 +56,10 @@
           "members": [
             {
               "id": "Bird::fly",
-              "title": "Bird.fly(symbol, number) -> bool\nBird.fly(string, number) -> bool\n",
-              "comment": "<p>Flying is the most critical feature of birds.</p>\n\n<h1 id=\"method-i-fly-label-Example\">Example<span><a href=\"#method-i-fly-label-Example\">&para;</a> <a href=\"#top\">&uarr;</a></span></h1>\n\n<pre class=\"ruby\"><span class=\"ruby-identifier\">fly</span>(:<span class=\"ruby-identifier\">south</span>, <span class=\"ruby-value\">70</span>)\n</pre>",
-              "code": "<span class=\"ruby-comment\"># File example.rb, line 49</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">fly</span>(<span class=\"ruby-identifier\">direction</span>, <span class=\"ruby-identifier\">velocity</span>)\n  <span class=\"ruby-keyword\">if</span> <span class=\"ruby-constant\">RUBY_PLATFORM</span> <span class=\"ruby-operator\">==</span> <span class=\"ruby-string\">&#39;java&#39;</span>\n    <span class=\"ruby-identifier\">_fly_jruby</span>(<span class=\"ruby-identifier\">direction</span>, <span class=\"ruby-identifier\">velocity</span>)\n  <span class=\"ruby-keyword\">else</span>\n    <span class=\"ruby-identifier\">puts</span> <span class=\"ruby-node\">&quot;flying away: direction=#{direction}, velocity=#{velocity}&quot;</span>\n  <span class=\"ruby-keyword\">end</span>\n<span class=\"ruby-keyword\">end</span>",
+              "title": "fly",
+              "signature": "Bird.fly(symbol, number) -> bool\nBird.fly(string, number) -> bool\n",
+              "comment": "<p>Fly somewhere.</p>\n\n<p>Flying is the most critical feature of birds.</p>\n\n<h1 id=\"method-i-fly-label-Example\">Example<span><a href=\"#method-i-fly-label-Example\">&para;</a> <a href=\"#top\">&uarr;</a></span></h1>\n\n<pre class=\"ruby\"><span class=\"ruby-identifier\">fly</span>(:<span class=\"ruby-identifier\">south</span>, <span class=\"ruby-value\">70</span>)\n</pre>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 51</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">fly</span>(<span class=\"ruby-identifier\">direction</span>, <span class=\"ruby-identifier\">velocity</span>)\n  <span class=\"ruby-identifier\">_fly_impl</span>(<span class=\"ruby-identifier\">direction</span>, <span class=\"ruby-identifier\">velocity</span>)\n<span class=\"ruby-keyword\">end</span>",
               "level": "instance",
               "visibility": "public",
               "kind": "method",
@@ -75,7 +76,8 @@
             },
             {
               "id": "Bird::speak",
-              "title": "speak() { |text| ... }",
+              "title": "speak",
+              "signature": "speak() { |text| ... }",
               "comment": "<p>Produce some noise.</p>",
               "code": "<span class=\"ruby-comment\"># File example.rb, line 32</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">speak</span> <span class=\"ruby-comment\"># :yields: text</span>\n  <span class=\"ruby-identifier\">puts</span> <span class=\"ruby-string\">&#39;generic tweeting&#39;</span>\n  <span class=\"ruby-keyword\">yield</span> <span class=\"ruby-string\">&#39;tweet&#39;</span>\n  <span class=\"ruby-keyword\">yield</span> <span class=\"ruby-string\">&#39;tweet&#39;</span>\n<span class=\"ruby-keyword\">end</span>",
               "level": "instance",
@@ -117,6 +119,7 @@
             {
               "id": "Duck::Animal",
               "title": "Animal",
+              "signature": "",
               "comment": "",
               "kind": "extended",
               "labels": [
@@ -137,6 +140,7 @@
             {
               "id": "Duck::Waterfowl",
               "title": "Waterfowl",
+              "signature": "",
               "comment": "",
               "kind": "included",
               "labels": [
@@ -157,6 +161,7 @@
             {
               "id": "Duck::MAX_VELOCITY",
               "title": "MAX_VELOCITY",
+              "signature": "",
               "comment": "",
               "kind": "constant",
               "labels": [
@@ -177,9 +182,10 @@
           "members": [
             {
               "id": "Duck::new",
-              "title": "new(domestic, rubber)",
+              "title": "new",
+              "signature": "new(domestic, rubber)",
               "comment": "<p>Creates a new duck.</p>",
-              "code": "<span class=\"ruby-comment\"># File example.rb, line 116</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">initialize</span>(<span class=\"ruby-identifier\">domestic</span>, <span class=\"ruby-identifier\">rubber</span>)\n  <span class=\"ruby-ivar\">@domestic</span> = <span class=\"ruby-identifier\">domestic</span>\n  <span class=\"ruby-ivar\">@rubber</span> = <span class=\"ruby-identifier\">rubber</span>\n  <span class=\"ruby-identifier\">@@rubber_ducks</span> <span class=\"ruby-operator\">&lt;&lt;</span> <span class=\"ruby-keyword\">self</span> <span class=\"ruby-keyword\">if</span> <span class=\"ruby-identifier\">rubber</span>\n<span class=\"ruby-keyword\">end</span>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 114</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">initialize</span>(<span class=\"ruby-identifier\">domestic</span>, <span class=\"ruby-identifier\">rubber</span>)\n  <span class=\"ruby-ivar\">@domestic</span> = <span class=\"ruby-identifier\">domestic</span>\n  <span class=\"ruby-ivar\">@rubber</span> = <span class=\"ruby-identifier\">rubber</span>\n  <span class=\"ruby-identifier\">@@rubber_ducks</span> <span class=\"ruby-operator\">&lt;&lt;</span> <span class=\"ruby-keyword\">self</span> <span class=\"ruby-keyword\">if</span> <span class=\"ruby-identifier\">rubber</span>\n<span class=\"ruby-keyword\">end</span>",
               "level": "class",
               "visibility": "public",
               "kind": "method",
@@ -196,9 +202,10 @@
             },
             {
               "id": "Duck::rubber_ducks",
-              "title": "rubber_ducks()",
+              "title": "rubber_ducks",
+              "signature": "rubber_ducks()",
               "comment": "<p>Returns list of all rubber ducks.</p>",
-              "code": "<span class=\"ruby-comment\"># File example.rb, line 111</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-keyword\">self</span>.<span class=\"ruby-identifier\">rubber_ducks</span>\n  <span class=\"ruby-identifier\">@@rubber_ducks</span>\n<span class=\"ruby-keyword\">end</span>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 109</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-keyword\">self</span>.<span class=\"ruby-identifier\">rubber_ducks</span>\n  <span class=\"ruby-identifier\">@@rubber_ducks</span>\n<span class=\"ruby-keyword\">end</span>",
               "level": "class",
               "visibility": "public",
               "kind": "method",
@@ -225,6 +232,7 @@
             {
               "id": "Duck::domestic",
               "title": "domestic",
+              "signature": "",
               "comment": "<p>True for domestic ducks.</p>",
               "level": "instance",
               "visibility": "public",
@@ -243,6 +251,7 @@
             {
               "id": "Duck::rubber",
               "title": "rubber",
+              "signature": "",
               "comment": "<p>True for rubber ducks.</p>",
               "level": "instance",
               "visibility": "public",
@@ -269,9 +278,10 @@
           "members": [
             {
               "id": "Duck::quack",
-              "title": "quack()",
+              "title": "quack",
+              "signature": "quack()",
               "comment": "<p>Implements quacking</p>",
-              "code": "<span class=\"ruby-comment\"># File example.rb, line 88</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">quack</span>\n  <span class=\"ruby-string\">&#39;quack&#39;</span>\n<span class=\"ruby-keyword\">end</span>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 86</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">quack</span>\n  <span class=\"ruby-string\">&#39;quack&#39;</span>\n<span class=\"ruby-keyword\">end</span>",
               "level": "instance",
               "visibility": "private",
               "kind": "method",
@@ -288,9 +298,10 @@
             },
             {
               "id": "Duck::speak",
-              "title": "speak() { |speech| ... }",
+              "title": "speak",
+              "signature": "speak() { |speech| ... }",
               "comment": "<p><a href=\"Duck.html\">Duck</a> overrides generic implementation.</p>",
-              "code": "<span class=\"ruby-comment\"># File example.rb, line 82</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">speak</span>\n  <span class=\"ruby-identifier\">speech</span> = <span class=\"ruby-identifier\">quack</span>\n  <span class=\"ruby-keyword\">yield</span> <span class=\"ruby-identifier\">speech</span>\n<span class=\"ruby-keyword\">end</span>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 80</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">speak</span>\n  <span class=\"ruby-identifier\">speech</span> = <span class=\"ruby-identifier\">quack</span>\n  <span class=\"ruby-keyword\">yield</span> <span class=\"ruby-identifier\">speech</span>\n<span class=\"ruby-keyword\">end</span>",
               "level": "instance",
               "visibility": "public",
               "kind": "method",
@@ -307,9 +318,10 @@
             },
             {
               "id": "Duck::useful?",
-              "title": "Bird.useful? -> bool",
+              "title": "useful?",
+              "signature": "Bird.useful? -> bool",
               "comment": "<p>Checks if this duck is a useful one.</p>",
-              "code": "<span class=\"ruby-comment\"># File example.rb, line 126</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">useful?</span>\n  <span class=\"ruby-ivar\">@domestic</span> <span class=\"ruby-operator\">||</span> <span class=\"ruby-ivar\">@rubber</span>\n<span class=\"ruby-keyword\">end</span>",
+              "code": "<span class=\"ruby-comment\"># File example.rb, line 124</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">useful?</span>\n  <span class=\"ruby-ivar\">@domestic</span> <span class=\"ruby-operator\">||</span> <span class=\"ruby-ivar\">@rubber</span>\n<span class=\"ruby-keyword\">end</span>",
               "level": "instance",
               "visibility": "public",
               "kind": "method",
@@ -349,6 +361,7 @@
             {
               "id": "Object::DEFAULT_DUCK_VELOCITY",
               "title": "DEFAULT_DUCK_VELOCITY",
+              "signature": "",
               "comment": "<p>Default velocity for a flying duck.</p>",
               "kind": "constant",
               "labels": [
@@ -383,7 +396,8 @@
           "members": [
             {
               "id": "Waterfowl::swim",
-              "title": "swim()",
+              "title": "swim",
+              "signature": "swim()",
               "comment": "<p>Swimming helper.</p>",
               "code": "<span class=\"ruby-comment\"># File example.rb, line 19</span>\n<span class=\"ruby-keyword\">def</span> <span class=\"ruby-identifier\">swim</span>\n  <span class=\"ruby-identifier\">puts</span> <span class=\"ruby-string\">&#39;swimming around&#39;</span>\n<span class=\"ruby-keyword\">end</span>",
               "level": "instance",

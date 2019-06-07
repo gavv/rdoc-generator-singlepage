@@ -113,6 +113,7 @@ class DocLoader
 
       member[:id] = make_id(klass, m.name)
       member[:title] = get_title(m)
+      member[:signature] = get_signature(m)
       member[:comment] = get_comment(m)
 
       if m.respond_to? :markup_code
@@ -194,10 +195,14 @@ class DocLoader
   end
 
   def get_title(object)
+    object.name
+  end
+
+  def get_signature(object)
     if object.respond_to? :arglists
       return object.arglists if object.arglists
     end
-    object.name
+    ''
   end
 
   def get_comment(object)

@@ -69,6 +69,10 @@ html
             span class="className"
               | #{klass.title}
 
+          - if klass.comment
+            div class="classComment"
+              | #{{klass.comment}}
+
           - klass.groups.each do |group|
             section class="groupBlock" id="#{group.id}"
 
@@ -86,6 +90,10 @@ html
 
                     span class="memberName"
                       | #{member.title}
+
+                  - if member.signature
+                    pre class="memberSignature"
+                      | #{{member.signature}}
 
                   - if member.comment
                     div class="memberComment"

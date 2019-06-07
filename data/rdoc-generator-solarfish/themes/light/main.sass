@@ -1,14 +1,14 @@
 @mixin label($bgColor, $textColor)
   background-color: $bgColor
   color: $textColor
-  font-size: 11px
+  font-size: 12px
   padding: 3px 5px
   border-radius: 8px
 
 body
   margin: 0 10px 10px 2px
   font-family: RobotoRegular
-  font-size: 15px
+  font-size: 16px
 
   header
     font-family: RalewaySemiBold
@@ -157,18 +157,19 @@ body
           flex-grow: 1
           padding-left: 4px
 
+      .classComment
+        padding: 5px 5px 0 13px
+
       .groupBlock
         border-top: 1px solid #d9d9d9
         padding: 5px 5px 0 5px
         border-radius: 5px
 
-        &:first-of-type
-          border-top: none
-
         .groupHeader
           background: none
           color: black
           padding: 7px
+          font-size: 18px
 
         .memberBlock
           padding-bottom: 15px
@@ -188,8 +189,11 @@ body
               font-weight: bolder
               padding-left: 4px
 
+          .memberSignature
+            font-size: 15px
+
           .memberComment
-            font-size: 14px
+            font-size: 16px
 
           .memberCode
             border: 1px solid #d9d9d9
@@ -207,5 +211,5 @@ body
               content: "−"
 
             pre
-              font-size: 12px
               padding: 0 8px 0 8px
+              font-size: 14px
