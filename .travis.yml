@@ -2,7 +2,8 @@ language: ruby
 rvm:
   - 2.1.10
   - 2.3.3
-script: 
+  - 2.6.3
+script:
     - rake rubocop
     - rake test
     - rake install
