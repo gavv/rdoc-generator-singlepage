@@ -143,6 +143,8 @@ Only one theme is available out of the box:
 
 You can configure what theme to use with the `--sf-theme` option. Its value may be either a path or a name. In the later case, the theme is searched in all locally installed gems that provide `data/rdoc-generator-solarfish/themes` directory.
 
+Multiple themes can be used simultaneously. In this case, each next theme may add more stylesheet or font files and overrides previous themes.
+
 ## Development
 
 Install development dependencies:
