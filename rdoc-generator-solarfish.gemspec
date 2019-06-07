@@ -16,14 +16,14 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'rdoc'
-  spec.add_runtime_dependency 'sass'
-  spec.add_runtime_dependency 'slim'
-  spec.add_runtime_dependency 'recursive-open-struct'
+  spec.add_runtime_dependency 'rdoc', '~> 5.1'
+  spec.add_runtime_dependency 'sass', '~> 3.4'
+  spec.add_runtime_dependency 'slim', '~> 3.0'
+  spec.add_runtime_dependency 'recursive-open-struct', '~> 1.0'
 
   spec.add_development_dependency 'bundler'
-  spec.add_development_dependency 'rake'
-  spec.add_development_dependency 'rubocop'
-  spec.add_development_dependency 'minitest'
-  spec.add_development_dependency 'html5_validator'
+  spec.add_development_dependency 'rake', '~> 12.0'
+  spec.add_development_dependency 'rubocop', '~> 0.49'
+  spec.add_development_dependency 'minitest', '~> 5.10'
+  spec.add_development_dependency 'html5_validator', '~> 1.0'
 end
