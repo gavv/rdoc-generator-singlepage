@@ -1,10 +1,10 @@
 # RDoc::Generator::SolarFish [![Gem Version](https://badge.fury.io/rb/rdoc-generator-solarfish.svg)](https://badge.fury.io/rb/rdoc-generator-solarfish) [![Build Status](https://travis-ci.org/rbdoc/rdoc-generator-solarfish.svg?branch=master)](https://travis-ci.org/rbdoc/rdoc-generator-solarfish)
 
-Single page HTML5 generator for Ruby RDoc.
+Single-page HTML5 generator for Ruby RDoc.
 
 ## Features
 
-* Generate single page HTML5 documentation suitable for offline use.
+* Generate single-page HTML5 documentation suitable for offline use.
 * Templates support using [Slim](http://slim-lang.com/).
 * Themes support.
 * Out of the box [Sass](http://sass-lang.com/) and SCSS support.
