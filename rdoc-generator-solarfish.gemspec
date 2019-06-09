@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name        = 'rdoc-generator-solarfish'
-  spec.version     = '0.0.2'
+  spec.version     = '0.0.3'
   spec.authors     = ['Victor Gaydov', 'Dmitriy Shilin', 'Valeria Khomyakova']
   spec.email       = ['victor@enise.org']
   spec.description = 'Single-page HTML5 generator for Ruby RDoc'
