@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require 'pathname'
 require 'rubygems'
 
 # Predefined configuration.
 module Settings
-  DEFAULT_HTMLFILE = 'index.html'.freeze
-  DEFAULT_TEMPLATE = 'onepage'.freeze
-  DEFAULT_THEME    = 'light'.freeze
+  DEFAULT_HTMLFILE = 'index.html'
+  DEFAULT_TEMPLATE = 'onepage'
+  DEFAULT_THEME    = 'light'
 
   def self.list_file_names(dir, ext)
     data_files(dir, "*#{ext}").map do |file|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # DocLoader reads RDoc documentation from RDoc store and builds a hash that
 # will be passed to HTML template or written to JSON file.
 class DocLoader
@@ -21,11 +23,11 @@ class DocLoader
 
     class_list = classes.map do |klass|
       {
-        id:      klass.full_name.strip,
-        title:   klass.full_name,
-        kind:    get_class_kind(klass.full_name),
+        id: klass.full_name.strip,
+        title: klass.full_name,
+        kind: get_class_kind(klass.full_name),
         comment: get_comment(klass),
-        groups:  build_groups(klass)
+        groups: build_groups(klass)
       }
     end
 
@@ -142,19 +144,19 @@ class DocLoader
     case object[:kind]
     when :module, :class, :constant, :included, :extended
       labels << {
-        id:    object[:kind].capitalize,
+        id: object[:kind].capitalize,
         title: object[:kind].to_s
       }
 
     when :method
       labels << if object[:level] == :class
                   {
-                    id:    'ClassMethod',
+                    id: 'ClassMethod',
                     title: 'class method'
                   }
                 else
                   {
-                    id:    'InstanceMethod',
+                    id: 'InstanceMethod',
                     title: 'instance method'
                   }
                 end
@@ -162,12 +164,12 @@ class DocLoader
     when :attribute
       labels << if object[:level] == :class
                   {
-                    id:    'ClassAttribute',
+                    id: 'ClassAttribute',
                     title: 'class attribute'
                   }
                 else
                   {
-                    id:    'InstanceAttribute',
+                    id: 'InstanceAttribute',
                     title: 'instance attribute'
                   }
                 end
@@ -175,7 +177,7 @@ class DocLoader
 
     if object[:visibility]
       labels << {
-        id:    object[:visibility].capitalize,
+        id: object[:visibility].capitalize,
         title: object[:visibility].to_s
       }
     end
@@ -240,15 +242,15 @@ class DocLoader
       when :instance
         {
           title: 'Instance Methods',
-          type:  :InstanceMethods,
-          kind:  :method,
+          type: :InstanceMethods,
+          kind: :method,
           level: :instance
         }
       when :class
         {
           title: 'Class Methods',
-          type:  :ClassMethods,
-          kind:  :method,
+          type: :ClassMethods,
+          kind: :method,
           level: :class
         }
       end
@@ -257,35 +259,35 @@ class DocLoader
       when :instance
         {
           title: 'Instance Attributes',
-          type:  :InstanceAttributes,
-          kind:  :attribute,
+          type: :InstanceAttributes,
+          kind: :attribute,
           level: :instance
         }
       when :class
         {
           title: 'Class Attributes',
-          type:  :ClassAttributes,
-          kind:  :attribute,
+          type: :ClassAttributes,
+          kind: :attribute,
           level: :class
         }
       end
     when :constant
       {
         title: 'Constants',
-        type:  :Constants,
-        kind:  :constant
+        type: :Constants,
+        kind: :constant
       }
     when :extended
       {
         title: 'Extended Classes',
-        type:  :ExtendedClasses,
-        kind:  :extended
+        type: :ExtendedClasses,
+        kind: :extended
       }
     when :included
       {
         title: 'Included Modules',
-        type:  :IncludedModules,
-        kind:  :included
+        type: :IncludedModules,
+        kind: :included
       }
     end
   end

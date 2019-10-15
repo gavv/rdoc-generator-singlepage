@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 
 # JSONWriter builds JSON file and copies it to the output directory.

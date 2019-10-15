@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fileutils'
 require 'yaml'
 require 'sass'
@@ -23,10 +25,10 @@ class ThemeLoader
   def load
     theme = {
       head: {
-        styles:  [],
-        fonts:   [],
+        styles: [],
+        fonts: [],
         scripts: [],
-        html:    []
+        html: []
       },
       body: {
         header: [],
@@ -52,18 +54,18 @@ class ThemeLoader
 
     config.each do |section, content|
       check_one_of(
-        message:  'Unexpected section in theme config',
+        message: 'Unexpected section in theme config',
         expected: %w[head body],
-        actual:   section
+        actual: section
       )
 
       case section
       when 'head'
         content.each do |key, files|
           check_one_of(
-            message:  "Unexpected key in 'head'",
+            message: "Unexpected key in 'head'",
             expected: %w[styles fonts scripts html],
-            actual:   key
+            actual: key
           )
           section = key.to_sym
           files.each do |file_info|
@@ -93,9 +95,9 @@ class ThemeLoader
       when 'body'
         content.each do |key, files|
           check_one_of(
-            message:  "Unexpected key in 'body'",
+            message: "Unexpected key in 'body'",
             expected: %w[header footer],
-            actual:   key
+            actual: key
           )
           files.each do |file_info|
             path = theme_file(theme_path, file_info['file'])
@@ -107,8 +109,8 @@ class ThemeLoader
         end
       end
     end
-  rescue => error
-    raise "Can't load theme - #{theme_path}\n#{error}"
+  rescue StandardError => e
+    raise "Can't load theme - #{theme_path}\n#{e}"
   end
 
   def build_files(theme_files)
@@ -120,8 +122,8 @@ class ThemeLoader
 
   def build_css_file(file, ext)
     options = {
-      cache:  false,
-      style:  :default
+      cache: false,
+      style: :default
     }
 
     options[:syntax] = if ext == '.sass'

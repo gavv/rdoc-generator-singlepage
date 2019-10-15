@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fileutils'
 
 # HTMLWriter builds HTML file from a template and copies HTML and

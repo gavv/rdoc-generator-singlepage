@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rdoc/rdoc'
 
 require_relative 'settings'
@@ -114,8 +116,8 @@ class RDoc::Generator::SolarFish
     theme, theme_files = theme_loader.load
 
     data = {
-      title:   @options.title,
-      theme:   theme,
+      title: @options.title,
+      theme: theme,
       classes: classes
     }
 
