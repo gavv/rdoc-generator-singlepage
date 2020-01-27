@@ -1,6 +1,5 @@
 require 'bundler/gem_tasks'
 require 'rake/testtask'
-require 'rubocop/rake_task'
 
 Rake::TestTask.new do |t|
   t.verbose = true
@@ -8,12 +7,17 @@ Rake::TestTask.new do |t|
   t.test_files = FileList['test/test*.rb']
 end
 
-RuboCop::RakeTask.new(:rubocop) do |t|
-  t.patterns = ['lib/**/*.rb']
-  t.fail_on_error = false
-  t.options = [
-    '--display-cop-names'
-  ]
+begin
+  require 'rubocop/rake_task'
+
+  RuboCop::RakeTask.new(:rubocop) do |t|
+    t.patterns = ['lib/**/*.rb']
+    t.fail_on_error = false
+    t.options = [
+      '--display-cop-names'
+    ]
+  end
+rescue LoadError
 end
 
 task :example do

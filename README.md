@@ -169,6 +169,12 @@ Automatically fix some linter errors:
 $ rake rubocop:auto_correct
 ```
 
+Build gem:
+
+```
+$ gem build rdoc-generator-solarfish.gemspec
+```
+
 ## License
 
 * The source code is licensed under [MIT](LICENSE) license.
