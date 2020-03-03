@@ -1,6 +1,10 @@
-# RDoc::Generator::SolarFish [![Gem Version](https://badge.fury.io/rb/rdoc-generator-solarfish.svg)](https://badge.fury.io/rb/rdoc-generator-solarfish) [![Build Status](https://travis-ci.org/rbdoc/rdoc-generator-solarfish.svg?branch=master)](https://travis-ci.org/rbdoc/rdoc-generator-solarfish)
+# RDoc::Generator::SolarFish (unmaintained)
+
+[![Gem Version](https://badge.fury.io/rb/rdoc-generator-solarfish.svg)](https://badge.fury.io/rb/rdoc-generator-solarfish) [![Build Status](https://travis-ci.org/rbdoc/rdoc-generator-solarfish.svg?branch=master)](https://travis-ci.org/rbdoc/rdoc-generator-solarfish)
 
 Single-page HTML5 generator for Ruby RDoc.
+
+**This project is archived and unmaintained due to the lack of time and interest. It will likely continue working for some time. Feel free to contact us if you want to pick it up.**
 
 ## Features
 
